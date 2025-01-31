@@ -1,0 +1,32 @@
+{
+  "name": "game",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --config vite.config.for.development.js --host",
+    "build": "vite build --config ./.builds/configs/vite.config.for.full.game.build.js",
+    "build_presentation": "vite build --config ./.builds/configs/vite.config.for.presentation.layer.build.js & node ./.builds/configs/vite.es.module.wrapper.js",
+    "preview": "vite preview",
+    "install-all": "node ./install-all.js",
+    "postinstall": "npm install pixi-spine --no-save"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "module-alias": "^2.2.3",
+    "pepjs": "^0.5.3",
+    "pixi.js": "^7.4.2",
+    "qrcode": "^1.5.4",
+    "request": "^2.88.2",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@vitejs/plugin-vue": "^4.4.0",
+    "core-js": "^3.39.0",
+    "terser": "^5.37.0",
+    "vite": "^4.5.9"
+  }
+}

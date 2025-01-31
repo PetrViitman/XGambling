@@ -1,0 +1,87 @@
+{
+  "frames": {
+    "teaser_right": {
+      "frame": {
+        "x": 5,
+        "y": 5,
+        "w": 729,
+        "h": 517
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 729,
+        "h": 517
+      },
+      "sourceSize": {
+        "w": 729,
+        "h": 517
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "teaser_left": {
+      "frame": {
+        "x": 744,
+        "y": 5,
+        "w": 686,
+        "h": 514
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 686,
+        "h": 514
+      },
+      "sourceSize": {
+        "w": 686,
+        "h": 514
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "game_logo": {
+      "frame": {
+        "x": 1440,
+        "y": 5,
+        "w": 263,
+        "h": 205
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 1,
+        "w": 263,
+        "h": 205
+      },
+      "sourceSize": {
+        "w": 263,
+        "h": 206
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "teaser_elements.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1708,
+      "h": 527
+    },
+    "scale": 1
+  }
+}

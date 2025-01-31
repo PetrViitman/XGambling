@@ -1,0 +1,49 @@
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+import babel from '@rollup/plugin-babel';
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+  ],
+  publicDir: false,
+  build: {
+    outDir: './.builds/mvc_v',
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    },
+    lib: {
+      entry: 'src/EntryPointForPresentationLayerBuild.js',
+      formats: ['iife'],
+      name: 'PresentationLayer',
+      fileName: (format) => `CompiledPresentationLayer.js`,
+    },
+    rollupOptions: {
+      plugins: [
+        babel({
+          configFile: './.builds/configs/.babelrc',
+          babelHelpers: 'bundled',
+          extensions: ['.js'],
+          exclude: 'node_modules/**',
+        }),
+      ],
+    },
+  },
+  minify: 'terser',
+  terserOptions: {
+    compress: {
+      passes: 3,
+      drop_console: true,
+      drop_debugger: true,
+    },
+    mangle: {
+      toplevel: true,
+    },
+    format: {
+      comments: false,
+    },
+  },
+});

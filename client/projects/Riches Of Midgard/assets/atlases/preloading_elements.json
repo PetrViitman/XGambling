@@ -1,0 +1,63 @@
+{
+  "frames": {
+    "progress_bar_frame": {
+      "frame": {
+        "x": 5,
+        "y": 5,
+        "w": 678,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 678,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 678,
+        "h": 155
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "progress_bar": {
+      "frame": {
+        "x": 693,
+        "y": 5,
+        "w": 669,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 669,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 669,
+        "h": 142
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "preloading_elements.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1367,
+      "h": 165
+    },
+    "scale": 1
+  }
+}

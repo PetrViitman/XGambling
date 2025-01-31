@@ -1,0 +1,63 @@
+{
+  "frames": {
+    "reels": {
+      "frame": {
+        "x": 5,
+        "y": 5,
+        "w": 1160,
+        "h": 1330
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 3,
+        "y": 1,
+        "w": 1160,
+        "h": 1330
+      },
+      "sourceSize": {
+        "w": 1163,
+        "h": 1337
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "reels_free_spins": {
+      "frame": {
+        "x": 5,
+        "y": 1345,
+        "w": 1160,
+        "h": 1328
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 3,
+        "y": 0,
+        "w": 1160,
+        "h": 1328
+      },
+      "sourceSize": {
+        "w": 1163,
+        "h": 1337
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "reels_elements.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1170,
+      "h": 2678
+    },
+    "scale": 1
+  }
+}
