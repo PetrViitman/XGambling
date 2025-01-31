@@ -8,7 +8,8 @@
     "build-production": "vite build --config .builds/configs/config-production-build.js",
     "build-presentation": "vite build --config .builds/configs/config-presentation-build.js & node ./.builds/configs/es-module-wrapper.js",
     "preview-build-standalone": "vite preview --outDir .builds/standalone --host",
-    "preview-build-production": "vite preview --outDir .builds/production"
+    "preview-build-production": "vite preview --outDir .builds/production",
+    "postinstall": "npm install pixi-spine --no-save"
   },
   "dependencies": {
     "pepjs": "^0.5.3",
