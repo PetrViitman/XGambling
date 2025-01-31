@@ -1,4 +1,3 @@
-import './polyfills'
 import { RouterLogic } from './busynessLogic/RouterLogic'
 import { Presentation } from './presentation/Presentation'
 import webAPI from './busynessLogic/WebAPI'
