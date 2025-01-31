@@ -16,7 +16,7 @@ export default defineConfig({
       }
     },
     lib: {
-      entry: 'src/EntryPointForPresentationLayerBuild.js',
+      entry: 'src/EntryPointPresentation.js',
       formats: ['iife'],
       name: 'PresentationLayer',
       fileName: (format) => `CompiledPresentationLayer.js`,

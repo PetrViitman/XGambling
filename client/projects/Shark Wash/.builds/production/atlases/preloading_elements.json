@@ -4,20 +4,20 @@
       "frame": {
         "x": 5,
         "y": 5,
-        "w": 681,
-        "h": 83
+        "w": 914,
+        "h": 334
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 681,
-        "h": 83
+        "w": 914,
+        "h": 334
       },
       "sourceSize": {
-        "w": 681,
-        "h": 83
+        "w": 914,
+        "h": 334
       },
       "pivot": {
         "x": 0.5,
@@ -27,21 +27,21 @@
     "progress_bar": {
       "frame": {
         "x": 5,
-        "y": 98,
-        "w": 629,
-        "h": 30
+        "y": 349,
+        "w": 663,
+        "h": 97
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 629,
-        "h": 30
+        "w": 663,
+        "h": 97
       },
       "sourceSize": {
-        "w": 629,
-        "h": 30
+        "w": 663,
+        "h": 97
       },
       "pivot": {
         "x": 0.5,
@@ -55,8 +55,8 @@
     "image": "preloading_elements.png",
     "format": "RGBA8888",
     "size": {
-      "w": 691,
-      "h": 133
+      "w": 924,
+      "h": 451
     },
     "scale": 1
   }
