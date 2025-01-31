@@ -15,6 +15,7 @@ coverage
 *.local
 
 cookies.json
+credentials.json
 
 # Editor directories and files
 .vscode/*
