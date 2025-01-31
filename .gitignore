@@ -14,6 +14,7 @@ dist-ssr
 coverage
 *.local
 
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -24,9 +25,13 @@ coverage
 *.sln
 *.sw?
 
-.firebase/*
-.firebaserc
+**/.firebase
+**/.firebaserc
 
-.builds/standalone/*
-.builds/production/*
-.builds/presentation/*
+**/.builds/standalone/
+**/.builds/production/
+**/.builds/presentation/
+
+
+**/cookies.json
+**/credentials.json
