@@ -90,6 +90,9 @@ const signUp = async (username, password) => {
 }
 
 const logIn = async ({name, password, sessionId}) => {
+
+    console.log({name, password, sessionId})
+
     const user = await getUser({name})
 
     if(!user.password) {

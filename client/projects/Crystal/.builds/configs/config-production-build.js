@@ -28,6 +28,11 @@ export default defineConfig({
       input: {
         index: '/' + entryPointHTMLPageName,
       },
+      output: {
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name][extname]',
+      },
       plugins: [
         babel({
           configFile: './.builds/configs/.babelrc',

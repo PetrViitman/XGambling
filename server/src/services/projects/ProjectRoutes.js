@@ -4,7 +4,7 @@ const projectController = require('./ProjectController')
 const {validateSession} = require('../Shared')
 
 
-router.get('/list', validateSession, async (request, response) => {
+router.get('/list', async (request, response) => {
     const {errorCode, projects} = await projectController.getProjects(request.session.id)
 
     if(errorCode) {

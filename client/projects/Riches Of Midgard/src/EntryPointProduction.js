@@ -9,7 +9,7 @@ const port = 50004
 const presentation = new Presentation().setup({wrapperHTMLElementId: 'gameWrapper'})
 
 const remoteWebAPI = {
-    url: protocol + '//' + hostname + ':' + port + '/',
+    url: document.serviceURL ?? protocol + '//' + hostname + ':' + port + '/',
     get: (route) => fetch(remoteWebAPI.url + route, { method: "GET", credentials: 'include', })
         .then(response => response.json())
         .then(data => data)

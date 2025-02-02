@@ -9,12 +9,14 @@ const port = 50004
 const presentation = new Presentation().setup({wrapperHTMLElementId: 'gameWrapper'})
 
 const remoteWebAPI = {
-    url: protocol + '//' + hostname + ':' + port + '/',
+    url: document.serviceURL ?? protocol + '//' + hostname + ':' + port + '/',
     get: (route) => fetch(remoteWebAPI.url + route, { method: "GET", credentials: 'include', })
         .then(response => response.json())
         .then(data => data)
         .catch(_ => {return {errorCode: -1}}),
-    post: (route, data = {}) =>{ 
+    post: (route, data = {}) =>{
+        
+        console.log('REQUEST: ', { route, data, path: remoteWebAPI.url + route} )
         return fetch(
             remoteWebAPI.url + route, {
                 method: "POST",
@@ -23,7 +25,10 @@ const remoteWebAPI = {
                 body: JSON.stringify(data)
             })
         .then(response => response.json())
-        .then(data => data)
+        .then(data => {
+            console.log('RESPONSE: ', { data} ) 
+            return data
+        })
         .catch(_ => {return {errorCode: -1}})
     },
     gameDescription: (data) => remoteWebAPI.post('wildHeistShowdown/gameDescription', data),

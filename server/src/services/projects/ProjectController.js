@@ -82,8 +82,13 @@ const deleteProject = async (name, sessionId) => {
     return result
 }
 
+getAllProjects = async () => {
+    return ProjectModel.find({})
+}
+
 module.exports = {
     getProjects,
     createProject,
-    deleteProject
+    deleteProject,
+    getAllProjects
 }

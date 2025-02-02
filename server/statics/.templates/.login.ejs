@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        .container {
+            background: #1e1e1e;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 1rem;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            background: #2c2c2c;
+            color: white;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #33ff00;
+            border: none;
+            border-radius: 5px;
+            color: rgb(0, 0, 0);
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #168400;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>LOG IN</h2>
+        <form onsubmit="onSubmit()">
+            <input type="text" placeholder="Username" id="login" required>
+            <input type="password" placeholder="Password" id="password" required>
+            <button type="submit">LOG IN!</button>
+        </form>
+    </div>
+    <script>
+        const serviceURL = '<%- serviceURL %>'
+        const get = (route) =>
+            fetch(serviceURL + route, { method: "GET", credentials: 'include', })
+                .then(response => response.json())
+                .then(data => data)
+                .catch(_ => {return {errorCode: -1}})
+
+        const post = (route, data = {}) => {
+            return fetch(
+                serviceURL + route, {
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                })
+            .then(response => response.json())
+            .then(data => {
+                console.log('RESPONSE: ', { data} ) 
+                return data
+            })
+            .catch(_ => {return {errorCode: -1}})
+        }
+
+        const login = (data) => post('user/login', data)
+
+        const onSubmit = async () => {
+            const loginText = document.getElementById('login').value
+            const passwordText = document.getElementById('password').value
+
+            const {errorCode} = await login({
+                name: loginText,
+                password: passwordText
+            })
+
+            if (errorCode) {
+                alert('bad credentials try again')
+            } else {
+                location.reload()
+            }
+        }
+    </script>
+</body>
+</html>
