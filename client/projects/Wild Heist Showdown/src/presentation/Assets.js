@@ -1,5 +1,5 @@
 import { Assets, BaseTexture, Spritesheet, Texture } from "pixi.js"
-import sound from 'pixi-sound';
+
 let commonAssets = {}
 
 function isWebpSupported() {
@@ -35,25 +35,12 @@ async function fetchUncompressedAtlas({
     pathToJson,
 	textureResolution = 1
 }) {
-    const texture = await fetchUncompressedTexture(pathToImage);
-    const request = new XMLHttpRequest()
-    request.open('GET', pathToJson, true)
-    request.overrideMimeType('application/json')
-    request.send("")
+    const texture = await Assets.load(pathToImage)
+	const jsonData = await Assets.load({src: pathToJson, loadParser: 'loadTxt'})
 
-	const response = await new Promise(resolve => {
-		request.onreadystatechange = () => {
-			if (request.readyState === 4) {
-				resolve(request.response);
-			}
-		}
-	})
-
-
-    const jsonData = JSON.parse(response);
     const spriteSheet = new Spritesheet(
         texture,
-        jsonData,
+        JSON.parse(jsonData),
 		'@' + textureResolution + 'x'
     );
     await spriteSheet.parse()
@@ -101,14 +88,14 @@ export async function getPreloadingAssets(
 		atlases: [
 			{
 				pathToJson: 'atlases/preloading_elements.json',
-				pathToImage: 'atlases/preloading_elements.upng',
+				pathToImage: 'atlases/preloading_elements.webp',
 				isPathResolutionRequired: false,
 			},
 		],
 		atlasesAlt: [
 			{
 				pathToJson: 'atlases/preloading_elements.json',
-				pathToImage: 'atlases/preloading_elements.alt',
+				pathToImage: 'atlases/preloading_elements.png',
 				isPathResolutionRequired: false,
 			},
 		],
@@ -128,64 +115,64 @@ export async function getAssets(
 		atlases: [
 			{
 				pathToJson: 'atlases/elements_0.json',
-				pathToImage: 'atlases/elements_0.upng',
+				pathToImage: 'atlases/elements_0.webp',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_1.json',
-				pathToImage: 'atlases/elements_1.upng',
+				pathToImage: 'atlases/elements_1.webp',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_2.json',
-				pathToImage: 'atlases/elements_2.upng',
+				pathToImage: 'atlases/elements_2.webp',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_3.json',
-				pathToImage: 'atlases/elements_3.upng',
+				pathToImage: 'atlases/elements_3.webp',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_4.json',
-				pathToImage: 'atlases/elements_4.upng',
+				pathToImage: 'atlases/elements_4.webp',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_5.json',
-				pathToImage: 'atlases/elements_5.upng',
+				pathToImage: 'atlases/elements_5.webp',
 				isPathResolutionRequired: false,
 			}
 		],
 		atlasesAlt: [
 			{
 				pathToJson: 'atlases/elements_0.json',
-				pathToImage: 'atlases/elements_0.alt',
+				pathToImage: 'atlases/elements_0.png',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_1.json',
-				pathToImage: 'atlases/elements_1.alt',
+				pathToImage: 'atlases/elements_1.png',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_2.json',
-				pathToImage: 'atlases/elements_2.alt',
+				pathToImage: 'atlases/elements_2.png',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_3.json',
-				pathToImage: 'atlases/elements_3.alt',
+				pathToImage: 'atlases/elements_3.png',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_4.json',
-				pathToImage: 'atlases/elements_4.alt',
+				pathToImage: 'atlases/elements_4.png',
 				isPathResolutionRequired: false,
 			},
 			{
 				pathToJson: 'atlases/elements_5.json',
-				pathToImage: 'atlases/elements_5.alt',
+				pathToImage: 'atlases/elements_5.png',
 				isPathResolutionRequired: false,
 			}
 		],

@@ -14,7 +14,7 @@ const findPackageJson = (baseDir) => {
   for (const subdir of subdirs) {
     const fullPath = join(baseDir, subdir.name)
     
-    if (['node_modules', 'Router Web Interface'].includes(subdir.name) || subdir.name.startsWith('.')) {
+    if (['platforms', 'node_modules', 'Router Web Interface'].includes(subdir.name) || subdir.name.startsWith('.')) {
       continue
     }
 

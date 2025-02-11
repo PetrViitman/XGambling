@@ -1,0 +1,17 @@
+export const CHARACTERS_PER_LINE = 20
+export const FONT_SIZE = 30
+export const ERROR_CODES = {
+    NETWORK: {
+        SOMETHING_WENT_WRONG: 1000
+    },
+    USER: {
+        AUTHENTICATION_FAILED: 2000,
+        INVALID_CREDENTIALS: 2001,
+        NAME_IS_TAKEN: 2003,
+        ACCESS_DENIED: 2004,
+        USER_NOT_FOUND: 2005,
+        NOT_ENOUGH_MONEY: 2006,
+    }
+}
+
+export const DEFAULT_FONT_COLOR = 0x99FF00

@@ -132,6 +132,8 @@ export class GUIView extends AdaptiveContainer {
             assets[key] = value
         }
 
+        this.isMobileApplicationClient = isMobileApplicationClient
+
         //extractHighResolutionSymbols(gameAssets)
 
         this.audio = audio
@@ -710,6 +712,8 @@ export class GUIView extends AdaptiveContainer {
                 .stickBottom()
                 .highlight
 
+            this.infoBarView.expand(Math.min(2, Math.max(1.1, sidesRatio * 1)))
+
         } else {
 
             buttonAudioView.position.set(950, 150)
@@ -778,6 +782,8 @@ export class GUIView extends AdaptiveContainer {
                     height: 0.9 - offsetBottom
                 })
                 .stickMiddle()
+
+            this.infoBarView.expand(Math.max(1, sidesRatio * 2))
         }
     }
 
@@ -897,9 +903,11 @@ export class GUIView extends AdaptiveContainer {
         
     }
 
-    presentError() {
+    presentError(errorCode) {
         this.presentPopup()
         this.presentWindow()
+        this.fullScreeRequestTimeline.deleteAllAnimations()
+        document.exitFullscreen?.()
     }
 
     setRemainingAutoSpinsCount(remainingAutoSpinsCount) {
@@ -925,6 +933,8 @@ export class GUIView extends AdaptiveContainer {
     }
 
     requestFullScreen() {
+        if (this.isMobileApplicationClient) return
+
         this.fullScreeRequestTimeline
             .deleteAllAnimations()
             .addAnimation({

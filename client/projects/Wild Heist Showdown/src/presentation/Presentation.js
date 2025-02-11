@@ -15,7 +15,6 @@ import { Camera } from "./views/adaptiveDesign/Camera"
 import { InteractiveLayerView } from "./views/InteractiveLayerView"
 import { BankView } from "./views/bank/BankView"
 import { SkyView } from "./views/bank/SkyView"
-import { SparklesForegroundView } from "./views/bank/SparklesForegroundView"
 import { AwardView } from "./views/splashScreens/award/AwardView"
 import { GUIView } from "./views/GUI/GUIView"
 import { TextField } from "./views/text/TextField"
@@ -965,7 +964,7 @@ export class Presentation {
 			errorText: this.dictionary['error_' + errorCode] ?? errorCode
 		})
 
-		this.guiView.presentError()
+		this.guiView.presentError(errorCode)
 
 		this.bankView.presentLose()
 
@@ -991,9 +990,13 @@ export class Presentation {
 		this.guiView.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
 	}
 
-
 	resolve() {
 		this.guiView.resolve?.({})
+	}
+
+
+	setAudioPaused(isPaused = true) {
+		this.audio.setPaused(isPaused)
 	}
 	// ...API
 }

@@ -7,7 +7,7 @@ import { TextField } from "./views/text/TextField"
 import { TerminalView } from "./views/TerminalView"
 import { HTMLContainer } from "./views/adaptiveDesign/HTMLContainer"
 import { DEFAULT_FONT_COLOR } from "./Constants"
-import { Iframe } from "./views/iframe/Iframe"
+import { IframeView } from "./views/iframe/IframeView"
 
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
@@ -16,7 +16,7 @@ settings.MIPMAP_MODES = MIPMAP_MODES.ON
 export class Presentation {
 	pixiApplication
 	isLTRTextDirection
-	iframe
+	iframeView
 	terminalView
 
 	constructor({
@@ -101,8 +101,8 @@ export class Presentation {
 
 	initIframe() {
 		const {pixiApplication: {stage}} = this
-		this.iframe = new Iframe()
-		stage.addChild(this.iframe)
+		this.iframeView = new IframeView()
+		stage.addChild(this.iframeView)
 	}
 
 	async initBitmapFonts() {
@@ -313,7 +313,7 @@ export class Presentation {
 
 	presentProject(url, name) {
 		this.presentPendingResponse()
-		return this.iframe.presentProject(url, name)
+		return this.iframeView.presentProject(url, name)
 	}
 
 	refreshIframe() {

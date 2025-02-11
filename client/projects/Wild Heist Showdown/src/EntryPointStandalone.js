@@ -10,7 +10,7 @@ const customUIOption = customURLParameters.get("view")
 
 const presentation = new Presentation()
 	.setup({
-		wrapperHTMLElementId: 'gameWrapper',
+		wrapperHTMLElementId: 'projectWrapper',
 		customVFXLevel,
 		customUIOption,
 		languageCode,

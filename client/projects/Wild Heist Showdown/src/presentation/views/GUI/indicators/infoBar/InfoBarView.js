@@ -37,6 +37,9 @@ export class InfoBarView extends Container {
     assets
     dictionary
     idleMessageIndex = 0
+
+    expansionFactor = 1
+    contentWidth
     
     constructor({assets, dictionary, isLTRTextDirection}) {
         super()
@@ -144,12 +147,13 @@ export class InfoBarView extends Container {
         })
     }
 
-    adjustContentContainer(width) {
-        if (width > MAXIMAL_WIDTH) {
-            this.contentContainer.scale.set(MAXIMAL_WIDTH / width)
-        }
+    adjustContentContainer(width = this.contentWidth) {
+        this.contentWidth = width
+        this.panelView.scale.x = this.expansionFactor
+        const finalMaximalWidth = MAXIMAL_WIDTH * this.expansionFactor
+        this.contentContainer.scale.set(Math.min(1, finalMaximalWidth / width))
 
-        this.contentContainer.x = -Math.min(MAXIMAL_WIDTH, width) / 2
+        this.contentContainer.x = -Math.min(finalMaximalWidth, width) / 2
     }
 
     drop() {
@@ -847,5 +851,11 @@ export class InfoBarView extends Container {
                 }
             })
             .play()
-    } 
+    }
+
+
+    expand(expansionFactor = 1) {
+        this.expansionFactor = expansionFactor
+        this.adjustContentContainer()
+    }
 }

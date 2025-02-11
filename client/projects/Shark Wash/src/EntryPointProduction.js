@@ -6,7 +6,7 @@ const protocol = window.location.protocol
 const hostname = window.location.hostname
 const port = 50004
 
-const presentation = new Presentation().setup({wrapperHTMLElementId: 'gameWrapper'})
+const presentation = new Presentation().setup({wrapperHTMLElementId: 'projectWrapper'})
 
 const remoteWebAPI = {
     url: document.serviceURL ?? protocol + '//' + hostname + ':' + port + '/',

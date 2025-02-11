@@ -52,16 +52,13 @@ const options = {
     cert: fs.readFileSync('../.certificate/cert.pem'),
 }
 
-
-
 const { getAllProjects } = require('./src/services/projects/ProjectController');
-const path = require('path');
 app.set('view engine', 'ejs')
 app.set('views', './statics/.templates')
 
 
 getAllProjects().then(projects => {
-    projects.forEach(({name, visibility}) => {
+    projects.forEach(({name}) => {
         const serviceURL = 'https://localhost:40000/'
         try {
             const projectPath = '/' + name.replaceAll(' ', '-')
@@ -74,7 +71,7 @@ getAllProjects().then(projects => {
 
             app.get(projectPath, async (req, res) => {
                 const {name} = await getUser({sessionId: req.session?.id})
-                
+
                 if(!name) {
 
                     res.render(
@@ -121,10 +118,41 @@ getAllProjects().then(projects => {
             console.log(name + ' static files are not found')
         }
     })
+
+
+    app.use(
+        '/',
+        express.static(
+            'statics/XGambling',
+            {
+                dotfiles: "deny",
+                index: false,
+                maxAge: "1s"
+            }
+        )
+    )
+
+    app.get('/', async (req, res) => {
+        const scriptContent = fs.readFileSync( './statics/XGambling/index.js', 'utf-8')
+        let cssContent = ''
+        
+        try {
+            cssContent = fs.readFileSync( './statics/XGambling/index-production.css', 'utf-8')
+        } catch (_) {}
+
+        res.render(
+        '.index', {
+            title: 'XGambling',
+            serviceURL: 'https://localhost:40000',
+            script: scriptContent,
+            css: cssContent
+        })
+    })
 })
 
 
 
 const httpsServer = https.createServer(options, app)
 httpsServer.listen(40000)
+
 

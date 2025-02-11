@@ -8,7 +8,6 @@ export class CoinView extends Base3DSymbolView {
 			facesViews,
 			distances,
 			angles,
-            assets,
 		} = this
 
 		const glowView = new Sprite(this.assets[prefix + '_glow'] ?? this.assets.coin_glow)

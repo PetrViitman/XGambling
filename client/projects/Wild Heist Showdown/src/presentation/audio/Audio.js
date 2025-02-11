@@ -2,8 +2,42 @@ import PixiSound from 'pixi-sound';
 import { Timeline } from '../timeline/Timeline';
 import { getCookie, setCookie } from '../Utils';
 
+import { Assets } from "pixi.js"
+
+import { extensions, ExtensionType } from 'pixi.js';
+
+const customAssetLoader = {
+   extension: {
+       type: ExtensionType.LoadParser,
+       name: 'custom-asset-loader',
+   },
+   test(url) {
+        return (url.includes('.mp3') || url.includes('.ogg'))
+   },
+   load(url) {
+        return new Promise(
+            resolve => {
+                const sound = PixiSound.Sound.from({
+                    url,
+                    preload: true,
+                    loaded: () => resolve(sound)
+                })
+            }
+        )
+   },
+}
+
+
+extensions.add(customAssetLoader);
+
+
+
 const COOKIE_NAME = 'wildHeistShowdownAudioMuted'
 const AWARD_VOLUME_MULTIPLIER = 0.65
+
+const VOLUME_MAP = {
+    music: 0.75
+}
 
 export class Audio {
     audios = {}
@@ -106,7 +140,7 @@ export class Audio {
     ) {
 
         const {isPathResolutionRequired = true } = audioMap
-        const isOggSupported = document.createElement("audio").canPlayType?.("audio/ogg;codecs=vorbis") !== ""
+        const isOggSupported = false;// document.createElement("audio").canPlayType?.("audio/ogg;codecs=vorbis") !== ""
         const finalAudioMap = isOggSupported ? audioMap.oggMap : audioMap.mp3Map
         const promises = []
 
@@ -116,33 +150,20 @@ export class Audio {
             }
         }
 
-        Object.entries(finalAudioMap).forEach(
-            ([name, path]) => {
-                promises.push(
-                    new Promise(resolve => {
-                    
-                        this.audios[name] = PixiSound.Sound.from({
-                            url: path,
-                            preload: true,
-                            loaded: resolve
-                        })
-
-                        // this.audios[name].mainVolume = 1
-                        this.audios[name].name = name
-                    })
-                )
-            }
-        )
-
-        await Promise.all(promises)
+        for (const [name, path] of Object.entries(finalAudioMap) ) {
+            Assets.add({ alias: name, src: path })
+            this.audios[name] = await Assets.load(name)
+            this.audios[name].name = name
+        }
 
         this.onLoadingFinished()
     }
 
     setVolume(name, volume) {
+        const volumePreset = VOLUME_MAP[name] ?? 1
         const audio = this.audios[name]
         audio.mainVolume = volume ?? audio.mainVolume
-        audio.volume = audio.mainVolume * this.volumeMultiplier * this.loadingVolumeMultiplier
+        audio.volume = volumePreset * audio.mainVolume * this.volumeMultiplier * this.loadingVolumeMultiplier
 
         return this
     }
@@ -391,10 +412,13 @@ export class Audio {
     }
 
     presentBigWinShot() {
+        if (this.isPaused) return
+        
         this.play({name: 'big_win_shot', speed: 0.5 + 0.25 * Math.random(), volume: (0.4 + 0.3 * Math.random() ) * AWARD_VOLUME_MULTIPLIER})
     }
 
     presentBackgroundShot() {
+        if (this.isPaused) return
         if (!this.shootingVolumeMultiplier) return
         const currentTime = Date.now()
         const timeDelta = currentTime - this.lastBackgroundShotCallTimestamp

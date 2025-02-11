@@ -7,9 +7,10 @@ import { InfoBarView } from "../../indicators/infoBar/InfoBarView";
 import { Timeline } from "../../../../timeline/Timeline";
 import { colorToColor } from "../../../GraphicalPrimitives";
 
-const FONT_SIZE_HEADER = 75
-const FONT_SIZE_SUB_HEADER = 45
-const FONT_SIZE_TEXT = 37
+const FONT_SCALE_FACTOR = 1.25
+const FONT_SIZE_HEADER = 75 * FONT_SCALE_FACTOR
+const FONT_SIZE_SUB_HEADER = 45 * FONT_SCALE_FACTOR
+const FONT_SIZE_TEXT = 37 * FONT_SCALE_FACTOR
 const SYMBOLS_PER_LINE_COUNT = 45
 
 const SYMBOLS_NAMES = [

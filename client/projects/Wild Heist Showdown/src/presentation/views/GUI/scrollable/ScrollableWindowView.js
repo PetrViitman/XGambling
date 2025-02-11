@@ -3,6 +3,7 @@ import { AdaptiveContainer } from "../../adaptiveDesign/AdaptiveContainer";
 import { TextField } from "../../text/TextField";
 import { ButtonCloseView } from "./ButtonCloseView";
 import { GUIView } from "../GUIView";
+import { Timeline } from "../../../timeline/Timeline";
 
 export class ScrollableWindow extends AdaptiveContainer {
     wrapperContainer
@@ -16,6 +17,8 @@ export class ScrollableWindow extends AdaptiveContainer {
     textField
     iconView
     audio
+
+    releaseTimeline = new Timeline
     
     constructor({assets, dictionary, coefficients, isLTRTextDirection, locale, audio}) {
         super()
@@ -103,7 +106,7 @@ export class ScrollableWindow extends AdaptiveContainer {
 
         const {wrapperContainer} = this
         wrapperContainer.eventMode = 'static'
-        wrapperContainer.addEventListener('pointerdown', () => {
+        wrapperContainer.addEventListener('pointerdown', e => {
             GUIView.isOverlayInteraction = true
         })
 
@@ -133,7 +136,8 @@ export class ScrollableWindow extends AdaptiveContainer {
         this.scrollableContainer = container
 
         container.eventMode = 'static'
-        container.addEventListener('pointerdown', (e) => {
+        container.addEventListener('pointerdown', e => {
+            this.releaseTimeline.deleteAllAnimations()
             this.clickTimeStamp = Date.now()
             GUIView.isOverlayInteraction = true
             const {x, y} = this.scrollableContainer.toLocal(e.global)
@@ -145,14 +149,16 @@ export class ScrollableWindow extends AdaptiveContainer {
             this.slideY = y
 
             this.isInteractionInProgress = true
+
+            this.interactionStartY = y
         })
 
-        container.addEventListener('pointerup', () => { this.onRelease() })
+        container.addEventListener('pointerup', (e) => { this.onRelease(e) })
         container.addEventListener('globalmove', (e) => { this.isInteractionInProgress && this.onSlide(e) })
         container.onglobalmousemove = (e) => { this.isInteractionInProgress && this.onSlide(e) }
         container.onglobalpointermove = (e) => { this.isInteractionInProgress && this.onSlide(e) }
-        container.addEventListener('pointercancel', () => { this.onRelease() })
-        container.addEventListener('pointerupoutside', () => { this.onRelease() })
+        container.addEventListener('pointercancel', (e) => { this.onRelease(e) })
+        container.addEventListener('pointerupoutside', (e) => { this.onRelease(e) })
 
     }
 
@@ -167,7 +173,7 @@ export class ScrollableWindow extends AdaptiveContainer {
         const view = new Sprite(assets.rectangle)
         view.tint = 0xf8ee89
         view.width = 10
-        view.x = isLTRTextDirection ? contentView.width - view.width : 0
+        view.x = isLTRTextDirection ? this.scrollableContainer.mask.width - view.width : 0
         view.alpha = 0.75
         view.height = Math.max(0, Math.min(1, scrollableContainer.mask.height / contentView.height)) * scrollableContainer.mask.height
 
@@ -222,7 +228,7 @@ export class ScrollableWindow extends AdaptiveContainer {
         container.addChild(sprite)
 
         container.eventMode = 'static'
-        container.addEventListener('pointerdown', () => {
+        container.addEventListener('pointerdown', e => {
             GUIView.isOverlayInteraction = true
             this.onOverlayClick?.()
         })
@@ -254,14 +260,34 @@ export class ScrollableWindow extends AdaptiveContainer {
         scrollBarView.visible = contentView.height > scrollableContainer.mask.height
     }
 
-    onRelease() {
+    onRelease(e) {
         this.isInteractionInProgress = false
         this.scrollProgress = this.scrollSlideProgress
         this.scrollSlideProgress = 0
+
+        const slideDelta = this.interactionStartY - this.slideY
+        const absSlideDelta = Math.abs(slideDelta)
+        const finalSlideDelta = Math.min(1000, absSlideDelta) * (slideDelta / absSlideDelta)
+
+        const timeScaleFactor =  1 - Math.min(1, (Date.now() - this.clickTimeStamp) / 500)
+
+        const slideProgressDelta = finalSlideDelta / this.contentView.height * timeScaleFactor
+        const slideProgress = this.slideProgress
+
+
+        this.releaseTimeline
+            .deleteAllAnimations()
+            .addAnimation({
+                duration: 5000 * Math.abs(slideProgressDelta),
+                onProgress: progress => {
+                   this.setScroll(-slideProgress + slideProgressDelta * progress)
+                }
+            })
+            .play()
     }
 
     onSlide(e) {
-        const { scrollableContainer, scrollProgress, contentView } = this
+        const { scrollableContainer, contentView } = this
         const { x, y } = scrollableContainer.toLocal(e.global)
 
         this.slideX = x
@@ -269,11 +295,8 @@ export class ScrollableWindow extends AdaptiveContainer {
 
         const progress = (y - this.clickY) /  (contentView.height - scrollableContainer.mask.height)
 
-        // contentView.y = y - this.clickY
-        
-        // const progress = -(y - this.clickY) / (contentView.height / contentView.scale.y)
+        this.slideProgress = progress
 
-        // this.scrollSlideProgress = progress
         this.setScroll(-progress)
     }
 

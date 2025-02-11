@@ -11,7 +11,6 @@ export default defineConfig({
     ],
     server: {
         port: 50_000,
-    },
-    root: __dirname + '/projects/' + process.env.VITE_CURRENT_PROJECT,
+    }
 })
 

@@ -6,7 +6,7 @@ const protocol = window.location.protocol
 const hostname = window.location.hostname
 const port = 50004
 
-const presentation = new Presentation().setup({wrapperHTMLElementId: 'gameWrapper'})
+const presentation = new Presentation().setup({wrapperHTMLElementId: 'projectWrapper'})
 
 const remoteWebAPI = {
     url: document.serviceURL ?? protocol + '//' + hostname + ':' + port + '/',
@@ -15,8 +15,6 @@ const remoteWebAPI = {
         .then(data => data)
         .catch(_ => {return {errorCode: -1}}),
     post: (route, data = {}) =>{
-        
-        console.log('REQUEST: ', { route, data, path: remoteWebAPI.url + route} )
         return fetch(
             remoteWebAPI.url + route, {
                 method: "POST",

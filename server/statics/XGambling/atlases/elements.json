@@ -1,0 +1,327 @@
+{
+  "frames": {
+    "coin_rib": {
+      "frame": {
+        "x": 5,
+        "y": 5,
+        "w": 16,
+        "h": 61
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 61
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 61
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "coin_glow": {
+      "frame": {
+        "x": 76,
+        "y": 5,
+        "w": 56,
+        "h": 57
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 56,
+        "h": 57
+      },
+      "sourceSize": {
+        "w": 56,
+        "h": 57
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "coin_face": {
+      "frame": {
+        "x": 143,
+        "y": 5,
+        "w": 60,
+        "h": 61
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 60,
+        "h": 61
+      },
+      "sourceSize": {
+        "w": 60,
+        "h": 61
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "coin_stretch": {
+      "frame": {
+        "x": 214,
+        "y": 5,
+        "w": 60,
+        "h": 61
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 60,
+        "h": 61
+      },
+      "sourceSize": {
+        "w": 60,
+        "h": 61
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "disk_face": {
+      "frame": {
+        "x": 285,
+        "y": 5,
+        "w": 541,
+        "h": 188
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 327,
+        "w": 541,
+        "h": 188
+      },
+      "sourceSize": {
+        "w": 541,
+        "h": 515
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "bottom_gradient": {
+      "frame": {
+        "x": 836,
+        "y": 5,
+        "w": 1024,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 1024,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "preview_crystal": {
+      "frame": {
+        "x": 5,
+        "y": 203,
+        "w": 540,
+        "h": 292
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 540,
+        "h": 292
+      },
+      "sourceSize": {
+        "w": 540,
+        "h": 292
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "preview_wild_heist_showdown": {
+      "frame": {
+        "x": 555,
+        "y": 271,
+        "w": 540,
+        "h": 292
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 540,
+        "h": 292
+      },
+      "sourceSize": {
+        "w": 540,
+        "h": 292
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "preview_riches_of_midgard": {
+      "frame": {
+        "x": 1105,
+        "y": 271,
+        "w": 448,
+        "h": 296
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 448,
+        "h": 296
+      },
+      "sourceSize": {
+        "w": 448,
+        "h": 296
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "disk_glow": {
+      "frame": {
+        "x": 1563,
+        "y": 271,
+        "w": 323,
+        "h": 298
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 323,
+        "h": 298
+      },
+      "sourceSize": {
+        "w": 323,
+        "h": 298
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "preview_shark_wash": {
+      "frame": {
+        "x": 5,
+        "y": 573,
+        "w": 432,
+        "h": 580
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 432,
+        "h": 580
+      },
+      "sourceSize": {
+        "w": 432,
+        "h": 580
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "preview_book_of_x": {
+      "frame": {
+        "x": 595,
+        "y": 577,
+        "w": 512,
+        "h": 512
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 512,
+        "h": 512
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "disk_back": {
+      "frame": {
+        "x": 1117,
+        "y": 579,
+        "w": 541,
+        "h": 515
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 541,
+        "h": 515
+      },
+      "sourceSize": {
+        "w": 541,
+        "h": 515
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "elements.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1891,
+      "h": 1099
+    },
+    "scale": 1
+  }
+}

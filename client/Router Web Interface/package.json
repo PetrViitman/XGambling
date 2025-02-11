@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --config vite.config.for.development.js --host",
+    "dev": "vite --config ./local-dev-server-config.js --host",
     "build": "vite build --config ./.builds/configs/vite.config.for.full.game.build.js",
     "build_presentation": "vite build --config ./.builds/configs/vite.config.for.presentation.layer.build.js & node ./.builds/configs/vite.es.module.wrapper.js",
     "preview": "vite preview",
