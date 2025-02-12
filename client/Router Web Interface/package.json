@@ -11,6 +11,7 @@
     "postinstall": "npm install pixi-spine --no-save"
   },
   "dependencies": {
+    "deepl-node": "^1.16.0",
     "express": "^4.21.2",
     "pixi.js": "^7.4.2",
     "qrcode": "^1.5.4",
