@@ -63,7 +63,7 @@ export class Audio {
     constructor() {
         document.addEventListener("visibilitychange", () => {
             this.setPaused(document.hidden)
-          }, false);
+        }, false);
 
 
         this.setMuted(true, false)
@@ -232,9 +232,9 @@ export class Audio {
         const audios = Object.values(this.audios)
         
         if (isPaused) {
-            audios.forEach(audio => audio.pause?.())
+            audios.forEach(audio => audio.context?.audioContext?.suspend?.())
         } else {
-            audios.forEach(audio => audio.resume?.())
+            audios.forEach(audio => audio.context?.audioContext?.resume?.())
         }
 
         this.isPaused = isPaused

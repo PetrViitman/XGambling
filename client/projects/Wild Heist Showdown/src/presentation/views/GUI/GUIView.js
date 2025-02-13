@@ -463,7 +463,7 @@ export class GUIView extends AdaptiveContainer {
             this.buttonFullScreenView.scale.set(0.5)
             this.buttonFullScreenView.onClick = () => {
                 if(document.fullscreenElement) {
-                    document.exitFullscreen?.()
+                    this.exitFullscreen()
                 } else {
                     this.requestFullScreen() 
                 }
@@ -907,7 +907,15 @@ export class GUIView extends AdaptiveContainer {
         this.presentPopup()
         this.presentWindow()
         this.fullScreeRequestTimeline.deleteAllAnimations()
-        document.exitFullscreen?.()
+        this.exitFullscreen()
+    }
+
+    exitFullscreen() {
+        try {
+            document.exitFullscreen?.()
+        } catch (error) {
+
+        }
     }
 
     setRemainingAutoSpinsCount(remainingAutoSpinsCount) {
