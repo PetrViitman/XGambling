@@ -1,6 +1,7 @@
 import { Container, Sprite } from "pixi.js";
 import { SelectableBonusView } from "./SelectableBonusView";
 import { Timeline } from "../../../../timeline/Timeline";
+import { TextField } from "../../../text/TextField";
 
 export class BonusSelectorContentView extends Container {
     backgroundView
@@ -11,6 +12,7 @@ export class BonusSelectorContentView extends Container {
     refreshTimestamp = Date.now()
     locale
     audio
+    placeholderView
 
     
     constructor({assets, dictionary, isLTRTextDirection = true, locale, audio}) {
@@ -20,9 +22,11 @@ export class BonusSelectorContentView extends Container {
         this.dictionary = dictionary
         this.isLTRTextDirection = isLTRTextDirection
 
+        this.initPlaceholder()
+
+
         this.initBackground()
         this.initTimeline(locale)
-
     }
 
     initBackground() {
@@ -31,6 +35,27 @@ export class BonusSelectorContentView extends Container {
         sprite.tint = 0x000000
 
         this.backgroundView = sprite
+    }
+
+    initPlaceholder() {
+        const maximalWidth = 950
+        const maximalHeight = 1000
+
+        const textField = new TextField({
+            maximalWidth,
+            maximalHeight,
+        })
+            .setFontName('default')
+            .setFontSize(40)
+            .setFontColor(0xf8ee89)
+            .setAlignCenter()
+            .setAlignMiddle()
+            .setText(this.dictionary.no_bonuses)
+            .setCharactersPerLineCount(40)
+
+        textField.position.set(25, 250)
+
+        this.placeholderView = this.addChild(textField)
     }
 
     initTimeline(locale) {
@@ -74,7 +99,8 @@ export class BonusSelectorContentView extends Container {
             FBSE: bet, // free bet size
             GID: gameId, // game id
             TLM: remainingMinutesCount, // remaining time
-            color
+            color,
+            isLocked
         }, i) => {
             const view = this.getBonus(i)
             view.visible = true
@@ -87,7 +113,8 @@ export class BonusSelectorContentView extends Container {
                 bet,
                 remainingMinutesCount,
                 gameId,
-                color
+                color,
+                isLocked
             })
 
             offsetY += 250
@@ -98,5 +125,6 @@ export class BonusSelectorContentView extends Container {
         }
 
         this.backgroundView.height = offsetY
+        this.placeholderView.visible = !bonuses.length
     }
 }

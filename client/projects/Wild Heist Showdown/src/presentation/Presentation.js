@@ -114,7 +114,7 @@ export class Presentation {
 			"bonus_free_bet_shorthand": "FREE BET BONUS",
 			"bonus_double_up_shorthand": "DOUBLE UP BONUS",
 			"bonus_secure_half_bet_shorthand": "½ BET SECURE BONUS",
-
+			"accessible_only_within_primary_account": "Accessible only within primary account",
 			"paytable": "PAYTABLE",
 			"symbol_payout_values": "SYMBOL PAYOUT VALUES",
 			"symbol_payout_instructions": "• WILD SYMBOL substitutes for all symbols except SCATTER SYMBOL.║║• GOLD FRAMED SYMBOLS appear on reels 3 and 4 only.",

@@ -13,10 +13,12 @@ export class SelectableBonusView extends Container {
     remainingTimeTextField
     iconsViews = []
     bonusIconsPoolView
+    dictionary
     
     constructor({assets, dictionary, isLTRTextDirection, audio}) {
         super()
 
+        this.dictionary = dictionary
         this.initFrame(assets)
         this.initTexts(isLTRTextDirection)
         this.initButton({assets, dictionary, audio})
@@ -126,21 +128,26 @@ export class SelectableBonusView extends Container {
         bet,
         remainingMinutesCount,
         gameId,
-        color
+        color,
+        isLocked
     }) {
-
         this.remainingMinutesCount = remainingMinutesCount
         this.descriptor = {
             id,
             type,
             bet,
             description,
-            gameId
+            gameId,
+            isLocked
         }
+
+        const finalDescription = isLocked
+            ? description + '║(' + this.dictionary.accessible_only_within_primary_account + ')'
+            : description
 
         const fontColor = color ?? 0xf8ee89
         const iconsColor = color ?? 0xFFFFFF
-        this.descriptionTextField.setText(description).setFontColor(fontColor)
+        this.descriptionTextField.setText(finalDescription).setFontColor(fontColor)
         this.itemsCountTextField.setText('x' + count).setFontColor(fontColor)
         this.remainingTimeTextField.setFontColor(fontColor)
         this.iconsViews.forEach(view => view.tint = iconsColor)
@@ -173,6 +180,6 @@ export class SelectableBonusView extends Container {
         this.remainingTimeTextField.alpha = alpha
         this.descriptionTextField.alpha = alpha
         this.iconsViews.forEach(view => view.alpha = alpha)
-        this.buttonView.setInteractive(!!remainingMinutesCount)
+        this.buttonView.setInteractive(!this.descriptor.isLocked && !!remainingMinutesCount)
     }
 }

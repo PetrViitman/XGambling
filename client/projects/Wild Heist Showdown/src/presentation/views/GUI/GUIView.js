@@ -889,8 +889,8 @@ export class GUIView extends AdaptiveContainer {
         this.buttonBonusView.setInteractive(
             isBetExpected
             && this.isSpinExpected
-            && this.accounts.find(account => account.isActive)?.id !== -1
-            && this.accounts.find(account => account.isActive)?.isPrimary
+            // && this.accounts.find(account => account.isActive)?.id !== -1
+            // && this.accounts.find(account => account.isActive)?.isPrimary
             && !this.activeBonusDescriptor
         )
 
@@ -1022,7 +1022,10 @@ export class GUIView extends AdaptiveContainer {
     }
 
     presentBonuses(bonuses) {
-        this.bonusSelectorView.refresh(bonuses)
+        const isPrimaryAccountActive = this.accounts.find(account => account.isActive)?.isPrimary
+        console.log('IS PRIMARY ACCOUNT ACTIVE??? ', isPrimaryAccountActive)
+
+        this.bonusSelectorView.refresh(bonuses, isPrimaryAccountActive)
         this.presentWindow('bonuses')
     }
 }

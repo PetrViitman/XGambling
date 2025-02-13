@@ -22,21 +22,32 @@ export class BonusSelectorView extends ScrollableWindow {
         }
     }
 
-    refresh(bonuses) {
+    refresh(bonuses, isPrimaryAccountActive) {
         bonuses.forEach(bonus => {
             if(bonus.GID === 578) {
                 bonus.color = 0xFFFF00
+                bonus.isLocked = !isPrimaryAccountActive
             }
-        });
+        })
         bonuses.sort((bonus1, bonus2) => {
-            if (bonus1.GID < bonus2.GID || bonus1.GID === 578) {
+            if (bonus1.GID < bonus2.GID){
                 return -1;
             }
-            if (bonus1.GID > bonus2.GID) {
-                return 1;
+            return 1
+        })
+
+        bonuses.sort((bonus1, bonus2) => {
+            if (bonus1.GID === 578){
+                return -1;
             }
-            
-            return 0;
+            return 0
+        })
+
+        bonuses.sort((bonus1, bonus2) => {
+            if (bonus1.GID === bonus2.GID && bonus1.BNTP > bonus2.BNTP){
+                return -1;
+            }
+            return 0
         })
 
         this.contentView.refresh(bonuses)
