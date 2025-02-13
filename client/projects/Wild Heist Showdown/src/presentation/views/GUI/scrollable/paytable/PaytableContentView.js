@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 import { TextField } from "../../../text/TextField";
 import { REELS_COUNT, REELS_LENGTHS, REELS_OFFSETS, WILD_SYMBOL_ID } from "../../../../Constants";
 import { MultiplierView } from "../../../reels/MultiplierView";
@@ -11,7 +11,7 @@ const FONT_SCALE_FACTOR = 1.25
 const FONT_SIZE_HEADER = 75 * FONT_SCALE_FACTOR
 const FONT_SIZE_SUB_HEADER = 45 * FONT_SCALE_FACTOR
 const FONT_SIZE_TEXT = 37 * FONT_SCALE_FACTOR
-const SYMBOLS_PER_LINE_COUNT = 45
+const SYMBOLS_PER_LINE_COUNT = 30
 
 const SYMBOLS_NAMES = [
     'Clubs',
@@ -110,8 +110,7 @@ export class PaytableContentView extends Container {
     initSymbolsPayouts(assets, dictionary) {
         const {isLTRTextDirection} = this
         let maximalWidth = 1000
-        let maximalHeight = 75
-        let textField = new TextField({maximalWidth, maximalHeight})
+        let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
             .setAlignMiddle()
@@ -119,13 +118,13 @@ export class PaytableContentView extends Container {
             .setFontColor(0xf8ee89)
             .setFontSize(FONT_SIZE_HEADER)
             .setText(dictionary.symbol_payout_values)
-
-        textField.pivot.set(maximalWidth / 2, maximalHeight / 2)
-        textField.position.set(500, 100)
+        
+        textField.pivot.set(maximalWidth / 2, 0)
+        textField.position.set(500, 20)
         this.addChild(textField)
 
 
-        const offsetX = 160
+        const offsetX = textField.height + 20
         const stepWidth = 225
         const stepHeight = 225
 
@@ -267,8 +266,7 @@ export class PaytableContentView extends Container {
     initGoldFramedFeature(assets, dictionary) {
         let offsetY = this.height + 150
         let maximalWidth = 1000
-        let maximalHeight = 75
-        let textField = new TextField({maximalWidth, maximalHeight})
+        let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignMiddle()
             .setAlignCenter()
@@ -280,8 +278,10 @@ export class PaytableContentView extends Container {
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
+        console.log(textField.height)
 
-        offsetY += 225
+
+        offsetY += textField.height + 200
         const offsetX = 125
         const symbolsGroupView = this.generateSymbolsGroup({
             assets,
@@ -331,10 +331,9 @@ export class PaytableContentView extends Container {
     }
 
     initMultiplier(assets, dictionary) {
-        let offsetY = this.height + 150
+        let offsetY = this.height + 125
         let maximalWidth = 1000
-        let maximalHeight = 75
-        let textField = new TextField({maximalWidth, maximalHeight})
+        let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignMiddle()
             .setAlignCenter()
@@ -347,7 +346,7 @@ export class PaytableContentView extends Container {
         this.multiplierHeaderView = this.addChild(textField)
 
 
-        offsetY += 225
+        offsetY += textField.height + 150
         const view = new MultiplierView(assets)
         view.position.set(500, offsetY)
         view.scale.set(0.5)
@@ -375,10 +374,9 @@ export class PaytableContentView extends Container {
     }
 
     initFreeSpins(assets, dictionary) {
-        let offsetY = this.height + 225
+        let offsetY = this.height + 150
         let maximalWidth = 1000
-        let maximalHeight = 75
-        let textField = new TextField({maximalWidth, maximalHeight})
+        let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignMiddle()
             .setAlignCenter()
@@ -386,11 +384,11 @@ export class PaytableContentView extends Container {
             .setFontSize(FONT_SIZE_HEADER)
             .setText(dictionary.free_spins_feature)
 
-        textField.pivot.set(maximalWidth / 2, maximalHeight / 2)
+        textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
-        offsetY += 175
+        offsetY += textField.height + 150
 
         for(let x = 0; x < 3; x++) {
             const sprite = new Sprite(assets.symbolScatter)
@@ -425,10 +423,9 @@ export class PaytableContentView extends Container {
     }
 
     initMaximalWin(dictionary) {
-        let offsetY = this.height + 200
+        let offsetY = this.height + 150
         let maximalWidth = 1000
-        let maximalHeight = 75
-        let textField = new TextField({maximalWidth, maximalHeight})
+        let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignMiddle()
             .setAlignCenter()
@@ -436,11 +433,11 @@ export class PaytableContentView extends Container {
             .setFontSize(FONT_SIZE_HEADER)
             .setText(dictionary.maximal_win)
 
-        textField.pivot.set(maximalWidth / 2, maximalHeight / 2)
+        textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
-        offsetY += 125
+        offsetY += textField.height * 1.5
         maximalWidth = 900
         textField = new TextField({maximalWidth})
             .setFontName('default')
@@ -463,8 +460,7 @@ export class PaytableContentView extends Container {
     init3600Ways(assets, dictionary) {
         let offsetY = this.height + 200
         let maximalWidth = 1000
-        let maximalHeight = 75
-        let textField = new TextField({maximalWidth, maximalHeight})
+        let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignMiddle()
             .setAlignCenter()
@@ -472,12 +468,12 @@ export class PaytableContentView extends Container {
             .setFontSize(FONT_SIZE_HEADER)
             .setText(dictionary.win_3600_ways)
 
-        textField.pivot.set(maximalWidth / 2, maximalHeight / 2)
+        textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
 
-        offsetY += 125
+        offsetY += textField.height * 1.5
         maximalWidth = 900
         textField = new TextField({maximalWidth})
             .setFontName('default')
@@ -549,8 +545,7 @@ export class PaytableContentView extends Container {
         offsetY = this.height + 100
 
         maximalWidth = 400
-        maximalHeight = 50
-        textField = new TextField({maximalWidth, maximalHeight})
+        textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignTop()
             .setAlignCenter()
@@ -562,7 +557,7 @@ export class PaytableContentView extends Container {
         textField.position.set(275, offsetY)
         this.addChild(textField)
 
-        textField = new TextField({maximalWidth, maximalHeight})
+        textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignTop()
             .setAlignCenter()
@@ -574,7 +569,7 @@ export class PaytableContentView extends Container {
         this.addChild(textField)
 
 
-        offsetY += 100
+        offsetY += 150
         maximalWidth = 900
         textField = new TextField({maximalWidth})
             .setFontName('default')
@@ -595,8 +590,7 @@ export class PaytableContentView extends Container {
 
         offsetY = this.height + 150
         maximalWidth = 900
-        maximalHeight = 100
-        textField = new TextField({maximalWidth, maximalHeight})
+        textField = new TextField({maximalWidth})
             .setFontName('default')
             .setAlignBottom()
             .setAlignCenter()
@@ -604,11 +598,11 @@ export class PaytableContentView extends Container {
             .setFontSize(FONT_SIZE_SUB_HEADER)
             .setText(dictionary.win_3600_ways_example)
 
-        textField.pivot.set(maximalWidth / 2, maximalHeight/ 2)
+        textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
-        offsetY += 100
+        offsetY += 150
 
         
         const infoBarView = new InfoBarView({assets, dictionary, isLTRTextDirection: this.isLTRTextDirection})
@@ -617,7 +611,7 @@ export class PaytableContentView extends Container {
         infoBarView.position.set(500, offsetY)
         this.infoBarView = infoBarView
 
-        offsetY += 100
+        offsetY += 150
 
         maximalWidth = 900
         textField = new TextField({maximalWidth})

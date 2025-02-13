@@ -66,7 +66,6 @@ export const webAPI = {
         return response
     },
     switchAccount: async (accountId) => {
-        console.log('SWITCH!!!')
         const name = 'SWITCH ACCOUNT'
         printRequest({name, request: {
             accountId,

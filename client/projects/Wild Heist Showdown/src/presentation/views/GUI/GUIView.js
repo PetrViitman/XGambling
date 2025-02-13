@@ -93,27 +93,7 @@ export class GUIView extends AdaptiveContainer {
     timeline = new Timeline
     audio
 
-    constructor(wrapperHTMLElementId) {
-        super()
-
-        this.wrapperHTMLElement = document.getElementById(wrapperHTMLElementId)
-        document.body.addEventListener('fullscreenchange', () => {
-            if(! this.buttonFullScreenView) return
-            this.buttonFullScreenView.setFullscreenMode(document.fullscreenElement)
-        })
-
-        /*
-        document.addEventListener('keyup', ({key}) => {
-            if(key === '1') {
-                this.presentPopup('bet')
-            } else if(key === '2') {
-                this.presentPopup('autoplay')
-            } else if (key === '3') {
-                this.presentPopup()
-            }
-        })
-        */
-    }
+    isFullscreenModeAvailable
     
     async init({
         gameAssets,
@@ -133,6 +113,7 @@ export class GUIView extends AdaptiveContainer {
         }
 
         this.isMobileApplicationClient = isMobileApplicationClient
+        this.isFullscreenModeAvailable = !isMobileApplicationClient && !navigator.userAgent.match(/iPhone/i)
 
         //extractHighResolutionSymbols(gameAssets)
 
@@ -426,9 +407,6 @@ export class GUIView extends AdaptiveContainer {
             new ButtonBuyFeatureView(assets, audio),
             new ButtonBonusView(assets, audio),
             new ButtonAudioView(assets, audio),
-            isMobileApplicationClient
-                ? new ButtonHomeView(assets, audio)
-                : new ButtonFullScreenView(assets, audio)
         ]
 
         buttonsViews.forEach(view => { bottomGroupView.addChild(view) })
@@ -450,7 +428,7 @@ export class GUIView extends AdaptiveContainer {
         this.buttonAudioView.scale.set(0.5)
 
         if (isMobileApplicationClient) {
-            this.buttonHomeView = buttonsViews[10]
+            this.buttonHomeView = new ButtonHomeView(assets, audio)
             this.buttonHomeView.y = 50
             this.buttonHomeView.scale.set(0.5)
             this.buttonHomeView.onClick = () => {
@@ -458,8 +436,8 @@ export class GUIView extends AdaptiveContainer {
             }
 
             this.leftCornerGroupView.addChild(this.buttonHomeView)
-        } else {
-            this.buttonFullScreenView = buttonsViews[10]
+        } else if (this.isFullscreenModeAvailable) {
+            this.buttonFullScreenView = new ButtonFullScreenView(assets, audio)
             this.buttonFullScreenView.scale.set(0.5)
             this.buttonFullScreenView.onClick = () => {
                 if(document.fullscreenElement) {
@@ -617,35 +595,7 @@ export class GUIView extends AdaptiveContainer {
 
         leftSideGroupView.setTargetArea({x: 0, y: offsetTop + 0.25 * 0.9, width: 1, height: 0.5 * 0.9 - offsetBottom})
         leftCornerGroupView.setTargetArea({x: 0, y: offsetTop, width: 1, height: 1  - offsetBottom})
-        /*
-        if (sidesRatio > 0.5) {
-            console.log({
-                offsetTop,
-                offsetBottom
-            })
-
-            bottomGroupView.pivot.y = 0
-            bottomGroupView
-                .setSourceArea({width: 1000, height: 480})
-                .setTargetArea({
-                    x: 0,
-                    y: offsetTop + 0.7,
-                    width: 1,
-                    height: 0.30 - offsetBottom
-                })
-                .stickBottom()
-        } else {
-            bottomGroupView.pivot.y = -800
-            bottomGroupView
-                .setSourceArea({width: 1000, height: 480})
-                .setTargetArea({
-                    x: 0,
-                    y: offsetTop,
-                    width: 1,
-                    height: 0.9 - offsetBottom
-                })
-                .stickMiddle()
-        } */
+        buttonFullScreenView?.setFullscreenMode(document.fullscreenElement)
 
 
         if (sidesRatio > 1) {
@@ -911,11 +861,11 @@ export class GUIView extends AdaptiveContainer {
     }
 
     exitFullscreen() {
-        try {
-            document.exitFullscreen?.()
-        } catch (error) {
 
-        }
+        document.cancelFullScreen?.()?.catch((err) => {})
+        document.webkitCancelFullScreen?.()?.catch((err) => {})
+        document.mozCancelFullScreen?.()?.catch((err) => {})
+        document.exitFullscreen?.()?.catch((err) => {})
     }
 
     setRemainingAutoSpinsCount(remainingAutoSpinsCount) {
@@ -941,7 +891,7 @@ export class GUIView extends AdaptiveContainer {
     }
 
     requestFullScreen() {
-        if (this.isMobileApplicationClient) return
+        if (!this.isFullscreenModeAvailable) return
 
         this.fullScreeRequestTimeline
             .deleteAllAnimations()
@@ -950,13 +900,11 @@ export class GUIView extends AdaptiveContainer {
                 onFinish: () => {
                     const wrapperHTMLElement = document.body
                     const options = {navigationUI: 'hide'}
-                    if (wrapperHTMLElement.requestFullscreen) {
-                        wrapperHTMLElement.requestFullscreen(options).catch((err) => {})
-                    } else if (wrapperHTMLElement.webkitRequestFullscreen) {
-                        wrapperHTMLElement.webkitRequestFullscreen(options).catch((err) => {})
-                    } else if (wrapperHTMLElement.msRequestFullscreen) {
-                        wrapperHTMLElement.msRequestFullscreen(options).catch((err) => {})
-                    }
+
+                    wrapperHTMLElement.requestFullScreen?.(options)?.catch((err) => {})
+                    wrapperHTMLElement.webkitRequestFullScreen?.(options)?.catch((err) => {})
+                    wrapperHTMLElement.mozRequestFullScreen?.(options)?.catch((err) => {})
+                    wrapperHTMLElement.requestFullscreen?.(options)?.catch((err) => {})
                 }
             })
             .play()
