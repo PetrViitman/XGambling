@@ -11,7 +11,7 @@ const FONT_SCALE_FACTOR = 1.25
 const FONT_SIZE_HEADER = 75 * FONT_SCALE_FACTOR
 const FONT_SIZE_SUB_HEADER = 45 * FONT_SCALE_FACTOR
 const FONT_SIZE_TEXT = 37 * FONT_SCALE_FACTOR
-const SYMBOLS_PER_LINE_COUNT = 30
+const SYMBOLS_PER_LINE_COUNT = 45
 
 const SYMBOLS_NAMES = [
     'Clubs',
@@ -278,8 +278,6 @@ export class PaytableContentView extends Container {
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
-        console.log(textField.height)
-
 
         offsetY += textField.height + 200
         const offsetX = 125
@@ -355,6 +353,9 @@ export class PaytableContentView extends Container {
         offsetY += 150
         maximalWidth = 900
         textField = new TextField({maximalWidth})
+        textField.MARKER = true
+        
+        textField
             .setFontName('default')
             .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
             .setAlignTop()
@@ -366,6 +367,7 @@ export class PaytableContentView extends Container {
                     .multiplier_instructions
                     
             )
+
 
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)

@@ -84,42 +84,46 @@ export class TextField extends Container {
 				}
 			}
 
-			finalText = prefixRTL + finalText.substr(0, finalText.length - prefixRTL.length)
-
+			finalText = prefixRTL + finalText.substring(0, finalText.length - prefixRTL.length)
 		}
 
-		this.text = finalText
+		const finalTexts = text.split?.("║") ?? [finalText ?? '']
+
+		this.text = finalTexts.join('\n')
 
 		const {charactersPerLineCount} = this
 
-		if(charactersPerLineCount) {
+		if (charactersPerLineCount) {
 			this.text = ''
-			let isLineBreakExpected = false
-			let elapsedCharactersCount = 0
-			for (let i = 0; i < finalText.length; i++) {
-				const character = finalText[i]
-				
-				elapsedCharactersCount++
 
-				if(character === ' ' && isLineBreakExpected) {
-					this.text += '\n'
-					isLineBreakExpected = false
-					elapsedCharactersCount = 0
+			finalTexts.forEach(finalText => {
+				let buffer = ''
+
+				if(finalText.length < charactersPerLineCount) {
+					buffer = finalText
 				} else {
+					let elapsedCharactersCount = 0
+					let characterIndex = 0
+					while (elapsedCharactersCount < finalText.length) {
+						let textLine = finalText.substring(characterIndex, characterIndex + charactersPerLineCount)
+						
+						if(elapsedCharactersCount + charactersPerLineCount < finalText.length) {
+						for (let i = textLine.length; i > 0; i--) {
+							if(textLine[i] === ' ') {
+								
+								textLine = textLine.substring(0, i)
+								break
+							}
+						}
+						}
 
-					if(character === '║') {
-						this.text += '\n'
-						elapsedCharactersCount = 0
-						isLineBreakExpected = false
-					} else {
-						this.text += character
+						buffer += textLine + '\n'
+						characterIndex += textLine.length
+						elapsedCharactersCount += Math.max(0, textLine.length - 1) || charactersPerLineCount
 					}
 				}
-
-				if (elapsedCharactersCount > charactersPerLineCount) {
-					isLineBreakExpected = true
-				}
-			}
+				this.text += buffer
+			})
 		}
 
 		if (!this.textView)

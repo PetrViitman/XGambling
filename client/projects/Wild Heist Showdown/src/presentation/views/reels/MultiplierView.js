@@ -144,9 +144,12 @@ export class MultiplierView extends Container {
             view.alpha = 1
             view.y = 0
 
-            view.setText('x' + leftmostMultiplier)
-
-            if(i < 3 && view.wrapper.x > 0 ) offsettingTextField = view
+            if(i < 3 && view.wrapper.x > 0 ) {
+                offsettingTextField = view
+            } else {
+                view.setText('x' + leftmostMultiplier)
+            }
+            
 
             if(i >= 3 && view.wrapper.x > 0) rightmostMultiplier = leftmostMultiplier
 
