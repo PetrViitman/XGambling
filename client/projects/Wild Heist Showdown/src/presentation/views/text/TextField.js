@@ -87,9 +87,18 @@ export class TextField extends Container {
 			finalText = prefixRTL + finalText.substring(0, finalText.length - prefixRTL.length)
 		}
 
+
 		const finalTexts = text.split?.("║") ?? [finalText ?? '']
 
+		if(this.MARKER)
+		console.log('>> ', finalTexts)
+
 		this.text = finalTexts.join('\n')
+		if(this.MARKER)
+		console.log(this.text)
+
+		if(this.MARKER)
+			console.log('~~~~~~> ', this.charactersPerLineCount)
 
 		const {charactersPerLineCount} = this
 
@@ -100,7 +109,7 @@ export class TextField extends Container {
 				let buffer = ''
 
 				if(finalText.length < charactersPerLineCount) {
-					buffer = finalText
+					buffer = finalText + '\n'
 				} else {
 					let elapsedCharactersCount = 0
 					let characterIndex = 0

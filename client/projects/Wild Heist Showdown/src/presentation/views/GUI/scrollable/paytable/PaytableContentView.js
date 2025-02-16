@@ -178,13 +178,16 @@ export class PaytableContentView extends Container {
 
         offsetY = this.height + 175
         maximalWidth = 900
+
         textField = new TextField({maximalWidth})
+        textField.MARKER = true
+        textField
             .setFontName('default')
-            .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
             .setAlignTop()
             .setAlignLeft()
             .setFontColor(0xf8ee89)
             .setFontSize(FONT_SIZE_TEXT)
+            .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
             .setText(
                 dictionary
                     .symbol_payout_instructions
