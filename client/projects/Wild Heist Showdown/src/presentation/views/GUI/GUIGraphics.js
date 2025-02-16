@@ -371,7 +371,7 @@ function createIconBuyFeature(width = 175, height = 175) {
     return canvas
 }
 
-function createIconBonus(width = 100, height = 100) {
+function createIconBonus(width = 90, height = 90) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 	const lineWidth = width * 0.075
@@ -420,7 +420,7 @@ function createIconBonus(width = 100, height = 100) {
     return canvas
 }
 
-function createIconBonusFreeBet(width = 100, height = 100) {
+function createIconBonusFreeBet(width = 90, height = 90) {
 	const canvas = createIconBonus(width, height)
 	const {context} = canvas
 	
@@ -451,7 +451,7 @@ function createIconBonusFreeBet(width = 100, height = 100) {
 }
 
 
-function createIconBonusHalfBet(width = 100, height = 100) {
+function createIconBonusHalfBet(width = 90, height = 90) {
 	const canvas = createIconBonus(width, height)
 	const {context} = canvas
 	
@@ -480,7 +480,7 @@ function createIconBonusHalfBet(width = 100, height = 100) {
     return canvas
 }
 
-function createIconBonusDoubleUp(width = 100, height = 100) {
+function createIconBonusDoubleUp(width = 90, height = 90) {
 	const canvas = createIconBonus(width, height)
 	const {context} = canvas
 	
@@ -532,7 +532,13 @@ function createIconHome(width = 175, height = 125) {
 
 	context.fillStyle = '#b6c1c7'
 
-	context.roundRect(width * 0.55, height * 0.5 -height * 0.075, width * 0.2, height * 0.15, width * 0.025)
+	context.roundRect(
+		width * 0.35,
+		height * 0.5 -height * 0.075,
+		width * 0.45,
+		height * 0.15,
+		width * 0.025
+	)
 	context.fill()
 
 
@@ -549,13 +555,28 @@ function createIconHome(width = 175, height = 125) {
     return canvas
 }
 
-function createIconHomeBackground(width = 200, height = 125) {
+function createIconHomeBackground(width = 190, height = 125) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
 	context.fillStyle = '#FFFFFF'
 	context.roundRect(0, 0, width, height, width * 0.5)
 	context.rect(0, 0, width / 2, height)
+	context.fill()
+	
+
+    return canvas
+}
+
+function createIconTriangle(width = 190, height = 125) {
+	const canvas = createCanvas(width, height)
+	const {context} = canvas
+	context.fillStyle = '#FFFFFF'
+	context.lineWidth = width * 0.1
+
+	context.moveTo(width * 0.1, height * 0.9)
+	context.lineTo(width * 0.5, height * 0.1)
+	context.lineTo(width * 0.9, height * 0.9 )
 	context.fill()
 	
 
@@ -844,7 +865,7 @@ function createIconInfo(width = 100, height = 100) {
 }
 
 
-function createIconClose(width = 100, height = 100) {
+function createIconClose(width = 90, height = 90) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
@@ -874,7 +895,7 @@ function createIconClose(width = 100, height = 100) {
     return canvas
 }
 
-function createIconMute(width = 100, height = 100) {
+function createIconMute(width = 90, height = 90) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
@@ -914,7 +935,7 @@ function createIconMute(width = 100, height = 100) {
     return canvas
 }
 
-function createIconUnmute(width = 100, height = 100) {
+function createIconUnmute(width = 90, height = 90) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
@@ -943,7 +964,7 @@ function createIconUnmute(width = 100, height = 100) {
     return canvas
 }
 
-function createIconUnmuteLoading(width = 100, height = 100) {
+function createIconUnmuteLoading(width = 90, height = 90) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
@@ -1189,10 +1210,10 @@ export async function createAtlas(assets, vfxLevel) {
         {name: 'iconAutoplayActive', image: createIconAutoplay(false), x: 800, y: 200},
         {name: 'iconErase', image: createIconErase(), x: 1000, y: 200},
         {name: 'iconBuyFeature', image: createIconBuyFeature(), x: 1200, y: 200},
-        {name: 'iconBonus', image: createIconBonus(), x: 1400, y: 200},
-        {name: 'iconBonusFreeBet', image: createIconBonusFreeBet(), x: 1500, y: 200},
-		{name: 'iconBonusHalfBet', image: createIconBonusHalfBet(), x: 1400, y: 300},
-		{name: 'iconBonusDoubleUp', image: createIconBonusDoubleUp(), x: 1500, y: 300},
+        {name: 'iconBonus', image: createIconBonus(), x: 1405, y: 205},
+        {name: 'iconBonusFreeBet', image: createIconBonusFreeBet(), x: 1505, y: 205},
+		{name: 'iconBonusHalfBet', image: createIconBonusHalfBet(), x: 1405, y: 305},
+		{name: 'iconBonusDoubleUp', image: createIconBonusDoubleUp(), x: 1505, y: 305},
         {name: 'iconHome', image: createIconHome(), x: 1600, y: 200},
         {name: 'iconWatches', image: createIconWatches(), x: 1600, y: 400},
 
@@ -1202,10 +1223,10 @@ export async function createAtlas(assets, vfxLevel) {
         {name: 'iconBetMore', image: createIconBetMore(), x: 1200, y: 0},
         {name: 'iconBetLess', image: createIconBetLess(), x: 1400, y: 0},
         {name: 'iconInfo', image: createIconInfo(), x: 1600, y: 0},
-        {name: 'iconClose', image: createIconClose(), x: 1800, y: 0},
-        {name: 'iconAudioMute', image: createIconMute(), x: 1900, y: 0},
-        {name: 'iconAudioUnmute', image: createIconUnmute(), x: 1800, y: 100},
-        {name: 'iconAudioLoading', image: createIconUnmuteLoading(), x: 1900, y: 100},
+        {name: 'iconClose', image: createIconClose(), x: 1805, y: 5},
+        {name: 'iconAudioMute', image: createIconMute(), x: 1905, y: 5},
+        {name: 'iconAudioUnmute', image: createIconUnmute(), x: 1805, y: 105},
+        {name: 'iconAudioLoading', image: createIconUnmuteLoading(), x: 1905, y: 105},
         {name: 'iconWallet', image: createIconWallet(), x: 0, y: 200},
         {name: 'iconFullScreen', image: createIconFullScreen(), x: 100, y: 200},
         {name: 'iconMinimizeScreen', image: createIconMinimizeScreen(), x: 100, y: 300},
@@ -1235,8 +1256,7 @@ export async function createAtlas(assets, vfxLevel) {
 		{name: 'UICorner', image: createUICorner(), x: 405, y: 805}, 
 		{name: 'UIBorder', image: createUIBorder(), x: 405, y: 905}, 
 		{name: 'iconHomeBackground', image: createIconHomeBackground(), x: 605, y: 805}, 
-
-		
+		{name: 'iconTriangle', image: createIconTriangle(), x: 805, y: 805}
     ].forEach(({
         name, x, y, image,
 		maximalWidth = image.width,
@@ -1272,10 +1292,10 @@ export async function createAtlas(assets, vfxLevel) {
 
 
 
-	//canvas.style.position = "absolute"
-	//canvas.style.zIndex = 500000
-	//var body = document.getElementsByTagName("body")[0]
-	//body.appendChild(canvas)
+	// canvas.style.position = "absolute"
+	// canvas.style.zIndex = 500000
+	// var body = document.getElementsByTagName("body")[0]
+	// body.appendChild(canvas)
 	
 
     return spriteSheet.parse()

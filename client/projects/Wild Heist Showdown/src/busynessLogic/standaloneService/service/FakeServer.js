@@ -44,7 +44,7 @@ const ACCOUNTS = [
             "id": 1,
             "code": "RUB"
         }
-    },
+    },/*
     {
         "type": 9,
         "name": "Other currencies",
@@ -100,7 +100,7 @@ const ACCOUNTS = [
             "id": 25,
             "code": "mBT"
         }
-    }
+    }*/
 ]
 
 /*

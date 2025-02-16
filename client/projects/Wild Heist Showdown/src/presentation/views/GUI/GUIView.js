@@ -866,6 +866,16 @@ export class GUIView extends AdaptiveContainer {
         document.webkitCancelFullScreen?.()?.catch((err) => {})
         document.mozCancelFullScreen?.()?.catch((err) => {})
         document.exitFullscreen?.()?.catch((err) => {})
+    
+        this.fullScreeRequestTimeline
+            .deleteAllAnimations()
+            .addAnimation({
+                duration: 10,
+                onFinish: () => {
+                    AdaptiveContainer.onResize()
+                }
+            })
+            .play()
     }
 
     setRemainingAutoSpinsCount(remainingAutoSpinsCount) {

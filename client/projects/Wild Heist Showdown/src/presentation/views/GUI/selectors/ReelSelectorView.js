@@ -23,6 +23,7 @@ export class ReelSelectorView extends Container {
     slideY = 0
 
     timeline = new Timeline
+    switchTimeline = new Timeline
     selectedTextField
 
     isEditable = false
@@ -33,12 +34,16 @@ export class ReelSelectorView extends Container {
     minimalValue = 0
     maximalValue = Infinity
     clickTimeStamp = 0
+    frameView
+    trianglesIconsViews
 
     constructor(assets) {
         super()
         this.initPanel(assets)
         this.initTextFields()
         this.setSelectableOptions()
+        this.initFrame(assets)
+        this.initTriangles(assets)
     }
 
     initPanel(assets) {
@@ -113,6 +118,61 @@ export class ReelSelectorView extends Container {
         this.selectedTextField = this.textFields[Math.trunc(this.textFields.length / 2)]
     }
 
+    initFrame(assets) {
+        const {textFields} = this
+        const container = this.addChild(new Container)
+        const height = textFields[0].maximalHeight
+        container.pivot.y = height / 2
+        container.y = 87 + height / 2
+
+        const offsets = [
+            0,
+            height
+        ].forEach(y => {
+            const sprite = new Sprite(assets.rectangle)
+            sprite.anchor.set(0.5)
+            sprite.tint = 0xf8ee89
+            sprite.y = y
+            sprite.width = 154
+            sprite.height = 1.5
+            container.addChild(sprite)
+        })
+
+        this.frameView = container
+    }
+
+    initTriangles(assets) {
+        this.trianglesIconsViews = [45, 177].map(y => {
+            const sprite = new Sprite(assets.iconTriangle)
+            sprite.anchor.set(0.5)
+            sprite.y = y
+            sprite.scale.set(0.5)
+            sprite.tint = 0x00FF00
+            sprite.alpha = 0
+            
+            return this.addChild(sprite)
+        })
+    }
+
+    presentTrianglesBlink(isUpwardDirected = true) {
+        const {trianglesIconsViews} = this
+        trianglesIconsViews.forEach(view => 
+            view.scale.y = isUpwardDirected ? 0.5 : -0.5
+        )
+
+        this.switchTimeline
+            .deleteAllAnimations()
+            .addAnimation({
+                duration: 250,
+                onProgress: progress => {
+                    const finalProgress = Math.sin(Math.PI * progress)
+
+                    trianglesIconsViews.forEach(view => view.alpha = finalProgress)
+                }
+            })
+            .play()
+    }
+
     adjust() {
         const {
             textFields,
@@ -130,6 +190,8 @@ export class ReelSelectorView extends Container {
             selectedOptionIndex -= selectableOptions.length
         }
 
+
+        let distanceToFrame = Infinity
         textFields.forEach((textField, i) => {
             textField.setFontColor(0xf8ee89)
             let finalOptionIndex = Math.trunc(finalProgress + i)
@@ -146,16 +208,16 @@ export class ReelSelectorView extends Container {
 
             finalOptionIndex -= Math.trunc(textFields.length / 2)
 
+            if (finalOptionIndex === this.selectedOptionIndex) {
+                this.selectedTextField = textField
+            }
+
             if(finalOptionIndex >= selectableOptions.length) {
                 finalOptionIndex -= selectableOptions.length
             } else if(finalOptionIndex < 0) {
                 finalOptionIndex += selectableOptions.length
             }
-            
-            if (finalOptionIndex === this.selectedOptionIndex) {
-                this.selectedTextField = textField
-            }
-
+        
             textField.setText(formattedSelectableOptions[finalOptionIndex % this.selectableOptions.length])
 
             const rollProgress = (textField.y / HEIGHT)
@@ -164,6 +226,12 @@ export class ReelSelectorView extends Container {
             textField.y = HEIGHT * 0.5 + HEIGHT * 0.5 * distortion
             textField.scale.y = Math.sin(Math.PI * rollProgress)
             textField.alpha = textField.scale.y ** 1.75
+
+            const newDistanceToFrame = Math.abs(textField.y - this.frameView?.y)
+            if(newDistanceToFrame < distanceToFrame) {
+                distanceToFrame = newDistanceToFrame
+                this.selectedTextField = textField
+            }
         })
 
         if(this.selectedOptionIndex !== selectedOptionIndex) {
@@ -177,7 +245,6 @@ export class ReelSelectorView extends Container {
             this.onOptionSelected?.(this.selectableOptions[selectedOptionIndex], selectedOptionIndex)
         }
 
-        //this.selectedTextField.setFontColor(this.isUserInputValid ? 0x00FF00 : 0xFF0000)
         this.selectedTextField.setFontColor(0x00FF00)
     }
 
@@ -191,7 +258,15 @@ export class ReelSelectorView extends Container {
         const releasePointDistance = Math.abs(this.slideY - this.clickY)
         const isEditRequested = releasePointDistance <= 5 && (Date.now() - this.clickTimeStamp) < 500
         
-        if (isSlideRelease) {
+        if (isEditRequested) {
+            this.forceSelect({
+                optionIndex: this.selectedOptionIndex,
+                dropUserInput: false,
+                ignoreSameOptionIndex: true
+            })
+
+            this.onClick?.()
+        } else if (isSlideRelease) {
             this.progress = (this.progress + this.progressOffset) % this.selectableOptions.length
             this.progressOffset = 0
 
@@ -209,11 +284,6 @@ export class ReelSelectorView extends Container {
                 })
                 .play()
         }
-
-        if(isEditRequested) {
-            this.timeline.wind(1)
-            this.onClick?.()
-        }
     }
 
     onSlide(e) {
@@ -229,8 +299,8 @@ export class ReelSelectorView extends Container {
         this.userInput = ''
     }
 
-    forceSelect({optionIndex, dropUserInput}) {
-        if(this.selectedOptionIndex === optionIndex) return
+    forceSelect({optionIndex, dropUserInput, ignoreSameOptionIndex = false}) {
+        if(!ignoreSameOptionIndex && this.selectedOptionIndex === optionIndex) return
         this.timeline.wind(1)
         this.progressOffset = 0
         this.progress = optionIndex
@@ -255,13 +325,43 @@ export class ReelSelectorView extends Container {
     }
 
     onClick() {
-        this.setEditable()
+        const distanceToFrame = this.clickY - this.frameView.y
+        if (Math.abs(distanceToFrame) <= this.frameView.height / 2) {
+            this.setEditable()
+        } else if (distanceToFrame < 0) {
+            if (this.isEditable) {
+              this.setEditable(false)
+            } else {
+                let nextOptionIndex = this.selectedOptionIndex + 1
+                if(nextOptionIndex >= this.selectableOptions.length) {
+                    nextOptionIndex = 0
+                }
+                
+                this.forceSelect({optionIndex: nextOptionIndex, dropUserInput: true})
+                this.onBetEdited()
+                this.presentTrianglesBlink()
+            }
+        } else {
+            if (this.isEditable) {
+               this.setEditable(false)
+            } else {
+                let nextOptionIndex = this.selectedOptionIndex - 1
+                if(nextOptionIndex < 0) {
+                    nextOptionIndex = this.selectableOptions.length - 1
+                }
+                
+                this.forceSelect({optionIndex: nextOptionIndex, dropUserInput: true})
+                this.onBetEdited()
+                this.presentTrianglesBlink(false)
+            }
+        }
     }
 
     setEditable(isEditable = true) {
-        if(isEditable) {
+        this.timeline.wind(1)
+
+        if (isEditable) {
             this.timeline
-                .wind(1)
                 .deleteAllAnimations()
                 .addAnimation({
                     duration: 500,
@@ -275,6 +375,8 @@ export class ReelSelectorView extends Container {
                 })
                 .setLoopMode()
                 .play()
+
+            this.validateUserInput()
         }
 
         if(this.isEditable === isEditable) return
@@ -354,7 +456,7 @@ export class ReelSelectorView extends Container {
 
         if (this.isUserInputValid) {
             selectedTextField.setFontColor(0x00FF00)
-            this.onOptionSelected?.(Number(this.userInput))
+            this.onOptionSelected?.(Number(this.userInput), this.selectedOptionIndex)
         } else {
             selectedTextField.setFontColor(0xFF0000)
         }

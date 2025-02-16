@@ -673,7 +673,7 @@ export class Presentation {
 
 	async presentIntro() {
 		this.audio.recoverCookieMuteState()
-		this.audio.play({name: 'music', loop: true})
+		this.audio.playMusic()
 		// this.assets.music.play({loop: true})
 		this.setGamePlayTimeScale()
 		this.guiView.refresh({ isSkipExpected: true })

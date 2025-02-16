@@ -1,20 +1,18 @@
 import PixiSound from 'pixi-sound';
 import { Timeline } from '../timeline/Timeline';
 import { getCookie, setCookie } from '../Utils';
-
 import { Assets } from "pixi.js"
-
 import { extensions, ExtensionType } from 'pixi.js';
 
 const customAssetLoader = {
-   extension: {
-       type: ExtensionType.LoadParser,
-       name: 'custom-asset-loader',
-   },
-   test(url) {
+    extension: {
+        type: ExtensionType.LoadParser,
+        name: 'custom-asset-loader',
+    },
+    test(url) {
         return (url.includes('.mp3') || url.includes('.ogg'))
-   },
-   load(url) {
+    },
+    load(url) {
         return new Promise(
             resolve => {
                 const sound = PixiSound.Sound.from({
@@ -24,13 +22,11 @@ const customAssetLoader = {
                 })
             }
         )
-   },
+    },
 }
 
 
 extensions.add(customAssetLoader);
-
-
 
 const COOKIE_NAME = 'wildHeistShowdownAudioMuted'
 const AWARD_VOLUME_MULTIPLIER = 0.65
@@ -41,7 +37,6 @@ const VOLUME_MAP = {
 
 export class Audio {
     audios = {}
-    playRequests = []
     isPaused = false
 
     timeline = new Timeline
@@ -59,6 +54,7 @@ export class Audio {
     lastScatterCallTimestamp = Date.now()
 
     winIndex = 0
+    isMusicRequested
 
     constructor() {
         document.addEventListener("visibilitychange", () => {
@@ -142,7 +138,7 @@ export class Audio {
         const {isPathResolutionRequired = true } = audioMap
         const isOggSupported = false;// document.createElement("audio").canPlayType?.("audio/ogg;codecs=vorbis") !== ""
         const finalAudioMap = isOggSupported ? audioMap.oggMap : audioMap.mp3Map
-        const promises = []
+        
 
         if (isPathResolutionRequired) {
             for (const [name, path] of Object.entries(finalAudioMap) ) {
@@ -198,15 +194,21 @@ export class Audio {
         this.onCookieMuteStateRecovered?.(this.isMuted)
     }
 
+    playMusic() {
+        this.isMusicRequested = true
+        this.play({name: 'music', loop: true})
+    }
+
     play(params) {
         const audio = this.audios[params.name]
 
         if(!audio) return
 
         if(!audio.isLoaded) {
-            if(params.loop) {
-                this.playRequests.push(params)
-            }
+            return
+        }
+
+        if (params.loop && audio.isPlaying) {
             return
         }
 
@@ -219,10 +221,10 @@ export class Audio {
     }
 
     onLoadingFinished() {
-        this.playRequests.forEach(params => this.play(params))
         this.onAudioReady?.()
 
         this.loadingVolumeMultiplier = 1
+        this.isMusicRequested && this.playMusic()
         this.setMuted(this.isMuted, false)
     }
 
