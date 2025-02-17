@@ -317,7 +317,7 @@ export class Presentation {
 	}
 
 	refreshIframe() {
-		this.iframe.refresh()
+		this.iframeView.refresh()
 	}
 	// ...API
 }

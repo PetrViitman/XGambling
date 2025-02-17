@@ -3,13 +3,13 @@ import { getBrowserCookie, setBrowserCookie } from "../presentation/Utils"
 
 const protocol = window.location.protocol
 const hostname = window.location.hostname
-const port = 50004
 const PORT = 50000
 
 export class RouterLogic {
 	webAPI
 	presentation
 	presentedProjectName
+	webSocket
 
 	constructor({
 		webAPI,
@@ -17,13 +17,26 @@ export class RouterLogic {
 	}) {
 		this.webAPI = webAPI
 		this.presentation = presentation
-		this.longpollRouterServer()
-		this.pingRouterServer()
-		setInterval(() => {this.pingRouterServer()}, 60_000)
+		this.initWebSocket()
+	}
 
-		document.addEventListener('keyup', () => {
-		//	this.longpollRouterServer()
-		})
+	initWebSocket() {
+		const webSocket = new WebSocket('ws://' + hostname + ':' + PORT)
+
+		webSocket.onopen = () => this.pingRouterServer()
+
+		webSocket.onmessage = (message) => {
+			const data = JSON.parse(message.data)
+			switch (data.command) {
+				case 'refresh':
+					this.presentation.refreshIframe(this.presentedProjectName)
+				break
+			}
+		}
+
+		setInterval(() => {this.pingRouterServer()}, 10_000)
+
+		this.webSocket = webSocket
 	}
 
 	async init() {
@@ -172,12 +185,15 @@ export class RouterLogic {
 
 		this.projectPort = port
 
+		this.pingRouterServer()
+
 		await this.presentation.presentProject(
 			protocol + '//' + hostname + ':' + port + '/index-production.html',
 			project.name
 		)
 
 		setBrowserCookie('router.project', null)
+		this.presentedProjectName = undefined
 
 		await fetch('http://' + hostname + ':' + PORT + '/home', {
 			method: 'GET',
@@ -191,33 +207,14 @@ export class RouterLogic {
 		this.lobby()
 	}
 
-	async longpollRouterServer() {
-		const longpollRequest =  fetch('http://' + hostname + ':' + PORT + '/longpollReload', {
-				method: 'GET',
-				headers: {
-				'Content-Type': 'application/json',
-				},
-			})
-			.then(response => response.json())
-			.then(data => data)
-
-
-		const {projectName} = await longpollRequest
-
-		if(projectName === this.presentedProjectName) {
-			this.presentation.refreshIframe(projectName)
-		}
-
-		return this.longpollRouterServer()
-	}
-
 	pingRouterServer() {
-		fetch('http://' + hostname + ':' + PORT + '/ping', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'projectName': getBrowserCookie('router.project'),
-			},
-		  })
+		this.webSocket
+			.send(
+				JSON.stringify({
+					command: 'ping',
+					projectName: this.presentedProjectName
+				})
+			)
 	}
+
 }

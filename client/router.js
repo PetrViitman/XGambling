@@ -1,9 +1,8 @@
 const ROUTER_PUBLIC_PORT = 50000
 
-const ROUTER_WEB_INTERFACE_PATH = './Router Web Interface/'
-const ROUTER_WEB_INTERFACE_PORT = 50001
+const ROUTER_PATH = './router/'
+const ROUTER_PORT = 50001
 
-const LOCAL_NETWORK_DEV_PROJECT_PORT = 50002
 const LOCAL_NETWORK_DEV_PROJECTS_SERVICES_PORT = 50004
 
 const BACKEND_HOSTNAME = 'localhost'
@@ -15,12 +14,12 @@ const dns = require('node:dns')
 const os = require('node:os')
 const http = require('http')
 const fs = require('fs')
-const WebSocket = require("./Router Web Interface/node_modules/ws");
-const request = require(ROUTER_WEB_INTERFACE_PATH + '/node_modules/request')
+const WebSocket = require("./router/node_modules/ws")
+const request = require(ROUTER_PATH + '/node_modules/request')
 
 let localNetworkIPAddress
+let webSocketServer
 const projectsServerMap = {}
-let longpollResponses = []
 
 let projectIndex = 0
 
@@ -36,7 +35,7 @@ const getProjectServersGroup = async ({
 		return projectsServerMap[serverId]
 	}
 
-	const {createServer} = await import(ROUTER_WEB_INTERFACE_PATH + 'node_modules/vite/dist/node/index.js')
+	const {createServer} = await import(ROUTER_PATH + 'node_modules/vite/dist/node/index.js')
 
 	const viteServer = await createServer({
 		configFile: path.resolve(pathToProject ?? __dirname, pathToProjectConfigFileName),
@@ -81,12 +80,12 @@ const getLocalNetworkIPAdress = () => {
 
 const getCookies = () => {
 	try {
-		const data = fs.readFileSync(ROUTER_WEB_INTERFACE_PATH + 'cookies.json') ?? {}
+		const data = fs.readFileSync(ROUTER_PATH + 'cookies.json') ?? {}
 		const cookies = JSON.parse(data)
 
 		return cookies
 	} catch (_) {
-		fs.writeFileSync(ROUTER_WEB_INTERFACE_PATH + 'cookies.json', '')
+		fs.writeFileSync(ROUTER_PATH + 'cookies.json', '')
 	}
 	
 	return {}
@@ -100,36 +99,18 @@ const saveCookie = (username, cookie) => {
 	const cookies = getCookies()
 	cookies[username] = cookie
 
-	fs.writeFileSync(ROUTER_WEB_INTERFACE_PATH + 'cookies.json', JSON.stringify(cookies))
+	fs.writeFileSync(ROUTER_PATH + 'cookies.json', JSON.stringify(cookies))
 }
 
 const startRouterPublicDevServer = (ipAddress) => {
-	// ЗАПРОСЫ ОТ ROUTER WEB INTERFACE...
-	http.createServer(async function (req, res) {
+	// ЗАПРОСЫ ОТ router...
+	const server = http.createServer(async function (req, res) {
 		const url = req.url
 		if (url === '/home') {
 			res.writeHead(200, { 'Content-Type': 'application/json' })
 			res.write(JSON.stringify({ message: 'Success' }))
 			res.end()
 
-		} else if (url === '/ping') {
-			const serversGroup = projectsServerMap[req.headers.projectname]
-
-			if(serversGroup) {
-				serversGroup.pingTimestamp = Date.now()
-			}
-
-			res.writeHead(200, { 'Content-Type': 'application/json' })
-			res.write(JSON.stringify({ message: 'pong' }))
-			res.end()
-
-		} else if (url === '/longpollReload') {
-			res.writeHead(200, {
-				'Content-Type': 'application/json',
-				'Connection': 'keep-alive'
-			})
-
-			longpollResponses.push(res)
 		} else if (url === '/project') {
 			projectIndex = (projectIndex + 1) % 100
 			const {name, viteServer, tunnelPort} = await getProjectServersGroup({
@@ -144,12 +125,15 @@ const startRouterPublicDevServer = (ipAddress) => {
 				const originalSend = viteServer.ws.send
 				viteServer.ws.send = function (payload) {
 					if (payload.type === 'full-reload') {
-						longpollResponses.forEach((response, i) => {
-							response.write(JSON.stringify({ projectName: name }))
-							response.end()
+						webSocketServer.clients.forEach(webSocket => {
+							if (webSocket.projectName === name) {
+								webSocket.send(
+									JSON.stringify({
+										command: 'refresh',
+									})
+								)
+							}
 						})
-
-						longpollResponses = []
 					}
 					originalSend.call(this, payload)
 				}
@@ -170,11 +154,32 @@ const startRouterPublicDevServer = (ipAddress) => {
 			res.end()
 
 		} else {
-			req.pipe(request('http://localhost:' + ROUTER_WEB_INTERFACE_PORT + req.url)).pipe(res)
+			req.pipe(request('http://localhost:' + ROUTER_PORT + req.url)).pipe(res)
 		}
 	})
-	.listen(ROUTER_PUBLIC_PORT, ipAddress)
-	// ...ЗАПРОСЫ ОТ ROUTER WEB INTERFACE
+
+	server.listen(ROUTER_PUBLIC_PORT, ipAddress)
+
+	webSocketServer = new WebSocket.Server({ server })
+	webSocketServer.on('connection', (webSocket) => {
+		webSocket.on('message', (message) => {
+			const data = JSON.parse(message)
+
+			switch(data.command) {
+				case 'ping':
+					const serversGroup = projectsServerMap[data.projectName]
+					webSocket.projectName = data.projectName
+
+					if(serversGroup) {
+						serversGroup.pingTimestamp = Date.now()
+					}
+				break
+			}
+
+			webSocket.send(JSON.stringify({command: 'pong'}))
+		})
+	})
+	// ...ЗАПРОСЫ ОТ router
 
 	// ПРОКСИРОВАНИЕ ЗАПРОСОВ К СЕРВЕРУ БЕКЕНДА...
 	http.createServer(function (req, res) {
@@ -215,8 +220,8 @@ const startRouterPublicDevServer = (ipAddress) => {
 getLocalNetworkIPAdress().then((ipAddress) => {
 	localNetworkIPAddress = ipAddress
 	getProjectServersGroup({
-		pathToProject: ROUTER_WEB_INTERFACE_PATH,
-		port: ROUTER_WEB_INTERFACE_PORT,
+		pathToProject: ROUTER_PATH,
+		port: ROUTER_PORT,
 		isPingRequired: false
 	})
 
@@ -234,19 +239,13 @@ getLocalNetworkIPAdress().then((ipAddress) => {
 setInterval(() => {
 	const timestamp = Date.now()
 	Object.entries(projectsServerMap).forEach(([name, serversGroup]) => {
-		if (timestamp - serversGroup.pingTimestamp > 120_000) {
+		if (timestamp - serversGroup.pingTimestamp > 30_000) {
 			serversGroup.viteServer.close()
 			serversGroup.tunnelServer.close()
 			delete projectsServerMap[name]
 		}
 	})
-
-	longpollResponses.forEach(response => {
-		response.write(' ')
-	})
-
-	longpollResponses = []
-}, 60_000)
+}, 15_000)
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
 const originalEmit = process.emit

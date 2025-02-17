@@ -8,6 +8,7 @@ export class GameLogic {
 	betsOptions = []
 	balance = 0
 	currencyCode = ''
+	winCurrencyCode = ''
 	bet
 	minimalBet
 	maximalBet
@@ -196,6 +197,7 @@ export class GameLogic {
 			isBuyFeatureRequest,
 		})
 
+		this.winCurrencyCode = currencyCode
 		// retrieving final balance anyways 
 		this.balance = balance ?? this.balance
 
@@ -392,6 +394,7 @@ export class GameLogic {
 			bet,
 			balance,
 			currencyCode,
+			winCurrencyCode,
 			presentation,
 			betsOptions,
 			winMap,
@@ -412,6 +415,7 @@ export class GameLogic {
 			winMap,
 			payout,
 			currencyCode,
+			winCurrencyCode,
 			minimalBet,
 			maximalBet,
 			activeBonusDescriptor,

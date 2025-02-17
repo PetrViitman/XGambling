@@ -136,7 +136,7 @@ export class Audio {
     ) {
 
         const {isPathResolutionRequired = true } = audioMap
-        const isOggSupported = false;// document.createElement("audio").canPlayType?.("audio/ogg;codecs=vorbis") !== ""
+        const isOggSupported = document.createElement("audio").canPlayType?.("audio/ogg;codecs=vorbis") !== ""
         const finalAudioMap = isOggSupported ? audioMap.oggMap : audioMap.mp3Map
         
 
@@ -158,6 +158,7 @@ export class Audio {
     setVolume(name, volume) {
         const volumePreset = VOLUME_MAP[name] ?? 1
         const audio = this.audios[name]
+        if(!audio) return this
         audio.mainVolume = volume ?? audio.mainVolume
         audio.volume = volumePreset * audio.mainVolume * this.volumeMultiplier * this.loadingVolumeMultiplier
 

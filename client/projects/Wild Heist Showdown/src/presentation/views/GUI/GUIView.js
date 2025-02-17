@@ -757,7 +757,7 @@ export class GUIView extends AdaptiveContainer {
         this.betIndex = closestBetIndex
         // ...DETECTING CLOSEST BET INDEX
 
-        this.indicatorWinView.setValue(this.payout, this.currencyCode)
+        this.indicatorWinView.setValue(this.payout, this.winCurrencyCode ?? this.currencyCode)
         this.indicatorBalanceView.setValue(this.balance, this.currencyCode)
         this.indicatorBetView.setValue(this.bet, this.currencyCode)
 
@@ -876,12 +876,8 @@ export class GUIView extends AdaptiveContainer {
                 }
             })
             .play()
-    }
 
-    setRemainingAutoSpinsCount(remainingAutoSpinsCount) {
-        context.remainingAutoSpinsCount = remainingAutoSpinsCount
-        context.onAutoplaySpinsCountChange?.(remainingAutoSpinsCount)
-        this.buttonAutoplayView.presentSpinsCount(remainingAutoSpinsCount)
+        
     }
 
     getUserInput() {

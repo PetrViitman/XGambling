@@ -180,8 +180,6 @@ export class PaytableContentView extends Container {
         maximalWidth = 900
 
         textField = new TextField({maximalWidth})
-        textField.MARKER = true
-        textField
             .setFontName('default')
             .setAlignTop()
             .setAlignLeft()
@@ -355,10 +353,8 @@ export class PaytableContentView extends Container {
 
         offsetY += 150
         maximalWidth = 900
-        textField = new TextField({maximalWidth})
-        textField.MARKER = true
         
-        textField
+        textField = new TextField({maximalWidth})
             .setFontName('default')
             .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
             .setAlignTop()

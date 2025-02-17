@@ -4,7 +4,7 @@ const getProjectsNames = async () =>
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name)
 
-const deepl = require('./Router Web Interface/node_modules/deepl-node')
+const deepl = require('./router/node_modules/deepl-node')
 const authKey = "ecc7fd55-6e59-4457-b036-62580a7f43b0:fx";
 const translator = new deepl.Translator(authKey)
 const LANGUAGE_CODES = ['ar','bg','cs','da','de','el','es','et','fi','fr','hu','id','it','ja','ko','lt','lv','nb','nl','pl','ro','ru','sk','sl','sv','tr','uk','zh']

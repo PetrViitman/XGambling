@@ -236,6 +236,7 @@ export class Presentation {
 
 			this.setGamePlayTimeScale(Number(!isVisible))
 		}
+
 		this.pixiGUIApplication.stage.addChild(this.guiView)
 
 		AdaptiveContainer.install([this.pixiApplication, this.pixiGUIApplication], true)
@@ -619,6 +620,7 @@ export class Presentation {
 		betsOptions,
 		payout = 0,
 		currencyCode,
+		winCurrencyCode,
 		minimalBet,
 		maximalBet,
 		activeBonusDescriptor,
@@ -631,6 +633,7 @@ export class Presentation {
 			balance,
 			betsOptions,
 			currencyCode,
+			winCurrencyCode,
 			minimalBet,
 			maximalBet,
 			isSpinExpected: true,
@@ -649,6 +652,10 @@ export class Presentation {
 		if (this.remainingAutoSpinsCount) {
 			return { key: 'make_bet' }
 		}
+
+		this.guiView.refresh({
+			remainingAutoSpinsCount: this.remainingAutoSpinsCount,
+		})
 
 		payout && this.bankView.presentIdle()
 

@@ -6,7 +6,7 @@ import { Timeline } from "../../../../timeline/Timeline";
 import { colorToColor } from "../../../GraphicalPrimitives";
 import { formatMoney } from "../../../../Utils";
 
-const SYMBOLS_PER_LINE_COUNT = 25
+const SYMBOLS_PER_LINE_COUNT = 35
 
 export class BuyFeatureSelectorView extends PopupSelectorView {
     scattersViews
@@ -75,7 +75,7 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
         this.hintView.setMaximalHeight(100)
 
 
-        let maximalWidth = 700
+        let maximalWidth = 760
         let maximalHeight = 250
         let textField = new TextField({maximalWidth, maximalHeight})
             .setFontName('default')
@@ -91,7 +91,7 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
         this.instructionTextField = this.addChild(textField)
 
 
-        maximalWidth = 700
+
         maximalHeight = 100
         textField = new TextField({maximalWidth, maximalHeight})
             .setFontName('default')
@@ -107,7 +107,6 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
         this.priceHeaderTextField = this.addChild(textField)
 
 
-        maximalWidth = 700
         maximalHeight = 100
         textField = new TextField({maximalWidth, maximalHeight})
             .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
