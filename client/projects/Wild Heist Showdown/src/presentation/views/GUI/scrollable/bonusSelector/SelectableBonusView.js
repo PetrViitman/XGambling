@@ -1,9 +1,14 @@
 import { Container, Sprite } from "pixi.js";
 import { TextField } from "../../../text/TextField";
-import { ButtonBarView } from "../../selectors/accounts/ButtonBarView";
-import { getDefaultLocale } from "../../../../Utils";
 import { ButtonBonusView } from "./ButtonBonusView";
 import { BonusIconsPoolView } from "./BonusIconsPoolView";
+
+function getDefaultLocale() {
+	if (navigator.languages != undefined) 
+	  return navigator.languages[0]; 
+	return navigator.language;
+}
+
 
 export class SelectableBonusView extends Container {
     descriptor

@@ -25,7 +25,6 @@ const customAssetLoader = {
     },
 }
 
-
 extensions.add(customAssetLoader);
 
 const COOKIE_NAME = 'wildHeistShowdownAudioMuted'

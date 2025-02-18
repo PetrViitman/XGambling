@@ -19,6 +19,7 @@ import { AwardView } from "./views/splashScreens/award/AwardView"
 import { GUIView } from "./views/GUI/GUIView"
 import { TextField } from "./views/text/TextField"
 import { Audio } from "./audio/Audio"
+import { getDictionary } from "./Dictionary"
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
 
@@ -58,82 +59,12 @@ export class Presentation {
 		audioMap,
 		isLTRTextDirection = true,
 		isMobileApplicationClient = false,
-		dictionary = {
-			"maximal_bet": "МАКСИМУМ",
-			"info_bar_idle_multiplier": "MULTIPLIER DOUBLES AFTER EVERY WIN",
-			"congratulations": "ПОЗДРАВЛЯЕМ!",
-			"bonuses": "БОНУСЫ",
-			"symbol_payout_values": "ВЫПЛАТЫ ЗА СИМВОЛЫ",
-			"scatter": "SCATTER",
-			"info_bar_idle_3600_ways": "{WAYS_COUNT} WAYS TO WIN!",
-			"info_bar_tension": "ANOTHER {SCATTER_SYMBOL}?!",
-			"minimal_bet": "МИНИМУМ",
-			"gold_framed_symbols": "СИМВОЛЫ В ЗОЛОТОЙ РАМКЕ",
-			"info_bar_common_payout": "TOTAL WINNINGS: {PAYOUT}",
-			"click_anywhere_to_continue": "КЛИКНИТЕ В ЛЮБОМ МЕСТЕ, ЧТОБЫ ПРОДОЛЖИТЬ!",
-			"set_your_bet": "НАСТРОЙКИ СТАВКИ",
-			"bonus_free_bet_shorthand": "БОНУС: БЕСПЛАТНАЯ СТАВКА",
-			"info_bar_free_spins_triggered": "{SCATTER_SYMBOLS} HAVE ACTIVATED {FS_COUNT} FREE SPINS!",
-			"bonus_secure_half_bet_shorthand": "БОНУС: ВОЗВРАТ ½ СТАВКИ",
-			"tap_anywhere_to_continue": "НАЖМИТЕ В ЛЮБОМ МЕСТЕ, ЧТОБЫ ПРОДОЛЖИТЬ!",
-			"free_spins_over": "БОНУСНАЯ ИГРА ЗАВЕРШЕНА!",
-			"maximal_bet_is": "МАКСИМАЛЬНАЯ СТАВКА {BET}",
-			"win_3600_ways": "3600 СПОСОБОВ ВЫИГРАТЬ",
-			"good_luck": "УДАЧИ!",
-			"big_win": "ЭТО BIG WIN!",
-			"free_spins_won": "ПОЛУЧЕНЫ БЕСПЛАТНЫЕ ВРАЩЕНИЯ",
-			"select_the_account": "ВЫБЕРИТЕ СЧЁТ",
-			"win_3600_ways_instructions_part_2": "• Общее количество выигрышных комбинаций для каждого символа рассчитывается умножением числа одинаковых символов на каждом из барабанов слева направо.║║• Выплата за комбинацию символов умножается на общее количество таких комбинаций.",
-			"slide_or_tap": "ПРОВЕДИТЕ ДЛЯ ПРОКРУТКИ / НАЖМИТЕ ДЛЯ КАСТОМИЗАЦИИ",
-			"buy_feature_price": "СТОИМОСТЬ БОНУСНОЙ ИГРЫ:",
-			"no_win": "НЕ ВЫИГРЫШ",
-			"multiplier_instructions": "• В начале каждого вращения в основной игре, множитель равен x1.║║• Если в результате любого вращения, выпадет любой выигрыш, то после получения всех выплат и выпадения новых символов, множитель удваивается.║║• Максимальное значение множителя равно 1024.",
-			"tap_to_continue": "НАЖМИТЕ ЧТОБЫ ПРОДОЛЖИТЬ",
-			"no_bonuses": "У ВАС ПОКА НЕТ БОНУСОВ",
-			"bonus_double_up_shorthand": "БОНУС: УДВОЕНИЕ",
-			"maximal_win": "МАКСИМАЛЬНЫЙ ВЫИГРЫШ",
-			"set_your_autoplay": "ВЫБЕРИТЕ ДЛИТЕЛЬНОСТЬ АВТОИГРЫ",
-			"buy_bonus_game": "ПОКУПАЙТЕ БОНУСНУЮ ИГРУ!",
-			"mega_win": "ЭТО MEGA WIN!",
-			"loading": "ЗАГРУЗКА",
-			"no_luck": "В СЛЕДУЮЩИЙ РАЗ ПОВЕЗЁТ!",
-			"switch": "ПЕРЕКЛЮЧИТЬСЯ",
-			"symbol_payout_instructions": "• WILD заменяет все символы, кроме SCATTER.║║• Символы в ЗОЛОТОЙ РАМКЕ появляются только на 3-м и 4-м барабанах.",
-			"slide_to_select": "ПРОВЕДИТЕ ДЛЯ ПРОКРУТКИ",
-			"info_bar_idle_scatter": "{SCATTERS_COUNT} OR MORE {SCATTER_SYMBOL} ACTIVATE {FS_COUNT} OR MORE FREE SPINS",
-			"win_3600_ways_instructions_part_3": "• После получения выплат в каждом раунде все выигрышные символы взрываются. Оставшиеся и новые символы падают вниз, формируя новый раунд.║║• Это продолжается до тех пор, пока есть выигрышные комбинации.║║• Все выигрыши отображаются в валюте.",
-			"paytable": "ТАБЛИЦА ВЫПЛАТ",
-			"wild": "WILD",
-			"win_3600_ways_example": "ИЗ ПРИМЕРА ВЫШЕ:",
-			"free_bet": "БЕСПЛАТНАЯ СТАВКА {BET} EUR",
-			"purchase": "КУПИТЬ",
-			"info_bar_idle_wild": "EVERY SYMBOL WITH A GOLDEN FRAME CAN TURN INTO A {WILD_SYMBOL}!",
-			"buy_feature_instructions": "КАЖДОЕ БОНУСНОЕ ВРАЩЕНИЕ БУДЕТ ПРОХОДИТЬ ПО ВЫБРАННОЙ СТАВКЕ {BET}",
-			"minimal_bet_is": "МИНИМАЛЬНАЯ СТАВКА {BET}",
-			"free_spins_feature_instructions": "• 3 символа SCATTER, выпавшие в любом месте на барабанах, активируют 10 БЕСПЛАТНЫХ ВРАЩЕНИЙ. Каждый дополнительный символ SCATTER активирует 2 дополнительных БЕСПЛАТНЫХ ВРАЩЕНИЯ║║• В начале каждого бесплатного вращения, множитель имеет начальное значение x8.║║• Если в результате бесплатного вращения, выпадет любой выигрыш, то после получения всех выплат и выпадения новых символов, множитель удваивается.║║• БЕСПЛАТНЫЕ ВРАЩЕНИЯ могут быть повторно активированы во время бесплатных вращений.",
-			"info_bar_payout": "{SYMBOLS} {×} {PAYOUT} PAID OUT",
-			"maximal_win_instructions": "• Максимальный выигрыш (5000x от ставки) составляет {PAYOUT}.",
-			"win": "ВЫИГРЫШ",
-			"free_spins_feature": "БЕСПЛАТНЫЕ ВРАЩЕНИЯ",
-			"get_3_guaranteed_scatters": "ПОЛУЧИТЕ 3 ГАРАНТИРОВАННЫХ СКАТТЕРА И 10 БОНУСНЫХ ВРАЩЕНИЙ",
-			"huge_win": "ЭТО HUGE WIN!",
-			"gold_framed_symbols_instructions": "• Во время любого вращения некоторые символы (кроме WILD и SCATTER) на барабанах 3 и/или 4 могут быть в ЗОЛОТОЙ РАМКЕ.║║• В каждом следующем раунде, после выпадения новых символов, любые символы в ЗОЛОТОЙ РАМКЕ, участвовавшие в выигрыше в предыдущем раунде, превращаются в WILD.",
-			"win_3600_ways_instructions": "• Выигрышные комбинации складываются из символов, идущих подряд слева направо.",
-			"click_to_continue": "КЛИКНИТЕ ЧТОБЫ ПРОДОЛЖИТЬ",
-			"multiplier": "МНОЖИТЕЛЬ",
-			"activate": "АКТИВИРОВАТЬ"
-		},
-		getTranslatedText
+		dictionary
 	}) {
 		this.isLTRTextDirection = isLTRTextDirection
 		this.isMobileApplicationClient = isMobileApplicationClient
 		TextField.isLTRTextDirection = isLTRTextDirection
 		this.dictionary = dictionary
-		if(getTranslatedText) {
-			Object.keys(dictionary).forEach(key => dictionary[key] = getTranslatedText(key))
-		}
-
-
 		this.preloadingAssetsMap = preloadingAssetsMap
 		this.assetsMap = assetsMap
 		this.audioMap = audioMap
@@ -314,18 +245,14 @@ export class Presentation {
 		}
 		// ...ADJUSTING RESOLUTION
 
-
-		const {stage} = this.pixiApplication
-
 		// FETCHING DICTIONARY...
-		//const prefix = '../../public/translations/'
-		//if (!locales[prefix + this.languageCode + '.json'])
-		//	this.languageCode = 'en'
-
-		//this.dictionary = await locales[prefix + this.languageCode + '.json']()
+		if (!this.dictionary) {
+			this.dictionary =  await getDictionary(this.languageCode)
+			this.isLTRTextDirection = this.dictionary.isLTRTextDirection
+			TextField.isLTRTextDirection = this.isLTRTextDirection
+		}
 		// ...FETCHING DICTIONARY
 
-	
 		this.assets = await getPreloadingAssets(this.preloadingAssetsMap, this.vfxLevel)
 		this.initBitmapFonts(accounts)
 		this.initLoadingScreen(this.assets)
@@ -351,7 +278,7 @@ export class Presentation {
 		this.initBank()
 		this.initReels({initialReels, coefficients})
 		this.initSplashScreens()
-		stage.addChild(this.loadingScreen)
+		this.pixiApplication.stage.addChild(this.loadingScreen)
 		this.pixiApplication.renderer.backgroundColor = 0x0a153d
 		this.initInteractiveLayer()
 		AdaptiveContainer.onResize()
@@ -384,10 +311,7 @@ export class Presentation {
 
 		this.guiView.onSkipRequested = () => { this.skip() }
 
-
 		await this.loadingScreen.presentInteractionRequest(this.assets)
-
-
 
 		const isSignedIn = accounts.find(account => account.isActive)
 
