@@ -9,7 +9,7 @@ export default defineConfig({
   ],
   publicDir: false,
   build: {
-    outDir: './.builds/mvc_v',
+    outDir: './.builds/presentation',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))

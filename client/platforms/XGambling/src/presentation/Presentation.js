@@ -197,11 +197,11 @@ export class Presentation {
 
 	async presentProject(url, name) {
 		await this.presentFade(false)
-		// await this.foldersPoolView.setVisible(false)
+		
 		this.vueContext
 			.refresh({
 				projectName: name,
-				projectURL: url,
+				projectURL: url + window.location.search,
 				activePopupName: 'iframe'
 			})
 	

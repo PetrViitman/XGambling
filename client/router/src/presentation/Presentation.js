@@ -313,7 +313,7 @@ export class Presentation {
 
 	presentProject(url, name) {
 		this.presentPendingResponse()
-		return this.iframeView.presentProject(url, name)
+		return this.iframeView.presentProject(url + window.location.search, name)
 	}
 
 	refreshIframe() {
