@@ -42,7 +42,8 @@ export class PayoutView extends Container {
             .setFontSize(100)
             .setText('1234567890.,')
             .setAlignCenter()
-            .setAlignMiddle();
+            .setAlignMiddle()
+            .setHiddenCharacters([','])
 
         this.textField = this.addChild(textField);
     }
@@ -79,7 +80,7 @@ export class PayoutView extends Container {
         textField.y = textField.pivot.y;
     
 
-        textField.setText(formatMoney(payout)).hideSpriteCharacter(',');
+        textField.setText(formatMoney(payout))
         textField.scale.set(0.5 + 0.5 * Math.min(1,  Math.sin(Math.PI * progress) * 1.1) );
         textField.alpha = Math.min(1, Math.sin(Math.PI * progress) * 2.5);
         // ...ТЕКСТ

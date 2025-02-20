@@ -59,7 +59,7 @@ export class InfoBarView extends Container {
             .addChild(
                 new TextField({maximalWidth, maximalHeight}),
             )
-            .setFontName('roboto')
+            .setFontName('default')
             .setFontSize(maximalHeight / 2)
             .setFontColor(0xFFFFFF)
             .setAlignCenter()

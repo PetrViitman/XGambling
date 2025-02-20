@@ -79,7 +79,7 @@ export class PayoutsInfoPanelView extends Container {
 						maximalWidth: 140,
 						maximalHeight: 70
 					}))
-				.setFontName('runes')
+				.setFontName('default')
 				.setFontColor(0x00FF00)
 				.setFontSize(50)
 				.setAlignLeft()

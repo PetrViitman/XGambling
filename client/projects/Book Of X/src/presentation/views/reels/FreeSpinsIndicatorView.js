@@ -33,7 +33,7 @@ export class FreeSpinsIndicatorView extends Container {
         })
             .setFontColor(0xFF9900)
             .setFontColor(0xFF9955)
-            .setFontName('egypt')
+            .setFontName('default')
             .setFontSize(45)
             .setText('123456')
             .setAlignMiddle()

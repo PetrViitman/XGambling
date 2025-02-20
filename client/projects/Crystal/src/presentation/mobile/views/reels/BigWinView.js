@@ -35,7 +35,7 @@ export class BigWinView extends Container {
             .addChild(new TextField({}))
             .setMaximalWidth(headerWidth)
             .setMaximalHeight(headerHeight)
-            .setFontName('roboto')
+            .setFontName('default')
             .setFontSize(100)
             .setFontColor(0xd2e99d)
             .setText(dictionary.total_win_bmp)
@@ -68,7 +68,8 @@ export class BigWinView extends Container {
             .setFontSize(100)
             .setText('1234567890.,')
             .setAlignCenter()
-            .setAlignMiddle();
+            .setAlignMiddle()
+            .setHiddenCharacters([','])
 
         payoutView.pivot.set(payoutWidth / 2, payoutHeight / 2);
 
@@ -92,7 +93,7 @@ export class BigWinView extends Container {
             .setMaximalWidth(currencyWidth)
             .setMaximalHeight(currencyHeight)
             .setFontColor(0xe2b45d)
-            .setFontName('roboto')
+            .setFontName('default')
             .setFontSize(100)
             .setText('RUB')
             .setAlignCenter()
@@ -105,10 +106,10 @@ export class BigWinView extends Container {
     }
 
     async present(totalPayout = 123, currencyCode = '') {
-        const {spineView} = this;
+        const {spineView} = this
 
-        this.payoutView.setText(formatMoney(totalPayout)).hideSpriteCharacter(',')
-        this.bigWinCurrencyView.setText(currencyCode);
+        this.payoutView.setText(formatMoney(totalPayout))
+        this.bigWinCurrencyView.setText(currencyCode)
         spineView.playAnimation({
             name: 'win_total'
         })

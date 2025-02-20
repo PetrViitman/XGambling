@@ -1,3 +1,8 @@
+const customURLParameters = new URLSearchParams(document.location.search)
+const languageCode = customURLParameters.get("lang") ?? 'en'
+const customVFXLevel = customURLParameters.get("vfx")
+const customUIOption = customURLParameters.get("view")
+
 import './polyfills'
 import { GameLogic } from './busynessLogic/GameLogic'
 import { MobilePresentation as Presentation } from './presentation/mobile/MobilePresentation'
@@ -6,7 +11,13 @@ const protocol =  window.location.protocol
 const hostname = window.location.hostname
 const port = 50004
 
-const presentation = new Presentation().setup({wrapperHTMLElementId: 'projectWrapper'})
+const presentation = new Presentation()
+    .setup({
+        languageCode,
+        customVFXLevel,
+        customUIOption,
+        wrapperHTMLElementId: 'projectWrapper'
+    })
 
 const remoteWebAPI = {
     url: document.serviceURL ?? protocol + '//' + hostname + ':' + port + '/',

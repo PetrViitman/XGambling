@@ -486,7 +486,7 @@ export class Presentation {
 
 	async initBitmapFonts(accounts) {
 		const bitmapPhrases = []
-		Object.values(this.dictionary).map(text => bitmapPhrases.push(text))
+		Object.values(this.dictionary).forEach(text => bitmapPhrases.push(text))
 
 		TextField.fontStyles.default =  {
 			fontFamily: "Helvetica",

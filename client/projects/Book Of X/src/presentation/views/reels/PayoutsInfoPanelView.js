@@ -76,7 +76,7 @@ export class PayoutsInfoPanelView extends Container {
 						maximalWidth: 215,
 						maximalHeight: 43
 					}))
-				.setFontName('egypt')
+				.setFontName('default')
 				.setFontColor(0x00FF00)
 				.setFontSize(50)
 				.setAlignMiddle()

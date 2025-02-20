@@ -3,7 +3,7 @@ import { Container, Sprite } from 'pixi.js'
 export class AtlasCharacter extends Container {
 	currentSprite
 	symbolsSprites = {}
-	spaceSymbol = '1'
+	spaceSizeReferenceSymbol = '.'
 
 	constructor({characters = '0123456789', textures, color = 0xffffff}) {
 		super()
@@ -11,6 +11,7 @@ export class AtlasCharacter extends Container {
 		characters.split('').forEach((char, i) => {
 			this.symbolsSprites[char] = this.addChild(new Sprite(texturesArray[i]))
 			this.symbolsSprites[char].visible = false
+			this.symbolsSprites[char].anchor.set(0.5)
 		})
 
 		this.setColor(color)
@@ -24,7 +25,7 @@ export class AtlasCharacter extends Container {
 
 	setCharacter(character) {
 		const targetSprite = this.symbolsSprites[character]
-			?? this.symbolsSprites[this.spaceSymbol]
+			?? this.symbolsSprites[this.spaceSizeReferenceSymbol]
 			?? this.symbolsSprites[0]
 
 		if (this.currentSprite !== undefined)
@@ -33,12 +34,5 @@ export class AtlasCharacter extends Container {
 		this.currentSprite = targetSprite
 		this.currentSprite.alpha = this.symbolsSprites[character] ? 1 : 0
 		this.currentSprite.visible = true
-	}
-
-	hideCharacter(character) {
-		const targetSprite = this.symbolsSprites[character]
-		if (!targetSprite) return
-
-		targetSprite.alpha = 0
 	}
 }

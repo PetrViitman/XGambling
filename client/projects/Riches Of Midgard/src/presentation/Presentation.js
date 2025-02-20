@@ -17,7 +17,8 @@ import { getVFXLevel } from "./Benchmark"
 import { BigWinPayoutSplashScreen } from "./views/splashScreens/BigWinPayoutSplashScreen"
 import { Camera } from "./views/adaptiveDesign/Camera"
 import { InteractiveLayerView } from "./views/InteractiveLayerView"
-const locales = import.meta.glob('../../public/translations/*.json')
+import { getDictionary } from "./Dictionary"
+import { TextField } from "./views/text/TextField"
 
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
@@ -47,40 +48,7 @@ export class Presentation {
 		customVFXLevel,
 		customUIOption,
 		languageCode,
-		dictionary = {			
-			"bet": "Bet",
-			"win": "Win",
-			"balance": "Balance",
-			"buy": "Buy",
-			"select_bet": "Select bet",
-			"select_autoplay": "Selet autoplay length",
-			"buy_feature": "Buy feature",
-			"buy_feature_per_spin": " per spin",
-			"start": "Start",
-			"select": "Select",
-			"ok": "Confirm",
-			"make_cheat_bet": "Make cheat bet",
-			"error_100": "Server error",
-			"error_200": "Not enough money",
-			"error_300": "Bet is invalid",
-			"error_400": "Cheat bets are not expected",
-			"error_401": "Desired result is impossible",
-			
-			"spins_left_bmp": "FREE SPINS",
-			"total_win_bmp": "TOTAL WIN",
-			"congratulations_bmp": "CONGRATULATIONS!",
-			"free_spins_bmp": "FREE SPINS",
-			"you_have_won_bmp": "YOU WON",
-			"respin_awarded_bmp": "RE-SPIN!",
-			"loading_bmp": "LOADING",
-			"free_spins_teaser_bmp": "FREE SPINS!",
-			"wild_multipliers_teaser_bmp": "WILD SYMBOLS!",
-			"click_anywhere_to_continue_bmp": "Click anywhere to continue!",
-			"tap_anywhere_to_continue_bmp": "Tap anywhere to continue!",
-			"big_win_bmp": "That's a BIG WIN!",
-			"huge_win_bmp": "That's a HUGE WIN!",
-			"mega_win_bmp": "That's a MEGA WIN!"
-		}
+		dictionary
 	}) {
 		this.dictionary = dictionary
 		this.languageCode = languageCode
@@ -147,6 +115,14 @@ export class Presentation {
 		coefficients,
 		winLinesTopologies
 	}) {
+		// FETCHING DICTIONARY...
+		if (!this.dictionary) {
+			this.dictionary =  await getDictionary(this.languageCode)
+			this.isLTRTextDirection = this.dictionary.isLTRTextDirection
+			TextField.isLTRTextDirection = this.isLTRTextDirection
+		}
+		// ...FETCHING DICTIONARY
+
 		const {stage} = this.pixiApplication
 
 		this.resources = await getPreloadingResources()
@@ -347,43 +323,36 @@ export class Presentation {
 		stage.addChild(new VueUIContainer({vueContext, isMobileDevice}))
 	}
 
-	async initBitmapFonts() {
+	initBitmapFonts(accounts = []) {
 		const bitmapPhrases = []
 		for (const [key, value] of Object.entries(this.dictionary))
 			if (key.includes('_bmp'))
 				bitmapPhrases.push(value)
 
-		BitmapFont.from(
-			"runes",
-			{
-				fontFamily: "runes",
-				dropShadow: true,
-				dropShadowDistance: 10,
-				dropShadowAngle: Math.PI / 2,
-				dropShadowColor: 0x333333,
-				fontWeight: 'bold',
-				fontSize: 100,
-				fill: ['#FFFFFF', '#CCCCCC'],
-			},
-			{
-				chars: [
-					...new Set(bitmapPhrases.join('').split('')),
-					...'0123456789x:,.'
-				]
-			}
-		)
+		TextField.fontStyles.default =  {
+			fontFamily: "default",
+			dropShadow: true,
+			dropShadowDistance: 7,
+			dropShadowAngle: Math.PI / 2,
+			dropShadowColor: 0x333333,
+			fontWeight: 'bold',
+			fontSize: 100,
+			fill: ['#FFFFFF', '#CCCCCC'],
+		}
 
-		BitmapFont.from(
-			"Multiplier",
-			{
-				fontFamily: "bangopro",
-				fontSize: 100,
-				fill: '#FFFFFF',
-			},
-			{
-				chars: '12345x'
-			}
-		)
+		if(this.isLTRTextDirection) {
+			BitmapFont.from(
+				"default",
+				TextField.fontStyles.default,
+				{
+					chars: [...new Set([
+						...(accounts.map(({name}) => name).join('').split('')),
+						...(bitmapPhrases.join('').split('')),
+						...'0123456789x:,./ABCDEFGHIJKLMNOPQRSTUVWXYZ∞-|½×='
+					])]
+				}
+			)
+		}
 	}
 
 	// API...

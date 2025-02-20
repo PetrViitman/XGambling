@@ -18,10 +18,10 @@ import { BigWinPayoutSplashScreen } from "./views/splashScreens/BigWinPayoutSpla
 import { Camera } from "./views/adaptiveDesign/Camera"
 import { InteractiveLayerView } from "./views/InteractiveLayerView"
 import { WildIndicatorView } from "./views/WildIndicatorView"
+import { getDictionary } from "./Dictionary"
+import { TextField } from "./views/text/TextField"
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
-
-const locales = import.meta.glob('../../public/translations/*.json')
 
 export class Presentation {
 	resources
@@ -50,45 +50,7 @@ export class Presentation {
 		customVFXLevel,
 		customUIOption,
 		languageCode,
-		dictionary = {			
-			"bet": "Bet",
-			"lines": "Lines",
-			"win": "Win",
-			"balance": "Balance",
-			"select_bet": "Select bet",
-			"select_autoplay": "Select autoplay length",
-			"take_risk": "Double up!",
-			"start": "Start",
-			"select": "Select",
-			"ok": "Ok",
-			"make_bet": "Make bet",
-			"error_100": "Server error",
-			"error_200": "Not enough money",
-			"error_300": "Bet is invalid",
-			"error_400": "Cheat bets are not expected",
-			"error_401": "Desired result is invalid",
-			
-			"spins_left_bmp": "FREE SPINS",
-			"total_win_bmp": "TOTAL WIN",
-			"congratulations_bmp": "CONGRATULATIONS!",
-			"free_spins_bmp": "FREE SPINS",
-			"you_have_won_bmp": "YOU WON",
-			"loading_bmp": "LOADING",
-			"click_anywhere_to_continue_bmp": "CLICK ANYWHERE TO CONTINUE!",
-			"tap_anywhere_to_continue_bmp": "TAP ANYWHERE TO CONTINUE!",
-			"big_win_bmp": "That's a BIG WIN!",
-			"huge_win_bmp": "That's a HUGE WIN!",
-			"mega_win_bmp": "That's a MEGA WIN!",
-			"taking_risk_bmp": "DOUBLE UP!",
-			"or_bmp": "OR",
-			"red_bmp": "RED",
-			"green_bmp": "GREEN",
-			"collect_bmp": "QUIT",
-			"choose_bmp": "CHOOSE",
-			"additionally_bmp": "ADDITIONALLY!",
-			"special_symbol_bmp": "AND THE SPECIAL SYMBOL!",
-			"free_spins_over_bmp": "BONUS GAME IS FINISHED!"
-		}
+		dictionary
 	}) {
 		this.dictionary = dictionary
 		this.languageCode = languageCode
@@ -154,6 +116,14 @@ export class Presentation {
 		coefficients,
 		winLinesTopologies
 	}) {
+		// FETCHING DICTIONARY...
+		if (!this.dictionary) {
+			this.dictionary =  await getDictionary(this.languageCode)
+			this.isLTRTextDirection = this.dictionary.isLTRTextDirection
+			TextField.isLTRTextDirection = this.isLTRTextDirection
+		}
+		// ...FETCHING DICTIONARY
+		
 		const {stage} = this.pixiApplication
 
 		this.resources = await getPreloadingResources()
@@ -351,43 +321,36 @@ export class Presentation {
 		stage.addChild(new VueUIContainer({vueContext, isMobileDevice}))
 	}
 
-	async initBitmapFonts() {
+	initBitmapFonts(accounts = []) {
 		const bitmapPhrases = []
 		for (const [key, value] of Object.entries(this.dictionary))
 			if (key.includes('_bmp'))
 				bitmapPhrases.push(value)
 
-		BitmapFont.from(
-			"egypt",
-			{
-				fontFamily: "egypt",
-				dropShadow: true,
-				dropShadowDistance: 7,
-				dropShadowAngle: Math.PI / 2,
-				dropShadowColor: 0x333333,
-				fontWeight: 'bold',
-				fontSize: 100,
-				fill: ['#FFFFFF', '#CCCCCC'],
-			},
-			{
-				chars: [
-					...new Set(bitmapPhrases.join('').split('')),
-					...'0123456789x:,.'
-				]
-			}
-		)
+		TextField.fontStyles.default =  {
+			fontFamily: "default",
+			dropShadow: true,
+			dropShadowDistance: 7,
+			dropShadowAngle: Math.PI / 2,
+			dropShadowColor: 0x333333,
+			fontWeight: 'bold',
+			fontSize: 100,
+			fill: ['#FFFFFF', '#CCCCCC'],
+		}
 
-		BitmapFont.from(
-			"Multiplier",
-			{
-				fontFamily: "bangopro",
-				fontSize: 100,
-				fill: '#FFFFFF',
-			},
-			{
-				chars: '12345x'
-			}
-		)
+		if(this.isLTRTextDirection) {
+			BitmapFont.from(
+				"default",
+				TextField.fontStyles.default,
+				{
+					chars: [...new Set([
+						...(accounts.map(({name}) => name).join('').split('')),
+						...(bitmapPhrases.join('').split('')),
+						...'0123456789x:,./ABCDEFGHIJKLMNOPQRSTUVWXYZ∞-|½×='
+					])]
+				}
+			)
+		}
 	}
 
 	// API...

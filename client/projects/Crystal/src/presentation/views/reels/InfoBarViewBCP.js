@@ -65,7 +65,7 @@ export class InfoBarViewBCP extends Container {
             .addChild(
                 new TextField({maximalWidth, maximalHeight}),
             )
-            .setFontName('egypt')
+            .setFontName('default')
             .setFontSize(maximalHeight)
             .setFontColor(0xFFFFFF)
             .setAlignCenter()

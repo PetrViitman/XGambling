@@ -48,7 +48,7 @@ export class ProgressBarView extends AdaptiveContainer {
 			maximalWidth: 949,
 			maximalHeight: 200
 		})
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setFontSize(100)
 			.setText(dictionary.loading_bmp)
 			.setAlignCenter()

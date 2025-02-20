@@ -35,7 +35,7 @@ export class BigWinView extends Container {
             .addChild(new TextField({}))
             .setMaximalWidth(headerWidth)
             .setMaximalHeight(headerHeight)
-            .setFontName('egypt')
+            .setFontName('default')
             .setFontSize(100)
             .setFontColor(0xd2e99d)
             .setText(dictionary.total_win_bmp)
@@ -87,11 +87,12 @@ export class BigWinView extends Container {
             .setMaximalWidth(currencyWidth)
             .setMaximalHeight(currencyHeight)
             .setFontColor(0xe2b45d)
-            .setFontName('egypt')
+            .setFontName('default')
             .setFontSize(100)
             .setText('RUB')
             .setAlignCenter()
-            .setAlignMiddle();
+            .setAlignMiddle()
+            .setHiddenCharacters([','])
 
         currencyView.pivot.set(currencyWidth / 2, currencyHeight / 2);
         currencyView.y = 60;
@@ -102,7 +103,7 @@ export class BigWinView extends Container {
     async present(totalPayout = 123, currencyCode = '') {
         const {spineView} = this;
 
-        this.payoutView.setText(formatMoney(totalPayout)).hideSpriteCharacter(',')
+        this.payoutView.setText(formatMoney(totalPayout))
         this.bigWinCurrencyView.setText(currencyCode);
         spineView.playAnimation({
             name: 'win_total'

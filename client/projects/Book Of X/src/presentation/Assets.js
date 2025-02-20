@@ -14,7 +14,7 @@ function spreadWrappedTextures(resources) {
 export async function getPreloadingResources() {
 	Assets.addBundle('preloading', {
 		preloading_elements: 'atlases/preloading_elements.json',
-		egypt: 'fonts/egypt.otf'
+		default: 'fonts/default.otf'
 	})
 
 	commonResources = spreadWrappedTextures(

@@ -18,6 +18,7 @@ export class ProgressBarView extends AdaptiveContainer {
 		this.initCaption(dictionary)
 
 		this.setProgress(0)
+		alert('A')
 	}
 
 	initBar(assets) {
@@ -49,7 +50,7 @@ export class ProgressBarView extends AdaptiveContainer {
 			maximalWidth: 949,
 			maximalHeight: 200
 		})
-			.setFontName('egypt')
+			.setFontName('default')
 			.setFontSize(60)
 			.setText(dictionary.loading_bmp)
 			.setAlignCenter()

@@ -28,7 +28,7 @@ export class BonusAwardSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 125
 			}))
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setText(dictionary.congratulations_bmp)
 			.setFontColor(0xFFCC3b)
 			.setFontSize(90)
@@ -40,7 +40,7 @@ export class BonusAwardSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 90
 			}))
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setText(dictionary.you_have_won_bmp)
 			.setFontColor(0xCCFF3b)
 			.setFontSize(75)
@@ -53,7 +53,7 @@ export class BonusAwardSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 90
 			}))
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setFontColor(0xCCFF3b)
 			.setFontSize(75)
 			.setAlignCenter()
@@ -66,7 +66,7 @@ export class BonusAwardSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 90
 			}))
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setText(dictionary[
 				(isMobileDevice ? 'tap' : 'click')
 				+ '_anywhere_to_continue_bmp'

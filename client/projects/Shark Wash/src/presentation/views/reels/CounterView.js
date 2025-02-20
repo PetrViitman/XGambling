@@ -40,7 +40,7 @@ export class CounterView extends Container {
 			maximalWidth: 300,
 			maximalHeight: 70
 		})
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setFontSize(70)
 			.setText(captionText)
 			.setAlignCenter()
@@ -57,7 +57,7 @@ export class CounterView extends Container {
 			maximalWidth: 300,
 			maximalHeight: 100
 		})
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setFontSize(100)
 			.setAlignCenter()
 			.setAlignMiddle()

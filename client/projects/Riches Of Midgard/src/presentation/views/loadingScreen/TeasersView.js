@@ -43,7 +43,7 @@ export class TeasersView extends AdaptiveContainer {
 					maximalWidth: TEASER_WIDTH,
 					maximalHeight: 150
 				}))
-				.setFontName('runes')
+				.setFontName('default')
 				.setFontSize(50)
 				.setText(text)
 				.setAlignCenter()
@@ -60,7 +60,7 @@ export class TeasersView extends AdaptiveContainer {
 				maximalWidth: TEASER_WIDTH,
 				maximalHeight: 200
 			}))
-			.setFontName('runes')
+			.setFontName('default')
 			.setFontSize(50)
 			.setText(dictionary[
 				(isMobileDevice ? 'tap' : 'click')

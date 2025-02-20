@@ -2,6 +2,7 @@ import { Container } from 'pixi.js'
 import { AtlasCharacter } from './AtlasCharacter'
 
 export class AtlasText extends Container {
+	hiddenCharacters = []
 	bitmapCharacters = []
 	availableCharacters
 	textures
@@ -10,6 +11,9 @@ export class AtlasText extends Container {
 	color = 0xffffff
 	sampleHeight = 0
 	fontScaleFactor
+	blurScaleFactor = 1
+	distortionFactor = 0
+	distortionHeight = 0
 
 	constructor({availableCharacters, textures}) {
 		super()
@@ -38,10 +42,6 @@ export class AtlasText extends Container {
 		return this.bitmapCharacters[index]
 	}
 
-	hideCharacter(character) {
-		this.bitmapCharacters.forEach(view => view.hideCharacter(character))
-	}
-
 	setText(text = '') {
 		this.text = text
 
@@ -61,30 +61,72 @@ export class AtlasText extends Container {
 		return this
 	}
 
+	setDistortion(distortionFactor = 0) {
+		this.distortionFactor = distortionFactor
+
+		return this
+	}
+
+	setDistortionHeight(height) {
+		this.distortionHeight = height
+
+		return this
+	}
+
 	adjust() {
 		let x = 0
 		for (let i = 0; i < this.text.length; i++) {
+			
 			const bitmapCharacter = this.getBitmapCharacter(i)
 			bitmapCharacter.visible = true
 			bitmapCharacter.scale.set(this.fontScaleFactor)
 			bitmapCharacter.setCharacter(this.text[i])
 			bitmapCharacter.setColor(this.color)
-			bitmapCharacter.x = x
+			bitmapCharacter.skew.x = 0
+			bitmapCharacter.visible = !this.hiddenCharacters.includes(this.text[i])
 
-			const characterWidth = bitmapCharacter.width < 1
-				? this.sampleHeight * this.fontScaleFactor
-				: bitmapCharacter.width
-			x += characterWidth + this.letterSpacing
+
+			const characterHalfWidth = 
+			(
+				bitmapCharacter.width < 1
+					? this.sampleHeight * this.fontScaleFactor
+					: bitmapCharacter.width
+			)  * 0.5
+			x += characterHalfWidth
 
 			bitmapCharacter.scale.x = this.fontScaleFactor
 			bitmapCharacter.setColor(this.color)
+
+			bitmapCharacter.x = x
+			bitmapCharacter.y = bitmapCharacter.height / 2
+
+
+			x += characterHalfWidth + this.letterSpacing
 		}
 
 		for (let i = this.text.length; i < this.bitmapCharacters.length; i++) {
 			this.bitmapCharacters[i].visible = false
+			this.bitmapCharacters[i].skew.x = 0
 		}
 
+		this.finalTextWidth = x - this.letterSpacing
+
 		return this
+	}
+
+
+	onAdjusted() {
+		if(!this.distortionFactor) return
+
+		for (let i = 0; i < this.text.length; i++) {
+			const bitmapCharacter = this.getBitmapCharacter(i)
+			const symbolsProgress = i / (this.text.length - 1)
+			const progress = 0.25 + (1 - symbolsProgress) * 0.5
+			const angle = Math.PI * 2 * progress
+			const sin = Math.sin(angle)
+			bitmapCharacter.skew.x = sin * this.distortionFactor
+			bitmapCharacter.y = Math.sin(Math.PI * symbolsProgress) * this.distortionHeight
+		}
 	}
 
 	setFontSize(fontSize = 20) {

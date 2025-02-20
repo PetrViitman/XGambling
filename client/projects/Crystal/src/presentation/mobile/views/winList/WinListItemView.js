@@ -98,7 +98,7 @@ export class WinListItemView extends Container {
             maximalWidth,
             maximalHeight,
         })
-            .setFontName('roboto')
+            .setFontName('default')
             .setAlignCenter()
             .setAlignMiddle()
             .setFontColor(0xFF0000)

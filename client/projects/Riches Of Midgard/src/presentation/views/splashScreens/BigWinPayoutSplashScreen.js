@@ -40,7 +40,7 @@ export class BigWinPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 125
 			}))
-			.setFontName('runes')
+			.setFontName('default')
 			.setText(dictionary.congratulations_bmp)
 			.setFontColor(0xFF5500)
 			.setFontSize(90)
@@ -53,7 +53,7 @@ export class BigWinPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 200
 			}))
-			.setFontName('runes')
+			.setFontName('default')
 			.setFontSize(200)
 			.setAlignCenter()
 			.setAlignMiddle()
@@ -66,7 +66,7 @@ export class BigWinPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 150
 			}))
-			.setFontName('runes')
+			.setFontName('default')
 			.setFontColor(0xFF5500)
 			.setFontSize(150)
 			.setAlignCenter()
@@ -79,7 +79,7 @@ export class BigWinPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1000,
 				maximalHeight: 90
 			}))
-			.setFontName('runes')
+			.setFontName('default')
 			.setText(dictionary[
 				(isMobileDevice ? 'tap' : 'click')
 				+ '_anywhere_to_continue_bmp'

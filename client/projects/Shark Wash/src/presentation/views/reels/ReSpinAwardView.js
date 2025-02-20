@@ -35,7 +35,7 @@ export class ReSpinAwardView extends Container {
 			maximalWidth: REELS_WIDTH,
 			maximalHeight: 200
 		})
-			.setFontName('SharkWash')
+			.setFontName('default')
 			.setFontSize(150)
 			.setText(dictionary.re_spin_awarded_bmp)
 			.setAlignCenter()

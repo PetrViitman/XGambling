@@ -200,7 +200,7 @@ export class WinLineView extends Container {
 					maximalWidth,
 					maximalHeight
 				}))
-				.setFontName('egypt')
+				.setFontName('default')
 				.setFontSize(100)
 				.setText((index + 1) + '')
 				.setAlignCenter()

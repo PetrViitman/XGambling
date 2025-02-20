@@ -51,7 +51,7 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 90
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary.free_spins_over_bmp)
 			.setFontColor(0xFF3300)
 			.setFontSize(50)
@@ -65,7 +65,7 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 125
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary.congratulations_bmp)
 			.setFontColor(0xFF5500)
 			.setFontSize(90)
@@ -77,7 +77,7 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 90
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary.you_have_won_bmp)
 			.setFontColor(0xFF3300)
 			.setFontSize(50)
@@ -125,7 +125,7 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 90
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary[
 				(isMobileDevice ? 'tap' : 'click')
 				+ '_anywhere_to_continue_bmp'

@@ -1,5 +1,5 @@
 import { Assets } from "pixi.js"
-let commonResources = {}
+let commonAssets = {}
 
 function spreadWrappedTextures(resources) {
 	for (const {textures} of Object.values(resources))
@@ -14,12 +14,12 @@ export async function getPreloadingResources() {
 	Assets.addBundle('preloading', {
 		loading_background: 'jpg/loading_background.jpg',
 		preloading_elements: 'atlases/preloading_elements.json',
-		runes:  'fonts/runes.ttf',
+		default:  'fonts/default.ttf',
 	})
 
-	commonResources = spreadWrappedTextures(await Assets.loadBundle('preloading'))
+	commonAssets = spreadWrappedTextures(await Assets.loadBundle('preloading'))
 
-	return commonResources
+	return commonAssets
 }
 
 export async function getResources(onProgressCallback) {
@@ -39,5 +39,5 @@ export async function getResources(onProgressCallback) {
 	const resources = spreadWrappedTextures(
 		await Assets.loadBundle('gameAssets', onProgressCallback))
 
-	return {...commonResources, ...resources}
+	return {...commonAssets, ...resources}
 }

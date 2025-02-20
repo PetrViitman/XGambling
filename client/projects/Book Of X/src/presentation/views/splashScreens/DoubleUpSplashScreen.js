@@ -110,7 +110,7 @@ export class DoubleUpSplashScreen extends BaseSplashScreen {
                 maximalWidth: 200,
                 maximalHeight: 50
             }))
-            .setFontName('egypt')
+            .setFontName('default')
             .setText(dictionary.red_bmp)
             .setFontColor(0xFF0000)
             .setFontSize(90)
@@ -157,7 +157,7 @@ export class DoubleUpSplashScreen extends BaseSplashScreen {
                 maximalWidth: 200,
                 maximalHeight: 50
             }))
-            .setFontName('egypt')
+            .setFontName('default')
             .setText(dictionary.green_bmp)
             .setFontColor(0xFFFF00)
             .setFontSize(90)
@@ -192,7 +192,7 @@ export class DoubleUpSplashScreen extends BaseSplashScreen {
         const maximalHeight = 90
         const textField = container
             .addChild(new TextField({maximalWidth, maximalHeight}))
-            .setFontName('egypt')
+            .setFontName('default')
             .setText(dictionary.green_bmp)
             .setFontColor(0xFFFF00)
             .setFontSize(90)
@@ -214,7 +214,7 @@ export class DoubleUpSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 125
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary.taking_risk_bmp)
 			.setFontColor(0xFF5500)
 			.setFontSize(90)
@@ -229,7 +229,7 @@ export class DoubleUpSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 90
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary.choose_bmp)
 			.setFontColor(0xFF00AA)
 			.setFontSize(50)
@@ -243,7 +243,7 @@ export class DoubleUpSplashScreen extends BaseSplashScreen {
 				maximalWidth: 1600,
 				maximalHeight: 90
 			}))
-			.setFontName('egypt')
+			.setFontName('default')
 			.setText(dictionary.or_bmp)
 			.setFontColor(0xFF00AA)
 			.setFontSize(90)

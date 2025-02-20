@@ -16,7 +16,7 @@ export async function getPreloadingAssets() {
 	Assets.addBundle('preloading', {
 		loading_background: 'jpg/loading_background.jpg',
 		preloading_elements: 'atlases/preloading_elements.json',
-		bangopro:  'fonts/bangopro.otf',
+		default:  'fonts/default.otf',
 	})
 
 	commonResources = spreadWrappedTextures(

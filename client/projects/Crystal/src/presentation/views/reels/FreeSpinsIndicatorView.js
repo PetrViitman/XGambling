@@ -32,7 +32,7 @@ export class FreeSpinsIndicatorView extends Container {
                 maximalHeight: height
             })
                 .setFontColor(0xFFFFFF)
-                .setFontName('egypt')
+                .setFontName('default')
                 .setText(dictionary.free_spins_bmp)
                 .setFontSize(45)
                 .setAlignMiddle()

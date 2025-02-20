@@ -38,7 +38,7 @@ export class WinTabloidView extends Container{
 				maximalHeight: 200
 			}))
 
-		this.textField.setFontName('runes')
+		this.textField.setFontName('default')
 		this.textField
 			.setText('')
 			.setFontSize(200)

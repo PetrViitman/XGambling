@@ -49,7 +49,7 @@ export class ProgressBarView extends AdaptiveContainer {
 			maximalWidth: 949,
 			maximalHeight: 200
 		})
-			.setFontName('roboto')
+			.setFontName('default')
 			.setFontSize(60)
 			.setText(dictionary.loading_bmp)
 			.setAlignCenter()

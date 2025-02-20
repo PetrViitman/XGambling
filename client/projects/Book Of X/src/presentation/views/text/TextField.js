@@ -1,16 +1,19 @@
-import { Graphics, BitmapText, Container } from 'pixi.js'
+import { Graphics, BitmapText, Container, Text } from 'pixi.js'
 import { AtlasText } from './AtlasText'
 
 const ALIGN_IDS = {
-	LEFT: 0,
-	CENTER: 1,
-	RIGHT: 2,
-	TOP: 0,
-	MIDDLE: 1,
-	BOTTOM: 2,
+	LEFT: 'left',
+	CENTER: 'center',
+	RIGHT: 'right',
+	TOP: 'top',
+	MIDDLE: 'middle',
+	BOTTOM: 'bottom',
 }
 
 export class TextField extends Container {
+	static fontStyles = {}
+	static isLTRTextDirection = true
+
 	text
 	maximalWidth
 	maximalHeight
@@ -27,15 +30,19 @@ export class TextField extends Container {
 	bitmapText
 	atlasText
 	textView
+	isDynamicCharacterSet
+	charactersPerLineCount = Infinity
 
 	constructor({
 		maximalWidth = undefined,
 		maximalHeight = undefined,
+		isDynamicCharacterSet = false
 	}) {
 		super()
 
 		this.maximalWidth = maximalWidth
 		this.maximalHeight = maximalHeight
+		this.isDynamicCharacterSet = isDynamicCharacterSet
 		this.setFontName()
 		this.setText('')
 	}
@@ -62,19 +69,74 @@ export class TextField extends Container {
 		return this
 	}
 
-	setText(text = '') {
-		const finalText = text + ''
-		if (finalText === this.text)
+	setText(text = '', forceReset = false) {
+		let finalText = text + ''
+		if (finalText === this.text && !forceReset)
 			return this
 
-		this.text = finalText
+		if (!TextField.isLTRTextDirection) {
+			let prefixRTL = ''
+			for(let i = finalText.length - 1; i >= 0; i--) {
+				if ('?!.'.includes(finalText[i])) {
+					prefixRTL += finalText[i]
+				} else {
+					break
+				}
+			}
+
+			finalText = prefixRTL + finalText.substring(0, finalText.length - prefixRTL.length)
+		}
+
+
+		const finalTexts = text.split?.("║") ?? [finalText ?? '']
+
+		this.text = finalTexts.join('\n')
+
+		const {charactersPerLineCount} = this
+
+		if (charactersPerLineCount) {
+			this.text = ''
+
+			finalTexts.forEach(finalText => {
+				let buffer = ''
+
+				if(finalText.length < charactersPerLineCount) {
+					buffer = finalText + (finalTexts.length > 1 ? '\n' : '')
+				} else {
+					let elapsedCharactersCount = 0
+					let characterIndex = 0
+					while (elapsedCharactersCount < finalText.length) {
+						let textLine = finalText.substring(characterIndex, characterIndex + charactersPerLineCount)
+						
+						if(elapsedCharactersCount + charactersPerLineCount < finalText.length) {
+						for (let i = textLine.length; i > 0; i--) {
+							if(textLine[i] === ' ') {
+								
+								textLine = textLine.substring(0, i)
+								break
+							}
+						}
+						}
+
+						buffer += textLine
+						characterIndex += textLine.length
+						elapsedCharactersCount += Math.max(0, textLine.length - 1) || charactersPerLineCount
+
+						if(elapsedCharactersCount < finalText.length) {
+							buffer += '\n'
+						}
+					}
+				}
+				this.text += buffer
+			})
+		}
 
 		if (!this.textView)
 			return this
 
-		this.textView.text = finalText
+		this.textView.text = this.text
 		if (this.atlasText)
-			this.atlasText.setText(finalText)
+			this.atlasText.setText(this.text)
 
 		return this.adjust()
 	}
@@ -91,8 +153,18 @@ export class TextField extends Container {
 		return this.adjust()
 	}
 
+	setCharactersPerLineCount(charactersPerLineCount) {
+		this.charactersPerLineCount = charactersPerLineCount
+
+		return this.setText(this.text, true)
+	}
+
 	setAlignLeft() {
-		return this.setHorizontalAlignMode(ALIGN_IDS.LEFT)
+		return this.setHorizontalAlignMode(
+			TextField.isLTRTextDirection
+				? ALIGN_IDS.LEFT
+				: ALIGN_IDS.RIGHT
+		)
 	}
 
 	setAlignCenter() {
@@ -100,7 +172,11 @@ export class TextField extends Container {
 	}
 
 	setAlignRight() {
-		return this.setHorizontalAlignMode(ALIGN_IDS.RIGHT)
+		return this.setHorizontalAlignMode(
+			TextField.isLTRTextDirection
+				? ALIGN_IDS.RIGHT
+				: ALIGN_IDS.LEFT
+			)
 	}
 
 	setAlignTop() {
@@ -118,6 +194,16 @@ export class TextField extends Container {
 	setHorizontalAlignMode(horizontalAlignMode) {
 		if (this.horizontalAlignMode === horizontalAlignMode)
 			return this
+
+		const { textView } = this
+
+		if(textView) {
+			if (textView.style) {
+				textView.style.align = horizontalAlignMode;
+			} else {
+				textView.align = horizontalAlignMode;
+			}
+		}
 
 		this.horizontalAlignMode = horizontalAlignMode
 		this.adjust()
@@ -142,7 +228,7 @@ export class TextField extends Container {
 		this.textView.scale.set(1)
 		this.textView.visible = true
 
-		const textFullWidth = this.textView.width
+		const textFullWidth = this.textView.finalTextWidth ?? this.textView.width
 		const textFullHeight = this.textView.height
 		const maximalWidth = this.maximalWidth ?? textFullWidth
 		const maximalHeight = this.maximalHeight ?? textFullHeight
@@ -192,6 +278,9 @@ export class TextField extends Container {
 		if (this.areaGraphics)
 			this.highlightArea()
 
+
+		this.atlasText?.onAdjusted()
+
 		return this
 	}
 
@@ -202,6 +291,33 @@ export class TextField extends Container {
 			this.bitmapText.letterSpacing = letterSpacing
 		else if (this.atlasText)
 			this.atlasText.setLetterSpacing(letterSpacing)
+
+		this.adjust()
+
+		return this
+	}
+
+	setDistortion(distortionFactor = 0) {
+		if (this.atlasText)
+			this.atlasText.setDistortion(distortionFactor)
+
+		this.adjust()
+
+		return this
+	}
+
+	setDistortionHeight(height) {
+		if (this.atlasText)
+			this.atlasText.setDistortionHeight(height)
+
+		this.adjust()
+
+		return this
+	}
+
+	setSymbolsScale(scaleFactor = 1) {
+		if (this.atlasText)
+			this.atlasText.setSymbolsScale(scaleFactor)
 
 		this.adjust()
 
@@ -233,7 +349,16 @@ export class TextField extends Container {
 		if (!this.textView) {
 			try {
 				this.atlasText = null
-				this.bitmapText = new BitmapText('', {fontName})
+				if (TextField.isLTRTextDirection && !this.isDynamicCharacterSet) {
+					this.bitmapText = new BitmapText('', {fontName})
+				} else {
+					this.bitmapText = new Text('')
+					const fontStyle = TextField.fontStyles[fontName]
+					if(fontStyle) {
+						this.bitmapText.style =  fontStyle
+					}
+				}
+
 				this.textView = this.addChild(this.bitmapText)
 			} catch (e) {}
 		}
@@ -249,8 +374,13 @@ export class TextField extends Container {
 	setFontSize(fontSize) {
 		this.style.fontSize = fontSize
 
-		if (this.bitmapText)
+		if (this.bitmapText) {
 			this.bitmapText.fontSize = fontSize
+
+			if (this.bitmapText.style) {
+				this.bitmapText.style.fontSize = fontSize
+			}
+		}
 		else if (this.atlasText)
 			this.atlasText.setFontSize(fontSize)
 
@@ -264,5 +394,10 @@ export class TextField extends Container {
 			this.bitmapText.tint = color
 
 		return this.adjust()
+	}
+
+	setHiddenCharacters(hiddenCharacters = []) {
+		if(!this.atlasText) return
+		this.atlasText.hiddenCharacters = hiddenCharacters
 	}
 }

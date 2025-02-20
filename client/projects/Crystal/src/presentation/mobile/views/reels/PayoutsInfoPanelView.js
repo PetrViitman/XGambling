@@ -75,7 +75,7 @@ export class PayoutsInfoPanelView extends Container {
 						maximalWidth: 175,
 						maximalHeight: height
 					}))
-				.setFontName('roboto')
+				.setFontName('default')
 				.setFontColor(0xFFFFFF)
 				.setFontSize(200)
 				.setAlignMiddle()

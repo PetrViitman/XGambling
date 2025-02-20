@@ -77,7 +77,7 @@ export class PayoutsInfoPanelView extends Container {
 						maximalWidth: 190,
 						maximalHeight: 70
 					}))
-				.setFontName('SharkWash')
+				.setFontName('default')
 				.setFontColor(0x00FF00)
 				.setFontSize(50)
 				.setAlignLeft()

@@ -58,7 +58,7 @@ export class CounterView extends Container {
 
 		captionView.position.set(-75, -60)
 
-		captionView.setFontName('runes')
+		captionView.setFontName('default')
 		captionView
 			.setText(headerText)
 			.setFontSize(100)
@@ -79,7 +79,7 @@ export class CounterView extends Container {
 
 		this.textField.position.set(-75, -43)
 
-		this.textField.setFontName('runes')
+		this.textField.setFontName('default')
 		this.textField
 			.setText('10')
 			.setFontSize(100)
