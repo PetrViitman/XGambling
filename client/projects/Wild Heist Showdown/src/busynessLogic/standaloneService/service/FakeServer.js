@@ -1,5 +1,5 @@
 import { COEFFICIENTS, SlotMachine } from "./slotMachine/SlotMachine"
-import PROBABILITY from "./slotMachine/ProbabilityTemplate"
+import PROBABILITY from "./slotMachine/RTP_96"
 
 const CUSTOM_REELS_EXPECTED = true
 const ERROR_CODES = {
@@ -21,7 +21,7 @@ const ACCOUNTS = [
         "type": 0,
         "name": "Main account",
         "id": 476313101,
-        "balance": 6540.36,
+        "balance": 10000,
         "currencyId": 1,
         "codeCurrency": "RUB",
         "isPrimary": true,

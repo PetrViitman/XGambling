@@ -423,11 +423,7 @@ export class ReelCellView extends Container {
 		const finalDistance = distance * CELL_HEIGHT
 		const fallDuration = Math.min(350, distance * 100)
 		symbolView.idleProgressOffset = idleProgressOffset
-		// symbolView.idleProgress = idleProgress
 
-		//this.presentSymbol(symbolId)
-		//symbolView.update()
-		//fallingView.y = -finalDistance * 1 + offsetY
 
 		this.presentSymbol(symbolId)
 		fallingView.y = -finalDistance

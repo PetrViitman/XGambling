@@ -87,18 +87,17 @@ export class SlotMachine {
 	}
 
 	roll({
-		isFreeSpinsMode = false,
+		probabilities = this.probability.defaultSpins,
 		desiredReels,
 		isBonusPurchased
 	}) {
+
 		const {
 			regularSymbolsProbability,
 			specialSymbolsProbability,
-		} =  isFreeSpinsMode
-			? this.probability.bonusGame
-			: this.probability.defaultGame
+		} = probabilities
 
-
+		
 		const reels = new Array(REELS_COUNT)
 			.fill(0)
 			.map((_, x) => new Array(REELS_LENGTHS[x])
@@ -119,7 +118,8 @@ export class SlotMachine {
 					if (!availableSymbols.length)
 						availableSymbols = [...REGULAR_SYMBOLS_IDS]
 					
-					const randomSymbolIndex = Math.trunc(Math.random() * availableSymbols.length)
+					const randomNumber = Math.random()
+					const randomSymbolIndex = Math.trunc(randomNumber * availableSymbols.length)
 					reels[x][y] = availableSymbols[randomSymbolIndex]
 					availableSymbols.splice(randomSymbolIndex, 1)
 				}
@@ -127,8 +127,10 @@ export class SlotMachine {
 
 			let remainingScattersCount = 3
 			while(remainingScattersCount) {
-				const x = Math.trunc(Math.random() * REELS_COUNT)
-				const y = Math.trunc(Math.random() * REELS_LENGTHS[x])
+				let randomNumber = Math.random()
+				const x = Math.trunc(randomNumber * REELS_COUNT)
+				randomNumber = Math.random()
+				const y = Math.trunc(randomNumber * REELS_LENGTHS[x])
 				
 				if(reels[x][y] !== SCATTER_SYMBOL_ID) {
 					reels[x][y] = SCATTER_SYMBOL_ID
@@ -139,8 +141,9 @@ export class SlotMachine {
 			return reels
 		}
 		
-		reels.forEach((reel, x) => {
-			reel.forEach((_, y) => {
+		for (let x = 0; x < reels.length; x++) {
+			const reel = reels[x]
+			for (let y = 0; y < REELS_LENGTHS[x]; y++) {
 				const symbolsIds = REGULAR_REELS_SYMBOLS_IDS[x]
 				const randomNumber = Math.random()
 				let probabilityOffset = 0
@@ -160,16 +163,19 @@ export class SlotMachine {
 					probabilityOffset = symbolProbability
 				}
 				// ...REGULAR SYMBOLS
-			})
+			}
 
 			// GOLDEN FRAMES...
 			if (x >= 2 && x <= 3) {
 				const goldenFramesProbability = specialSymbolsProbability.goldenFrames
 
-				goldenFramesProbability[x - 2].forEach((probability, y) => {
-					if (Math.random() <= probability)
+				const targetProbabilityArray = goldenFramesProbability[x - 2]
+				for(let y = 0; y < targetProbabilityArray.length; y++) {
+					const randomNumber = Math.random()
+					if (randomNumber <= targetProbabilityArray[y])
 						reels[x][y] *= -1
-				})
+
+				}
 			}
 			// ...GOLDEN FRAMES
 
@@ -177,18 +183,23 @@ export class SlotMachine {
 			// WILD...
 			const wildProbability = specialSymbolsProbability.wild
 			
-			if (Math.random() < wildProbability[x])
-				reel[Math.trunc(Math.random() * REELS_LENGTHS[x])] = WILD_SYMBOL_ID
+			let randomNumber = Math.random()
+			if (randomNumber < wildProbability[x]) {
+				randomNumber = Math.random()
+				reel[Math.trunc(randomNumber * REELS_LENGTHS[x])] = WILD_SYMBOL_ID
+			}
 			// ...WILD
 
 			// SCATTER...
 			const scatterProbability = specialSymbolsProbability.scatter
-
-			if (Math.random() < scatterProbability[x])
-				reel[Math.trunc(Math.random() * REELS_LENGTHS[x])] = SCATTER_SYMBOL_ID
+			randomNumber = Math.random()
+			if (randomNumber < scatterProbability[x]) {
+				randomNumber = Math.random()
+				reel[Math.trunc(randomNumber * REELS_LENGTHS[x])] = SCATTER_SYMBOL_ID
+			}
 			// ...SCATTER
 			// ...SPECIAL SYMBOLS SUBSTITUTION
-		})
+		}
 
 
 		// shuffling each individual reel, as symbols order makes no impact
@@ -197,6 +208,7 @@ export class SlotMachine {
 			const symbolsIds = reel.map(symbolId => symbolId)
 
 			for (let i = 0; i < REELS_LENGTHS[x]; i++) {
+				// This pseudo random shuffling makes no effect on RTP, therefor it's just for esthetics
 				const randomSymbolIndex = Math.trunc(Math.random() * symbolsIds.length)
 				shuffledReels[x].push(symbolsIds[randomSymbolIndex])
 
@@ -276,7 +288,8 @@ export class SlotMachine {
 	}
 
 	getReelsPatch(cascadedReels, isFreeSpinsMode) {
-		const reels = this.roll({isFreeSpinsMode})
+		const {defaultCascades, bonusCascades} = this.probability
+		const reels = this.roll({ probabilities: isFreeSpinsMode ? bonusCascades : defaultCascades })
 		const reelsPatch = cascadedReels.map((reel, x) => {
 			let cellsCount = 0
 			for(let y = 0; y < reel.length; y++) {
@@ -349,6 +362,7 @@ export class SlotMachine {
 		let winDescriptor
 
 		do {
+
 			const step = {multiplier}
 			const isFirstStep = !steps.length
 
@@ -387,6 +401,7 @@ export class SlotMachine {
 		desiredReels,
 		isBonusPurchased,
 	}) {
+		const {defaultSpins, bonusSpins} = this.probability
 		let roundSteps = []
 		let isFreeSpinsMode
 		let freeSpinsCount = 0
@@ -394,7 +409,7 @@ export class SlotMachine {
 		do {
 			freeSpinsCount = Math.max(0, freeSpinsCount - 1)
 			let reels = desiredReels ?? this.roll({
-				isFreeSpinsMode,
+				probabilities: isFreeSpinsMode ? bonusSpins : defaultSpins,
 				desiredReels,
 				isBonusPurchased: isBonusPurchased && !roundSteps.length
 			})

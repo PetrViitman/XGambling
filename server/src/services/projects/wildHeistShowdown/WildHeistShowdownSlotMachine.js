@@ -89,18 +89,17 @@ class SlotMachine {
 	}
 
 	async roll({
-		isFreeSpinsMode = false,
+		probabilities = this.probability.defaultSpins,
 		desiredReels,
 		isBonusPurchased
 	}) {
+
 		const {
 			regularSymbolsProbability,
 			specialSymbolsProbability,
-		} =  isFreeSpinsMode
-			? this.probability.bonusGame
-			: this.probability.defaultGame
+		} = probabilities
 
-
+		
 		const reels = new Array(REELS_COUNT)
 			.fill(0)
 			.map((_, x) => new Array(REELS_LENGTHS[x])
@@ -188,7 +187,7 @@ class SlotMachine {
 			
 			let randomNumber = await random()
 			if (randomNumber < wildProbability[x]) {
-				randomNumber = await random()
+				randomNumber = random()
 				reel[Math.trunc(randomNumber * REELS_LENGTHS[x])] = WILD_SYMBOL_ID
 			}
 			// ...WILD
@@ -291,7 +290,8 @@ class SlotMachine {
 	}
 
 	async getReelsPatch(cascadedReels, isFreeSpinsMode) {
-		const reels = await this.roll({isFreeSpinsMode})
+		const {defaultCascades, bonusCascades} = this.probability
+		const reels = await this.roll({ probabilities: isFreeSpinsMode ? bonusCascades : defaultCascades })
 		const reelsPatch = cascadedReels.map((reel, x) => {
 			let cellsCount = 0
 			for(let y = 0; y < reel.length; y++) {
@@ -364,6 +364,7 @@ class SlotMachine {
 		let winDescriptor
 
 		do {
+
 			const step = {multiplier}
 			const isFirstStep = !steps.length
 
@@ -402,6 +403,7 @@ class SlotMachine {
 		desiredReels,
 		isBonusPurchased,
 	}) {
+		const {defaultSpins, bonusSpins} = this.probability
 		let roundSteps = []
 		let isFreeSpinsMode
 		let freeSpinsCount = 0
@@ -409,7 +411,7 @@ class SlotMachine {
 		do {
 			freeSpinsCount = Math.max(0, freeSpinsCount - 1)
 			let reels = desiredReels ?? await this.roll({
-				isFreeSpinsMode,
+				probabilities: isFreeSpinsMode ? bonusSpins : defaultSpins,
 				desiredReels,
 				isBonusPurchased: isBonusPurchased && !roundSteps.length
 			})

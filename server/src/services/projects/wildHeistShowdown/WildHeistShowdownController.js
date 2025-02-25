@@ -2,7 +2,7 @@ const BUY_FEATURE_BET_MULTIPLIER = 75
 const { ERROR_CODES, BET_OPTIONS, ROLES } = require("../../../Constants");
 const { getUserIfCanAffordDeposit, getUser } = require("../../user/UserController");
 const { SlotMachine, COEFFICIENTS } = require("./WildHeistShowdownSlotMachine");
-const probability = require('./probabilities/ProbabilityTemplate')
+const probability = require('./probabilities/RTP97')
 const slotMachine = new SlotMachine(probability)
 
 
