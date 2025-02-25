@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     "defaultSpins": {
      "regularSymbolsProbability": {
       "1": [
