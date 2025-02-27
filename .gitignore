@@ -33,5 +33,5 @@ coverage
 **/.builds/presentation/
 
 
-**/cookies.json
-**/credentials.json
+**/.credentials
+**/.cookies
