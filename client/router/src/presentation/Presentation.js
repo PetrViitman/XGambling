@@ -310,10 +310,13 @@ export class Presentation {
 		this.terminalView.presentPendingResponse()
 	}
 
-
-	presentProject(url, name) {
+	presentProject(url, name, sessionId) {
 		this.presentPendingResponse()
-		return this.iframeView.presentProject(url + window.location.search, name)
+		
+		return this.iframeView.presentProject(
+			url + window.location.search,
+			name,
+			sessionId)
 	}
 
 	refreshIframe() {

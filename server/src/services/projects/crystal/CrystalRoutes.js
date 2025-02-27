@@ -1,27 +1,29 @@
 const express = require('express')
-const { validateSession } = require('../../Shared')
+const { validateSessionPost, validateSessionGet } = require('../../session/SessionRoutes')
 const { makeBet, gameDescription } = require('./CrystalController')
 
 const router = express.Router()
 
-router.get('/gameDescription', validateSession, async (request, response) => {
-    const descriptor = await gameDescription(request.session.id)
+router.get('/gameDescription', validateSessionGet, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const descriptor = await gameDescription(sessionId)
     
     response.send(descriptor)
 })
 
-router.post('/makeBet', validateSession, async (request, response) => {
+router.post('/makeBet', validateSessionPost, async (request, response) => {
     const {
         accountId,
         bet,
         desiredReels,
+        sessionId
     } = request.body
 
     const betResult = await makeBet({
         accountId,
         bet,
         desiredReels,
-        sessionId: request.session.id
+        sessionId
     })
 
     const {errorCode} = betResult

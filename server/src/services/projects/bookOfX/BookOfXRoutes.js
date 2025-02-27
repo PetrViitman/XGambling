@@ -1,23 +1,25 @@
 const express = require('express')
-const { validateSession } = require('../../Shared')
+const { validateSessionGet, validateSessionPost } = require('../../session/SessionRoutes')
 const { makeBet, makeRisk, gameDescription } = require('./BookOfXController')
 
 const router = express.Router()
 
-router.get('/gameDescription', validateSession, async (request, response) => {
-    const descriptor = await gameDescription(request.session.id)
+router.get('/gameDescription', validateSessionGet, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const descriptor = await gameDescription(sessionId)
     
     response.send(descriptor)
 })
 
-router.post('/makeBet', validateSession, async (request, response) => {
+router.post('/makeBet', validateSessionPost, async (request, response) => {
     const {
         accountId,
         betPerLine,
         linesCount,
         desiredReels,
         riskOption,
-        presetSpecialSymbolId
+        presetSpecialSymbolId,
+        sessionId
     } = request.body
 
     const betResult = await makeBet({
@@ -27,7 +29,7 @@ router.post('/makeBet', validateSession, async (request, response) => {
         desiredReels,
         riskOption,
         presetSpecialSymbolId,
-        sessionId: request.session.id
+        sessionId
     })
 
     const {errorCode} = betResult
@@ -39,14 +41,15 @@ router.post('/makeBet', validateSession, async (request, response) => {
     response.send(betResult)
 })
 
-router.post('/makeRisk', validateSession, async (request, response) => {
+router.post('/makeRisk', validateSessionPost, async (request, response) => {
     const {
-        riskOption
+        riskOption,
+        sessionId
     } = request.body
 
     const riskResult = await makeRisk({
         riskOption,
-        sessionId: request.session.id
+        sessionId
     })
 
     const {errorCode} = riskResult

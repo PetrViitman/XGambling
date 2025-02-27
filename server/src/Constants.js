@@ -16,6 +16,7 @@ module.exports = {
             USER_NOT_FOUND: 2005,
             NOT_ENOUGH_MONEY: 2006,
             INVALID_ACCOUNT: 2007,
+            SESSION_EXPIRED: 2008,
         },
         BET: {
             INVALID_BET_REQUEST: 3000

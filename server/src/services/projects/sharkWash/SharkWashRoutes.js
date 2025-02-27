@@ -1,16 +1,17 @@
 const express = require('express')
-const { validateSession } = require('../../Shared')
+const { validateSessionGet, validateSessionPost } = require('../../session/SessionRoutes')
 const { makeBet, gameDescription } = require('./SharkWashController')
 
 const router = express.Router()
 
-router.get('/gameDescription', validateSession, async (request, response) => {
-    const descriptor = await gameDescription(request.session.id)
+router.get('/gameDescription', validateSessionGet, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const descriptor = await gameDescription(sessionId)
     
     response.send(descriptor)
 })
 
-router.post('/makeBet', validateSession, async (request, response) => {
+router.post('/makeBet', validateSessionPost, async (request, response) => {
     const {
         sessionId,
         bet,
@@ -23,7 +24,6 @@ router.post('/makeBet', validateSession, async (request, response) => {
         bet,
         isBuyFeatureRequest,
         desiredReels,
-        sessionId: request.session.id
     })
 
     const {errorCode} = betResult

@@ -27,7 +27,7 @@ export class IframeView extends AdaptiveContainer{
         this.onDrop?.()
     }
 
-    async presentProject(url, name) {
+    async presentProject(url, name, sessionId) {
         this.drop()
 
         const iframe = document.createElement('iframe');
@@ -43,8 +43,8 @@ export class IframeView extends AdaptiveContainer{
         document.body.appendChild(iframe)
         await new Promise(resolve => {
             iframe.addEventListener('load', resolve, true)
-            iframe.url = url
-            iframe.src = url
+            iframe.url = url + '?sessionId=' + sessionId
+            iframe.src = url + '?sessionId=' + sessionId
         })
 
         this.iframeHTMLElement = iframe

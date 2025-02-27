@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('./UserController')
-const {validateSession} = require('../Shared')
-const { ERROR_CODES } = require('../../Constants')
-
+const { validateSessionPost, validateSessionGet } = require('../session/SessionRoutes')
+const { deleteSession } = require('../session/SessionController')
 
 router.post('/signUp', async (request, response) => {
     const { name, password } = request.body
@@ -13,46 +12,42 @@ router.post('/signUp', async (request, response) => {
         return response.send({errorCode: signUpResult.errorCode})
     }
 
-    const logInResult = await userController.logIn({name, password, sessionId: request.session.id})
-
+    const logInResult = await userController.logIn({name, password})    
     if (logInResult.errorCode) {
         return response.send({errorCode: logInResult.errorCode})
     }
-    
-    request.session.isAuth = true
-    response.send({result: 'success'})
+
+    response.send({sessionId: logInResult.sessionId})
 })
 
 router.post('/logIn', async (request, response) => {
     const {name, password} = request.body
 
-    await userController.logOut(request.session.id)
-    const { balance, username, errorCode} = await userController.logIn({name, password, sessionId: request.session.id})
+    await userController.logOut(request.body.sessionId)
+    const { sessionId, balance, username, errorCode} = await userController.logIn({name, password})
 
     if (errorCode) {
         return response.send({errorCode})
     }
 
-    request.session.isAuth = true
-    await request.session.save()
-
-    response.send({balance, username})
+    response.send({balance, username, sessionId})
 })
 
-router.post('/logOut', validateSession, async (request, response) => {
-    const logOutResult = await userController.logOut(request.session.id)
+router.post('/logOut', validateSessionPost, async (request, response) => {
+    const { sessionId } = request.body
+    const logOutResult = await userController.logOut(sessionId)
 
     if(logOutResult.errorCode) {
         return response.send()
     }
 
-    await request.session.destroy()
+    await deleteSession(sessionId)
 
     response.send({result: 'success'})
 })
 
 
-router.post('/delete', validateSession, async (request, response) => {
+router.post('/delete', validateSessionPost, async (request, response) => {
     const { name, password } = request.body
     const {errorCode} = await userController.deleteUser(name, password)
 
@@ -63,12 +58,13 @@ router.post('/delete', validateSession, async (request, response) => {
     response.send({result: 'success'})
 })
 
-router.post('/addAccount', validateSession, async (request, response) => {
+router.post('/addAccount', validateSessionPost, async (request, response) => {
     const {
         username,
         accountName,
         deposit,
-        currencyCode
+        currencyCode,
+        sessionId
     } = request.body
 
     const {errorCode} = await userController.addAccount({
@@ -76,7 +72,7 @@ router.post('/addAccount', validateSession, async (request, response) => {
         accountName,
         deposit,
         currencyCode,
-        sessionId: request.session.id
+        sessionId
     })
 
     if (errorCode) {
@@ -86,18 +82,19 @@ router.post('/addAccount', validateSession, async (request, response) => {
     response.send({result: 'success'})
 })
 
-router.post('/deposit', validateSession, async (request, response) => {
+router.post('/deposit', validateSessionPost, async (request, response) => {
     const {
         username,
         accountName,
-        deposit
+        deposit,
+        sessionId
     } = request.body
 
     const {errorCode} = await userController.deposit({
         username,
         accountName,
         deposit,
-        sessionId: request.session.id
+        sessionId
     })
 
     if (errorCode) {
@@ -107,8 +104,9 @@ router.post('/deposit', validateSession, async (request, response) => {
     response.send({result: 'success'})
 })
 
-router.get('/balance', validateSession, async (request, response) => {
-    const {errorCode, balance} = await userController.getBalance(request.session.id)
+router.get('/balance', validateSessionGet, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const {errorCode, balance} = await userController.getBalance(sessionId)
 
     if (errorCode) {
         return response.send({errorCode})
@@ -117,13 +115,15 @@ router.get('/balance', validateSession, async (request, response) => {
     response.send({balance})
 })
 
-router.get('/userInfo', validateSession, async (request, response) => {
+router.get('/userInfo', validateSessionGet, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+
     const {
         errorCode,
         name,
         accounts,
         role
-    } = await userController.getUser({sessionId: request.session.id})
+    } = await userController.getUser({sessionId})
 
     if (errorCode) {
         return response.send({errorCode})

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const UserModel = require('./UserModel')
 const {URI, ROLES, ERROR_CODES} = require('../../Constants')
-const { deleteSession } = require('../Shared')
+const { deleteSession, allocateNewSession } = require('../session/SessionController')
 
 const connectToDatabase = async () => {
     let databaseResponse
@@ -89,10 +89,7 @@ const signUp = async (username, password) => {
     )
 }
 
-const logIn = async ({name, password, sessionId}) => {
-
-    console.log({name, password, sessionId})
-
+const logIn = async ({name, password}) => {
     const user = await getUser({name})
 
     if(!user.password) {
@@ -103,15 +100,21 @@ const logIn = async ({name, password, sessionId}) => {
         return {error}
     }
 
-    await deleteSession(sessionId)
-
     const isPasswordValid = await bcrypt.compare(password, user.password)
 
     if (isPasswordValid) {
+        if(user.sessionId) {
+            await deleteSession(user.sessionId)
+        }
+
+        const { sessionId } = await allocateNewSession()
+
         user.sessionId = sessionId
         await saveUser(user)
 
-        return {name: user.name, balance: user.balance}
+        return {
+            sessionId
+        }
     }
 
     return {errorCode: ERROR_CODES.USER.INVALID_CREDENTIALS}

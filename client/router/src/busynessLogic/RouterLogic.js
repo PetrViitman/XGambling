@@ -10,6 +10,7 @@ export class RouterLogic {
 	presentation
 	presentedProjectName
 	webSocket
+	sessionId
 
 	constructor({
 		webAPI,
@@ -49,8 +50,8 @@ export class RouterLogic {
 		this.presentation.presentPendingResponse()
 
 
-		const {webAPI} = this
-		const {name, errorCode} = await webAPI.userInfo()
+		const {webAPI, sessionId} = this
+		const {name, errorCode} = await webAPI.userInfo({sessionId})
 		
 		if (errorCode) {
 			return this.logIn(errorCode)
@@ -67,7 +68,7 @@ export class RouterLogic {
 		switch (selectedOption) {
 			case 'log out':
 				this.presentation.presentPendingResponse()
-				await webAPI.logOut()
+				await webAPI.logOut({sessionId})
 				return this.logIn()
 			case 'lobby': return this.lobby(data)
 			case 'accounts': return this.accounts(data)
@@ -78,8 +79,8 @@ export class RouterLogic {
 	async accounts() {
 		this.presentation.presentPendingResponse()
 
-		const {webAPI} = this
-		const {accounts, role, errorCode} = await webAPI.userInfo()
+		const {webAPI, sessionId} = this
+		const {accounts, role, errorCode} = await webAPI.userInfo({sessionId})
 		
 		if (errorCode) {
 			return this.logIn(errorCode)
@@ -98,15 +99,14 @@ export class RouterLogic {
 	async deposit(account) {
 		const {selectedOption, data} = await this.presentation.presentDeposit(account)
 
-
 		if(selectedOption === 'back') {
 			return this.accounts()
 		}
 
-
 		const {errorCode} = await this.webAPI.deposit({
 			accountName: data.accountName,
-			deposit: data.deposit
+			deposit: data.deposit,
+			sessionId: this.sessionId
 		})
 
 		if(errorCode === ERROR_CODES.USER.ACCESS_DENIED) {
@@ -128,13 +128,12 @@ export class RouterLogic {
 		getBrowserCookie('router.project')
 		this.presentation.presentPendingResponse()
 
-		const {webAPI} = this
-		const {errorCode, projects}  = await webAPI.getProjectsList()
+		const {webAPI, sessionId} = this
+		const {errorCode, projects}  = await webAPI.getProjectsList({sessionId})
 
 		if (errorCode) {
 			return this.logIn(errorCode)
 		}
-
 
 		if (presetProjectName) {
 			const lastHandProject = projects.find(({name}) => name === presetProjectName)
@@ -158,12 +157,14 @@ export class RouterLogic {
 
 	async logIn(errorCode) {
 		const {name, password} = await this.presentation.presentLogIn(errorCode)
-
+	
 		this.presentation.presentPendingResponse()
 		const loginResult = await this.webAPI.logIn({name, password})
-		if(loginResult.errorCode) {
+		if (loginResult.errorCode) {
 			return this.logIn(loginResult.errorCode)
 		}
+
+		this.sessionId = loginResult.sessionId
 
 		this.entry()
 	}
@@ -189,7 +190,8 @@ export class RouterLogic {
 
 		await this.presentation.presentProject(
 			protocol + '//' + hostname + ':' + port + '/index-production.html',
-			project.name
+			project.name,
+			this.sessionId
 		)
 
 		setBrowserCookie('router.project', null)
@@ -216,5 +218,4 @@ export class RouterLogic {
 				})
 			)
 	}
-
 }

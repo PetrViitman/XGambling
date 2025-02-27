@@ -5,9 +5,6 @@ const {connectToDatabase, getUser} = require('./src/services/user/UserController
 const https = require('https')
 const fs = require('fs')
 const app = express()
-const {sessionStorage} = require('./src/services/Shared')
-const session = require('express-session')
-
 
 const localDomains = Array(50).fill(0).map((_, i) => 'https://localhost:' + (49990 + i))
 
@@ -18,20 +15,6 @@ app.use(cors({
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(session({
-    secret: 'test casino secret',
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStorage,
-    cookie: {
-        httpOnly: true,
-        secure: true,
-        maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'None'
-    },
-}))
-
-
 app.use('/user', require('./src/services/user/UserRoutes'))
 app.use('/project', require('./src/services/projects/ProjectRoutes'))
 app.use('/wildHeistShowdown', require('./src/services/projects/wildHeistShowdown/WildHeistShowdownRoutes'))
@@ -70,10 +53,10 @@ getAllProjects().then(projects => {
             } catch (_) {}
 
             app.get(projectPath, async (req, res) => {
-                const {name} = await getUser({sessionId: req.session?.id})
+                const sessionId = req.headers['sessionId']
+                const {name} = await getUser({sessionId})
 
                 if(!name) {
-
                     res.render(
                         '.login', {
                             title: 'LOG IN',
@@ -151,8 +134,5 @@ getAllProjects().then(projects => {
 })
 
 
-
 const httpsServer = https.createServer(options, app)
 httpsServer.listen(40000)
-
-
