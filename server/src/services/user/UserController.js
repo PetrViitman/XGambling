@@ -228,9 +228,15 @@ const logOut = async (sessionId) => {
         return {errorCode: ERROR_CODES.USER.USER_NOT_FOUND}
     }
 
+    console.log('log out is ok')
+
     await deleteSession(user.sessionId)
 
+    console.log('session deleted')
+
     user.sessionId = undefined
+
+    console.log('saving user,,,')
 
     return saveUser(user)
 }

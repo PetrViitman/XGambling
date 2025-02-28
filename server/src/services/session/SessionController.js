@@ -28,9 +28,6 @@ const validateSession = async sessionId => {
         expiringDate
     } = await getSession(sessionId)
 
-    console.log('VALIDATING USER SESSION GET: ')
-    console.log('SESSION ID R: ', sessionId)
-
     if (errorCode) return {errorCode}
 
     if (Date.now() > expiringDate) {

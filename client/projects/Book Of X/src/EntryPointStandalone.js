@@ -1,7 +1,7 @@
-const customURLParameters = new URLSearchParams(document.location.search)
-const languageCode = customURLParameters.get("lang") ?? 'en'
-const customVFXLevel = customURLParameters.get("vfx")
-const customUIOption = customURLParameters.get("view")
+const parametersFromURL = new URLSearchParams(document.location.search)
+const languageCode = parametersFromURL.get("lang") ?? 'en'
+const customVFXLevel = parametersFromURL.get("vfx")
+const customUIOption = parametersFromURL.get("view")
 
 import './polyfills'
 import { GameLogic } from './busynessLogic/GameLogic'

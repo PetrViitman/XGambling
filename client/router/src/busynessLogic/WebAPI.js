@@ -1,6 +1,6 @@
 const protocol = window.location.protocol
 const hostname = window.location.hostname
-const port = 50004
+const port = 5004
 
 const webAPI = {
     url: protocol + '//' + hostname + ':' + port + '/',
@@ -15,7 +15,10 @@ const webAPI = {
         return fetch(
             webAPI.url + route, {
                 method: "POST",
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    sessionId: data.sessionId
+                },
                 body: JSON.stringify(data)
             })
         .then(response => response.json())

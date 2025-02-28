@@ -1,12 +1,12 @@
-const ROUTER_PUBLIC_PORT = 50000
+const ROUTER_PUBLIC_PORT = 5000
 
 const ROUTER_PATH = './router/'
-const ROUTER_PORT = 50001
+const ROUTER_PORT = 5001
 
-const LOCAL_NETWORK_DEV_PROJECTS_SERVICES_PORT = 50004
+const LOCAL_NETWORK_DEV_PROJECTS_SERVICES_PORT = 5004
 
 const BACKEND_HOSTNAME = 'localhost'
-const BACKEND_PORT = 40000
+const BACKEND_PORT = 10000
 
 
 const path = require('path')
@@ -117,7 +117,7 @@ const startRouterPublicDevServer = (ipAddress) => {
 				name: req.headers.projectname,
 				pathToProject: './projects/' + req.headers.projectname + '/',
 				pathToProjectConfigFileName: './.builds/configs/config-production-build.js',
-				port: 50100 + projectIndex
+				port: 5100 + projectIndex
 			})
 
 			if(!viteServer.isPatched) {
@@ -161,7 +161,16 @@ const startRouterPublicDevServer = (ipAddress) => {
 	server.listen(ROUTER_PUBLIC_PORT, ipAddress)
 
 	webSocketServer = new WebSocket.Server({ server })
-	webSocketServer.on('connection', (webSocket) => {
+	webSocketServer.on('connection', (webSocket, request) => {
+		const recoveredSessionId = getCookie(request.socket.remoteAddress)
+
+		recoveredSessionId && webSocket.send(
+			JSON.stringify({
+				command: 'sessionId',
+				sessionId: recoveredSessionId
+			})
+		)
+		
 		webSocket.on('message', (message) => {
 			const data = JSON.parse(message)
 
@@ -173,6 +182,9 @@ const startRouterPublicDevServer = (ipAddress) => {
 					if(serversGroup) {
 						serversGroup.pingTimestamp = Date.now()
 					}
+				break
+				case 'sessionId':
+					saveCookie(request.socket.remoteAddress, data.sessionId)
 				break
 			}
 
@@ -197,18 +209,13 @@ const startRouterPublicDevServer = (ipAddress) => {
 				path: req.url.pathName,
 				headers: {
 					...req.headers,
-					Cookie: getCookie(requestIp) ?? '' // добавляем сохранённую ранее куку
+					sessionid: getCookie(requestIp) ?? '' // добавляем сохранённую ранее куку
 				},
 			}
 		)
 
-		proxy.on('response', (proxyRes) => {
-			if (proxyRes.headers['set-cookie']) {
-				saveCookie(requestIp, proxyRes.headers['set-cookie'])
-				res.setHeader('Set-Cookie', proxyRes.headers['set-cookie'])
-			}
-
-			proxyRes.pipe(res)
+		proxy.on('response', (proxyResponse) => {
+			proxyResponse.pipe(res)
 		})
 	
 		req.pipe(proxy).pipe(res)

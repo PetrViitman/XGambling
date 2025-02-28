@@ -1,20 +1,21 @@
 const express = require('express')
-const { validateSessionPost } = require('../../session/SessionRoutes')
+const { sessionValidation } = require('../../session/SessionRoutes')
 const { makeBet, gameDescription } = require('./WildHeistShowdownController')
 
 const router = express.Router()
 
-router.post('/gameDescription', validateSessionPost, async (request, response) => {
-    const { accountId, sessionId } = request.body
+router.post('/gameDescription', sessionValidation, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const { accountId } = request.body
 
     const descriptor = await gameDescription(sessionId, accountId)
     
     response.send(descriptor)
 })
 
-router.post('/makeBet', validateSessionPost, async (request, response) => {
+router.post('/makeBet', sessionValidation, async (request, response) => {
+    const sessionId = request.headers['sessionid']
     const {
-        sessionId,
         accountId,
         bet,
         isBuyFeatureRequest,

@@ -1,6 +1,7 @@
 const protocol = window.location.protocol
 const hostname = window.location.hostname
-const port = 40000
+const port = 10000
+const sessionId = parametersFromURL.get("sessionId")
 
 const webAPI = {
     url: protocol + '//' + hostname + ':' + port + '/',

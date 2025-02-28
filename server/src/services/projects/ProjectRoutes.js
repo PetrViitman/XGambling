@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const projectController = require('./ProjectController')
-const {validateSessionPost} = require('../session/SessionRoutes')
+const {sessionValidation} = require('../session/SessionRoutes')
 
 
 router.get('/list', async (request, response) => {
@@ -15,16 +15,18 @@ router.get('/list', async (request, response) => {
     response.send({projects})
 })
 
-router.post('/delete', validateSessionPost, async (request, response) => {
-    const { name, sessionId } = request.body
+router.post('/delete', sessionValidation, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const { name } = request.body
     const {error} = await projectController.deleteProject(name, sessionId)
 
     response.send({result: error ?? 'success'})
 })
 
-router.post('/create', validateSessionPost, async (request, response) => {
-    const { name, visibility, sessionId } = request.body
-    const {error} = await projectController.createProject({name, sessionId, visibility})
+router.post('/create', sessionValidation, async (request, response) => {
+    const sessionId = request.headers['sessionid']
+    const { name, visibility } = request.body
+    const { error } = await projectController.createProject({name, sessionId, visibility})
 
     response.send({result: error ?? 'success'})
 })

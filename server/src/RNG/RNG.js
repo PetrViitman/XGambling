@@ -1,4 +1,4 @@
-const RANDOM_NUMBERS_BUFFER_TARGET_LENGTH = 5000
+const RANDOM_NUMBERS_BUFFER_TARGET_LENGTH = 1000
 const BUSY_CPUS_COUNT = 5
 const {Worker} = require('worker_threads')
 const randomNumbers = []

@@ -6,7 +6,7 @@ const https = require('https')
 const fs = require('fs')
 const app = express()
 
-const localDomains = Array(50).fill(0).map((_, i) => 'https://localhost:' + (49990 + i))
+const localDomains = Array(50).fill(0).map((_, i) => 'https://localhost:' + (4990 + i))
 
 app.use(cors({
     origin: localDomains,
@@ -42,7 +42,7 @@ app.set('views', './statics/.templates')
 
 getAllProjects().then(projects => {
     projects.forEach(({name}) => {
-        const serviceURL = 'https://localhost:40000/'
+        const serviceURL = 'https://localhost:10000/'
         try {
             const projectPath = '/' + name.replaceAll(' ', '-')
             const scriptContent = fs.readFileSync( './statics/' + name + '/index.js', 'utf-8')
@@ -126,7 +126,7 @@ getAllProjects().then(projects => {
         res.render(
         '.index', {
             title: 'XGambling',
-            serviceURL: 'https://localhost:40000',
+            serviceURL: 'https://localhost:10000',
             script: scriptContent,
             css: cssContent
         })
@@ -135,4 +135,4 @@ getAllProjects().then(projects => {
 
 
 const httpsServer = https.createServer(options, app)
-httpsServer.listen(40000)
+httpsServer.listen(10000)

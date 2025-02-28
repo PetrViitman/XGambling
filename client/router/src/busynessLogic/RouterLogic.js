@@ -3,7 +3,7 @@ import { getBrowserCookie, setBrowserCookie } from "../presentation/Utils"
 
 const protocol = window.location.protocol
 const hostname = window.location.hostname
-const PORT = 50000
+const PORT = 5000
 
 export class RouterLogic {
 	webAPI
@@ -29,6 +29,9 @@ export class RouterLogic {
 		webSocket.onmessage = (message) => {
 			const data = JSON.parse(message.data)
 			switch (data.command) {
+				case 'sessionId':
+					this.sessionId = data.sessionId
+				break
 				case 'refresh':
 					this.presentation.refreshIframe(this.presentedProjectName)
 				break
@@ -68,7 +71,7 @@ export class RouterLogic {
 		switch (selectedOption) {
 			case 'log out':
 				this.presentation.presentPendingResponse()
-				await webAPI.logOut({sessionId})
+				await webAPI.logOut({sessionId: this.sessionId})
 				return this.logIn()
 			case 'lobby': return this.lobby(data)
 			case 'accounts': return this.accounts(data)
@@ -164,7 +167,13 @@ export class RouterLogic {
 			return this.logIn(loginResult.errorCode)
 		}
 
-		this.sessionId = loginResult.sessionId
+		this.sessionId = loginResult.sessionId		
+		this.webSocket.send(
+			JSON.stringify({
+				command: 'sessionId',
+				sessionId: this.sessionId
+			})
+		)
 
 		this.entry()
 	}
@@ -185,7 +194,6 @@ export class RouterLogic {
 			.then(data => data)
 
 		this.projectPort = port
-
 		this.pingRouterServer()
 
 		await this.presentation.presentProject(
