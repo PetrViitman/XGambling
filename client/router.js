@@ -1,3 +1,38 @@
+function dropAllClients() {
+	Object.entries(projectsServerMap).forEach(([name, serversGroup]) => {
+		serversGroup.viteServer.close()
+		serversGroup.tunnelServer.close()
+		delete projectsServerMap[name]
+	})
+
+	webSocketServer.clients.forEach(webSocket => {
+		webSocket.send(JSON.stringify({ command: 'drop' }))
+	})
+}
+
+process.on('uncaughtException', async (err) => {
+	console.error(err)
+	webSocketServer.close()
+
+	const promises = []
+	Object.entries(projectsServerMap).forEach(([name, serversGroup]) => {
+		promises.push(serversGroup.viteServer.close())
+		promises.push(serversGroup.tunnelServer.close())
+		delete projectsServerMap[name]
+	})
+})
+
+process.on('SIGINT', () => {
+	dropAllClients()
+	process.exit(0)
+})
+
+process.on('SIGTERM', () => {
+	dropAllClients()
+	process.exit(0)
+})
+
+
 const ROUTER_PUBLIC_PORT = 5000
 
 const ROUTER_PATH = './router/'
@@ -31,6 +66,7 @@ const getProjectServersGroup = async ({
 	isPingRequired = true
 }) => {
 	const serverId = name ?? pathToProject
+
 	if (projectsServerMap[serverId]) {
 		return projectsServerMap[serverId]
 	}
@@ -224,23 +260,26 @@ const startRouterPublicDevServer = (ipAddress) => {
 	// ...ПРОКСИРОВАНИЕ ЗАПРОСОВ К СЕРВЕРУ БЕКЕНДА
 }
 
-getLocalNetworkIPAdress().then((ipAddress) => {
-	localNetworkIPAddress = ipAddress
-	getProjectServersGroup({
-		pathToProject: ROUTER_PATH,
-		port: ROUTER_PORT,
-		isPingRequired: false
+function start() {
+	getLocalNetworkIPAdress().then((ipAddress) => {
+		localNetworkIPAddress = ipAddress
+		
+		getProjectServersGroup({
+			pathToProject: ROUTER_PATH,
+			port: ROUTER_PORT,
+			isPingRequired: false
+		})
+
+		startRouterPublicDevServer(ipAddress)
+		const finalURL = 'http://' + ipAddress + ':' + ROUTER_PUBLIC_PORT
+
+		console.log(
+			'\n 💻📱🖥️🪢🛜\n',
+			'\n\x1b[38;2;183;251;82m 🖧  \x1b[48;2;183;251;82m\x1b[38;2;0;0;0m' + finalURL + '\x1b[0m\n',
+			'\n'
+		)
 	})
-
-	startRouterPublicDevServer(ipAddress)
-	const finalURL = 'http://' + ipAddress + ':' + ROUTER_PUBLIC_PORT
-
-	console.log(
-		'\n 💻📱🖥️🪢🛜\n',
-		'\n\x1b[38;2;183;251;82m 🖧  \x1b[48;2;183;251;82m\x1b[38;2;0;0;0m' + finalURL + '\x1b[0m\n',
-		'\n'
-	)
-})
+}
 
 
 setInterval(() => {
@@ -262,3 +301,6 @@ process.emit = function (name, ...args) {
 	
 	return originalEmit.apply(process, arguments)
 }
+
+
+start()
