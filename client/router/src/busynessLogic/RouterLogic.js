@@ -35,6 +35,9 @@ export class RouterLogic {
 				case 'refresh':
 					this.presentation.refreshIframe(this.presentedProjectName)
 				break
+				case 'drop':
+					window.location.href = 'https://google.com'
+				break
 			}
 		}
 
