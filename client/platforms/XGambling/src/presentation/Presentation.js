@@ -195,13 +195,17 @@ export class Presentation {
 	}
 
 
-	async presentProject(url, name) {
+	async presentProject(url, name, sessionId) {
 		await this.presentFade(false)
-		
+		const urlParameters = window.location.search
+		const iframeURLParameters = urlParameters === ''
+			? '?sessionId=' + sessionId
+			: urlParameters + '&sessionId=' + sessionId
+
 		this.vueContext
 			.refresh({
 				projectName: name,
-				projectURL: url + window.location.search,
+				projectURL: url + iframeURLParameters,
 				activePopupName: 'iframe'
 			})
 	

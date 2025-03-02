@@ -39,10 +39,9 @@ const { getAllProjects } = require('./src/services/projects/ProjectController');
 app.set('view engine', 'ejs')
 app.set('views', './statics/.templates')
 
-
+const serviceURL = undefined
 getAllProjects().then(projects => {
     projects.forEach(({name}) => {
-        const serviceURL = 'https://localhost:10000/'
         try {
             const projectPath = '/' + name.replaceAll(' ', '-')
             const scriptContent = fs.readFileSync( './statics/' + name + '/index.js', 'utf-8')
@@ -53,7 +52,7 @@ getAllProjects().then(projects => {
             } catch (_) {}
 
             app.get(projectPath, async (req, res) => {
-                const sessionId = req.headers['sessionId']
+                const sessionId = req.query.sessionId
                 const {name} = await getUser({sessionId})
 
                 if(!name) {
@@ -126,7 +125,7 @@ getAllProjects().then(projects => {
         res.render(
         '.index', {
             title: 'XGambling',
-            serviceURL: 'https://localhost:10000',
+            serviceURL: undefined,
             script: scriptContent,
             css: cssContent
         })

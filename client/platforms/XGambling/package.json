@@ -8,6 +8,7 @@
     "preview-build-production": "vite preview --outDir .builds/production"
   },
   "dependencies": {
+    "pepjs": "^0.5.3",
     "pixi.js": "^7.4.2",
     "vue": "^3.3.4"
   },

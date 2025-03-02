@@ -3,11 +3,12 @@ import { getBrowserCookie, setBrowserCookie } from "../presentation/Utils"
 
 const protocol = window.location.protocol
 const hostname = window.location.hostname
-const port = 40000
+const port = 10000
 
 export class BusynessLogic {
 	webAPI
 	presentation
+	sessionId
 
 	constructor({
 		webAPI,
@@ -61,6 +62,9 @@ export class BusynessLogic {
 			return this.logIn(loginResult.errorCode)
 		}
 
+		this.sessionId = loginResult.sessionId
+		window.sessionId = loginResult.sessionId
+
 		this.lobby()
 	}
 
@@ -72,10 +76,10 @@ export class BusynessLogic {
 	}
 
 	async project(project) {
-		
 		await this.presentation.presentProject(
 			protocol + '//' + hostname + ':' + port + '/' + project.name.toLowerCase().replace(/ /g, '-'),
-			project.name
+			project.name,
+			this.sessionId
 		)
 	
 		this.lobby()

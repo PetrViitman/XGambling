@@ -65,17 +65,22 @@ const getProjectServersGroup = async ({
 	return serversGroup
 }
 
+function getLocalNetworkIPAdress() {
+	const interfaces = os.networkInterfaces()
+	let anyIPAdress
+	let wifiAccessibleIPAdress
 
-const getLocalNetworkIPAdress = () => {
-	return new Promise(resolve => {
-		dns.lookup(os.hostname(), { family: 4 }, (error, address) => {
-			if (error) {
-				resolve('no local network ip address found')
-			} else {
-				resolve(address)
+	for (const interfaceName in interfaces) {
+		for (const iface of interfaces[interfaceName]) {
+			if (iface.family === 'IPv4') {
+				anyIPAdress = iface.address
+				if (iface.family === 'IPv4' && !iface.internal) {
+					wifiAccessibleIPAdress = iface.address
+				}
 			}
-		})
-	})
+        }
+    }
+    return wifiAccessibleIPAdress ?? anyIPAdress
 }
 
 const getCookies = () => {
@@ -224,23 +229,21 @@ const startRouterPublicDevServer = (ipAddress) => {
 	// ...ПРОКСИРОВАНИЕ ЗАПРОСОВ К СЕРВЕРУ БЕКЕНДА
 }
 
-getLocalNetworkIPAdress().then((ipAddress) => {
-	localNetworkIPAddress = ipAddress
-	getProjectServersGroup({
-		pathToProject: ROUTER_PATH,
-		port: ROUTER_PORT,
-		isPingRequired: false
-	})
-
-	startRouterPublicDevServer(ipAddress)
-	const finalURL = 'http://' + ipAddress + ':' + ROUTER_PUBLIC_PORT
-
-	console.log(
-		'\n 💻📱🖥️🪢🛜\n',
-		'\n\x1b[38;2;183;251;82m 🖧  \x1b[48;2;183;251;82m\x1b[38;2;0;0;0m' + finalURL + '\x1b[0m\n',
-		'\n'
-	)
+localNetworkIPAddress = getLocalNetworkIPAdress()
+getProjectServersGroup({
+	pathToProject: ROUTER_PATH,
+	port: ROUTER_PORT,
+	isPingRequired: false
 })
+
+startRouterPublicDevServer(localNetworkIPAddress)
+const finalURL = 'http://' + localNetworkIPAddress + ':' + ROUTER_PUBLIC_PORT
+
+console.log(
+	'\n 💻📱🖥️🪢🛜\n',
+	'\n\x1b[38;2;183;251;82m 🖧  \x1b[48;2;183;251;82m\x1b[38;2;0;0;0m' + finalURL + '\x1b[0m\n',
+	'\n'
+)
 
 
 setInterval(() => {
