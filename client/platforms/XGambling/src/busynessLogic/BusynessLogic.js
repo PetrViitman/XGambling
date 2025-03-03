@@ -1,10 +1,3 @@
-import { ERROR_CODES } from "../presentation/Constants"
-import { getBrowserCookie, setBrowserCookie } from "../presentation/Utils"
-
-const protocol = window.location.protocol
-const hostname = window.location.hostname
-const port = 10000
-
 export class BusynessLogic {
 	webAPI
 	presentation
@@ -77,7 +70,7 @@ export class BusynessLogic {
 
 	async project(project) {
 		await this.presentation.presentProject(
-			protocol + '//' + hostname + ':' + port + '/' + project.name.toLowerCase().replace(/ /g, '-'),
+			window.location.href + project.name.toLowerCase().replace(/ /g, '-'),
 			project.name,
 			this.sessionId
 		)

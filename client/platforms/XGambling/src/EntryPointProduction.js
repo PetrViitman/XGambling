@@ -1,13 +1,9 @@
 import './polyfills'
 import { BusynessLogic } from './busynessLogic/BusynessLogic'
 import { Presentation } from './presentation/Presentation'
-const parametersFromURL = new URLSearchParams(document.location.search)
-const protocol = window.location.protocol
-const hostname = window.location.hostname
-const port = 10000
 
 const webAPI = {
-    url: protocol + '//' + hostname + ':' + port + '/',
+    url: document.serviceURL ?? window.location.href,
     get: (route) => fetch(webAPI.url + route, {
         method: "GET",
         credentials: 'include',

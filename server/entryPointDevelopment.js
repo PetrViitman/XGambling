@@ -1,12 +1,14 @@
 
+
+
 const express = require('express')
 const cors = require('cors')
 const {connectToDatabase, getUser} = require('./src/services/user/UserController')
-const https = require('https')
+const http = require('http')
 const fs = require('fs')
 const app = express()
 
-const localDomains = Array(50).fill(0).map((_, i) => 'https://localhost:' + (4990 + i))
+const localDomains = Array(50).fill(0).map((_, i) => 'http://localhost:' + (4990 + i))
 
 app.use(cors({
     origin: localDomains,
@@ -133,5 +135,5 @@ getAllProjects().then(projects => {
 })
 
 
-const httpsServer = https.createServer(options, app)
-httpsServer.listen(10000)
+const httpServer = http.createServer(options, app)
+httpServer.listen(10000)
