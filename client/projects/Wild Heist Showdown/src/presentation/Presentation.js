@@ -891,13 +891,13 @@ export class Presentation {
 		this.interactiveLayerView.setInteractive(false)
 	}
 
-	presentNetworkResponseAwait() {
-		this.guiView.refresh({
-			isSpinExpected: false
-		})
+	presentNetworkStatus(isResponsive = true) {
+		if(!isResponsive) {
+			this.interactiveLayerView.setInteractive(false)
+			this.reelsView.setInteractive(false)
+		}
 
-		this.interactiveLayerView.setInteractive(false)
-		this.reelsView.setInteractive(false)
+		this.guiView.presentNetworkStatus(isResponsive)
 	}
 
 	setAdaptiveDesignOffsets({

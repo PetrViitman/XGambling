@@ -112,7 +112,7 @@ export class GameLogic {
 
 	async changeAccount(account) {
 		this.accounts.forEach(account => account.isActive = false)
-		this.presentation?.presentNetworkResponseAwait?.()
+		this.presentation?.presentNetworkStatus?.(false)
 		this.activeBonusDescriptor = undefined
 
 		const {
@@ -123,13 +123,7 @@ export class GameLogic {
 			balance,
 		} = await this.webAPI.gameDescription({accountId: account.id})
 
-		console.log({
-			accounts,
-			minimalBet,
-			maximalBet,
-			currencyCode,
-			balance,
-		})
+		this.presentation?.presentNetworkStatus?.()
 
 		this.accounts = accounts
 		account.isActive = true
@@ -146,11 +140,12 @@ export class GameLogic {
 
 
 	async requestBonuses() {
-		
-		this.presentation?.presentNetworkResponseAwait?.()
+		this.presentation?.presentNetworkStatus?.(false)
 		const {
 			bonuses,
 		} = await this.webAPI.getGameBonuses()
+
+		this.presentation?.presentNetworkStatus?.()
 
 		await this.presentation?.presentBonuses?.(bonuses)
 
@@ -177,11 +172,20 @@ export class GameLogic {
 		if(this.balance < multipliedBet)
 			return this.error({errorCode: ERROR_CODES.OUT_OF_BALANCE})
 
+		const request = this.webAPI.makeBet({
+			accountId: this.activeAccount.id,
+			desiredReels,
+			bet,
+			isBuyFeatureRequest,
+		})
+
 		await presentation?.presentSpinStart?.({ // let it spin while fetching
 			balance: balanceBeforePayouts,
 			multiplier: this.multiplier,
 			currencyCode: this.currencyCode
 		})
+
+		this.presentation?.presentNetworkStatus?.(false)
 
 		const {
 			errorCode,
@@ -190,12 +194,9 @@ export class GameLogic {
 			steps,
 			totalCoefficient,
         	totalPayout,
-		} = await this.webAPI.makeBet({
-			accountId: this.activeAccount.id,
-			desiredReels,
-			bet,
-			isBuyFeatureRequest,
-		})
+		} = await request
+
+		this.presentation?.presentNetworkStatus?.()
 
 		this.winCurrencyCode = currencyCode
 		// retrieving final balance anyways 
@@ -206,66 +207,6 @@ export class GameLogic {
 		let isFreeSpinsMode
 		let commonPayout = 0
 		this.multiplier = 1
-
-		
-		/*
-		steps.forEach((step, i) => {
-			const {
-				reels,
-				winMap,
-				reelsPatch
-			} = step
-
-			// бекендер не захотел помечать минусом такие вины,
-			// т.к. у меня помечаются, здесь откатываю, как у него чтоб было
-			winMap?.forEach(reel => reel.forEach((value, y) => reel[y] = Math.abs(value)))
-
-			// EXCESS REELS PATCH REMOVAL...
-			// бекенд разработчик упорно засылает дополнительные символы (пустой массив),
-			// даже если не было коллапсов
-			// чтобы не возникло путаницы, пустой reelsPatch здесь обнуляется
-			let isRedundantReelsPatch = true
-			for (let x = 0; x < reelsPatch.length; x++) {
-				if(reelsPatch[x].length > 0) {
-					isRedundantReelsPatch = false
-					break
-				}
-			}
-
-			if(isRedundantReelsPatch) {
-				step.reelsPatch = undefined
-			}
-			// ...EXCESS REELS PATCH REMOVAL
-
-			// EXCESS WIN MAP REMOVAL...
-			// бекенд разработчик упорно засылает карты выигрышей даже на проигрыш (пустые)
-			// чтобы не возникло путаницы, пустые винмапы здесь приходится подчистить
-			let isRedundantWinMap= true
-			for (let x = 0; x < winMap.length; x++) {
-				if(winMap[x].includes(1)) {
-					isRedundantWinMap = false
-					break
-				}
-			}
-
-			if(isRedundantWinMap) {
-				step.winMap = undefined
-			}
-			// ...EXCESS WIN MAP REMOVAL
-
-
-			// EXCESS REELS REMOVAL...
-			// бекенд разработчик упорно засылает колёса даже на каскад
-			// чтобы не возникло путаницы, спин это, или каскад, приходится
-			// подчистить тут
-			const previousStep = steps[i - 1]
-			if(previousStep && previousStep.reelsPatch) {
-				step.reels = undefined
-			}
-			// ...EXCESS REELS REMOVAL
-			// ...FORCE REMOVE EXCESS REELS FROM CASCADE STEP
-		})
-		*/
 
 		for (let i = 0; i < steps.length; i++) {
 			const step = steps[i]

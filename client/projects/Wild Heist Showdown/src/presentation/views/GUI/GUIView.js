@@ -28,6 +28,7 @@ import { BonusSelectorView } from "./scrollable/bonusSelector/BonusSelectorView"
 import { ButtonBonusView } from "./buttons/ButtonBonusView";
 import { ButtonHomeView } from "./buttons/ButtonHomeView";
 import { ButtonAudioView } from "./buttons/ButtonAudioView";
+import { NetworkStatusView } from "./NetworkStatusView";
 
 export class GUIView extends AdaptiveContainer {
     bottomGradientView
@@ -50,6 +51,7 @@ export class GUIView extends AdaptiveContainer {
     indicatorWinView
     infoBarView
 
+    networkStatusView
     betSelectorView
     autoplaySelectorView
     buyFeatureSelectorView
@@ -129,29 +131,9 @@ export class GUIView extends AdaptiveContainer {
         this.initAccountSelector({assets, dictionary})
         this.initPaytable({assets, dictionary, coefficients, isLTRTextDirection})
         this.initBonusSelector({assets, dictionary, isLTRTextDirection, locale})
+        this.initNetworkStatus(assets)
 
         audio.onAudioReady = () => this.buttonAudioView.onAudioReady()
-
-        /*
-        const reelSelectorView = new ReelSelectorView()
-        this.addChild(reelSelectorView)
-        reelSelectorView.position.set(200)
-
-        const inputView = new InputView(assets)
-        this.addChild(inputView)
-        inputView.position.set(200, 400)
-        */
-
-        // const s
-
-       // this.popupView = this.addChild(new PopupView(gameAssets))
-
-
-       // const selectorView = new SelectorView({assets, options: this.autoplayOptions, selectedOptionIndex: 0})
-        //this.autoplaySelectorView = selectorView
-
-        // this.addChild(selectorView).position.set(300)
-
     }
 
     initBonusPanel(assets, dictionary) {
@@ -289,6 +271,11 @@ export class GUIView extends AdaptiveContainer {
         this.bonusSelectorView = this.addChild(view)
 
         this.windowsViews.push(view)
+    }
+
+    initNetworkStatus(assets) {
+        const view = new NetworkStatusView(assets)
+        this.networkStatusView = this.addChild(view)
     }
 
     presentWindow(name)  {
@@ -985,9 +972,18 @@ export class GUIView extends AdaptiveContainer {
 
     presentBonuses(bonuses) {
         const isPrimaryAccountActive = this.accounts.find(account => account.isActive)?.isPrimary
-        console.log('IS PRIMARY ACCOUNT ACTIVE??? ', isPrimaryAccountActive)
 
         this.bonusSelectorView.refresh(bonuses, isPrimaryAccountActive)
         this.presentWindow('bonuses')
     }
+
+    presentNetworkStatus(isResponsive = true) {
+        if(!isResponsive) {
+            this.refresh({
+                isSpinExpected: false
+            })
+        }
+
+		this.networkStatusView.present(isResponsive)
+	}
 }
