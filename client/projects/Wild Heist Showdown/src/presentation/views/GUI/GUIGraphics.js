@@ -1062,7 +1062,7 @@ function createGradient(width = 248, height = 400) {
     return canvas
 }
 
-function createBigRoundedRectangle(width = 390, height = 590) {
+function createBigRoundedRectangle(width = 490, height = 590) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
@@ -1253,8 +1253,8 @@ export async function createAtlas(assets, vfxLevel) {
 		
 		{name: 'bigRoundedRectangle', image: createBigRoundedRectangle(), x: 5, y: 805}, 
 
-		{name: 'UICorner', image: createUICorner(), x: 405, y: 805}, 
-		{name: 'UIBorder', image: createUIBorder(), x: 405, y: 905}, 
+		{name: 'UICorner', image: createUICorner(), x: 1005, y: 805}, 
+		{name: 'UIBorder', image: createUIBorder(), x: 1005, y: 905}, 
 		{name: 'iconHomeBackground', image: createIconHomeBackground(), x: 605, y: 805}, 
 		{name: 'iconTriangle', image: createIconTriangle(), x: 805, y: 805}
     ].forEach(({

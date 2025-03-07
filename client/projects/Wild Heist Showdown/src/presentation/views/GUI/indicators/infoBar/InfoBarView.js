@@ -209,7 +209,11 @@ export class InfoBarView extends Container {
                 })
             } else if (textPart === '×') {
                 multiplierTextField = this.getTextField(textFieldIndex)
-                finalText = multiplier > 1 ? '× ' + multiplier : ''
+                const multiplierTextPart = this.isLTRTextDirection
+                    ? '× ' + multiplier
+                    : multiplier + ' ×'
+            
+                finalText = multiplier > 1 ? multiplierTextPart : ''
             } else if (textPart === 'SYMBOLS') {
                 finalText = undefined
                 collapses.forEach(({

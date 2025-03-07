@@ -19,7 +19,7 @@ import { AwardView } from "./views/splashScreens/award/AwardView"
 import { GUIView } from "./views/GUI/GUIView"
 import { TextField } from "./views/text/TextField"
 import { Audio } from "./audio/Audio"
-import { getDictionary } from "./Dictionary"
+import { flipRTLPlaceholders, getDictionary } from "./Dictionary"
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
 
@@ -59,11 +59,15 @@ export class Presentation {
 		audioMap,
 		isLTRTextDirection = true,
 		isMobileApplicationClient = false,
+		isSpecialMobileApplicationClient = false,
 		dictionary
 	}) {
 		this.isLTRTextDirection = isLTRTextDirection
 		this.isMobileApplicationClient = isMobileApplicationClient
+		this.isSpecialMobileApplicationClient = isSpecialMobileApplicationClient
 		TextField.isLTRTextDirection = isLTRTextDirection
+
+		dictionary && !isLTRTextDirection && flipRTLPlaceholders(dictionary)
 		this.dictionary = dictionary
 		this.preloadingAssetsMap = preloadingAssetsMap
 		this.assetsMap = assetsMap
@@ -269,6 +273,7 @@ export class Presentation {
 			coefficients,
 			isLTRTextDirection: this.isLTRTextDirection,
 			isMobileApplicationClient: this.isMobileApplicationClient,
+			isSpecialMobileApplicationClient: this.isSpecialMobileApplicationClient,
 			locale,
 			audio: this.audio
 		})
@@ -889,6 +894,13 @@ export class Presentation {
 		this.bankView.presentLose()
 
 		this.interactiveLayerView.setInteractive(false)
+	}
+
+	dropRemainingAutoSpinsCount() {
+		this.remainingAutoSpinsCount = 0
+		this.guiView.refresh({
+			remainingAutoSpinsCount: 0,
+		})
 	}
 
 	presentNetworkStatus(isResponsive = true) {

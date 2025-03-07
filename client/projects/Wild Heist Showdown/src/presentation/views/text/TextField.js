@@ -77,7 +77,7 @@ export class TextField extends Container {
 		if (!TextField.isLTRTextDirection) {
 			let prefixRTL = ''
 			for(let i = finalText.length - 1; i >= 0; i--) {
-				if ('?!.'.includes(finalText[i])) {
+				if ('?!.-'.includes(finalText[i])) {
 					prefixRTL += finalText[i]
 				} else {
 					break
@@ -107,15 +107,14 @@ export class TextField extends Container {
 					let characterIndex = 0
 					while (elapsedCharactersCount < finalText.length) {
 						let textLine = finalText.substring(characterIndex, characterIndex + charactersPerLineCount)
-						
-						if(elapsedCharactersCount + charactersPerLineCount < finalText.length) {
-						for (let i = textLine.length; i > 0; i--) {
-							if(textLine[i] === ' ') {
-								
-								textLine = textLine.substring(0, i)
-								break
+
+						if (elapsedCharactersCount + charactersPerLineCount < finalText.length) {
+							for (let i = textLine.length; i > 0; i--) {
+								if(textLine[i] === ' ') {
+									textLine = textLine.substring(0, i)
+									break
+								}
 							}
-						}
 						}
 
 						buffer += textLine
@@ -127,6 +126,17 @@ export class TextField extends Container {
 						}
 					}
 				}
+
+				if (!TextField.isLTRTextDirection) {
+					const lines = buffer.split('\n')
+					buffer = ''
+
+					for(let i = lines.length - 1; i >= 0; i--) {
+						buffer += lines[i]
+						if (i) buffer += '\n'
+					}
+				}
+
 				this.text += buffer
 			})
 		}
@@ -353,6 +363,7 @@ export class TextField extends Container {
 					this.bitmapText = new BitmapText('', {fontName})
 				} else {
 					this.bitmapText = new Text('')
+
 					const fontStyle = TextField.fontStyles[fontName]
 					if(fontStyle) {
 						this.bitmapText.style =  fontStyle

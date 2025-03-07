@@ -70,7 +70,7 @@ export class ReelSelectorView extends Container {
     }
 
     initTextFields() {
-        const maximalWidth = 130
+        const maximalWidth = 180
         const maximalHeight = 50
 
         this.eventMode = 'static'
@@ -105,7 +105,7 @@ export class ReelSelectorView extends Container {
                 const textField = this
                     .addChild(new TextField({maximalWidth, maximalHeight}))
                     .setFontName('default')
-                    .setFontSize(maximalHeight)
+                    .setFontSize(maximalHeight * 0.85)
                     .setFontColor(0xFFFFFF)
                     .setAlignCenter()
                     .setAlignMiddle()
@@ -133,7 +133,7 @@ export class ReelSelectorView extends Container {
             sprite.anchor.set(0.5)
             sprite.tint = 0xf8ee89
             sprite.y = y
-            sprite.width = 154
+            sprite.width = 192
             sprite.height = 1.5
             container.addChild(sprite)
         })
@@ -319,9 +319,15 @@ export class ReelSelectorView extends Container {
     }
 
     setUserInput(value) {
-        const finalText = value.toFixed?.(2) ?? (value + '') 
+        const editableSymbols = '0123456789.'
+        const valueText = value.toFixed?.(2) ?? (value + '')
+        this.userInput = ''
 
-        this.userInput = finalText.split(' ').join('')
+        for (let i = 0; i < valueText.length; i++) {
+            if(editableSymbols.includes(valueText[i])) {
+                this.userInput += valueText[i]
+            }
+        }
     }
 
     onClick() {

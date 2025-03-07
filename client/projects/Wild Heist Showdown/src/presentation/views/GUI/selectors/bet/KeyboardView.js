@@ -64,13 +64,13 @@ export class KeyboardView extends Container {
         this.buttonEraseView = this.addChild(view)
 
         view = new KeyboardButtonView({assets, character: '½', audio})
-        view.position.set(525, -280)
+        view.position.set(545, -280)
         view.scale.set(0.5)
         view.onClick = () => this.onDoubleDown?.()
         this.buttonDoubleDownView = this.addChild(view)
 
         view = new KeyboardButtonView({assets, character: ' x2 ', audio})
-        view.position.set(525, -380)
+        view.position.set(545, -380)
         view.scale.set(0.5)
         view.onClick = () => this.onDoubleUp?.()
         this.buttonDoubleUpView = this.addChild(view)

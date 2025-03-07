@@ -7,11 +7,11 @@ import { InfoBarView } from "../../indicators/infoBar/InfoBarView";
 import { Timeline } from "../../../../timeline/Timeline";
 import { colorToColor } from "../../../GraphicalPrimitives";
 
-const FONT_SCALE_FACTOR = 1.25
-const FONT_SIZE_HEADER = 75 * FONT_SCALE_FACTOR
+const FONT_SCALE_FACTOR = 1.5
+const FONT_SIZE_HEADER = 55 * FONT_SCALE_FACTOR
 const FONT_SIZE_SUB_HEADER = 45 * FONT_SCALE_FACTOR
-const FONT_SIZE_TEXT = 37 * FONT_SCALE_FACTOR
-const SYMBOLS_PER_LINE_COUNT = 45
+const FONT_SIZE_TEXT = 40 * FONT_SCALE_FACTOR
+const SYMBOLS_PER_LINE_COUNT = 40
 
 const SYMBOLS_NAMES = [
     'Clubs',
@@ -472,6 +472,8 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+
+        console.log('TF: ', textField)
 
 
         offsetY += textField.height * 1.5

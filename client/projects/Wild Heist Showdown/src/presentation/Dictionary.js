@@ -18,6 +18,57 @@ async function getJsonData(path) {
     return JSON.parse(text)
 }
 
+export function flipRTLPlaceholders(dictionary) {
+    const endPointSymbols = '!?.,•-'
+    const breakPointSymbols = '×1234567890{}ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:_!@#$%^&*-,.•'
+    Object.entries(dictionary).forEach(([key, text]) => {
+        const fragments = []
+        let fragment = ''
+        let isBreakpointSymbol = false
+        for(let i = 0; i < text.length; i++ ) {
+            const symbol = text[i]
+            
+            if(breakPointSymbols.includes(symbol) !== isBreakpointSymbol) {
+                isBreakpointSymbol = breakPointSymbols.includes(symbol)
+
+                fragment.length && fragments.push(fragment)
+                fragment = ''
+            }
+            fragment += symbol
+        }
+
+        fragment.length && fragments.push(fragment)
+
+        let finalText = ''
+
+        for(let i = fragments.length - 1; i >= 0; i--) {
+            let fragment = fragments[i]
+            let offset = ''
+            
+            for (let j = fragment.length - 1; j >= 0; j --) {
+                const character = fragment[j]
+
+                if (endPointSymbols.includes(character)) {
+                    offset = character + offset
+                } else {
+                    break
+                }
+            }
+
+            if(offset.length) {
+                fragment = offset + fragment.substring(0, fragment.length - offset.length)
+            }
+            if (fragment[0] === ' ') {
+               // fragment = fragment.substring(1, fragment.length)
+            }
+
+            finalText += "\u200E" + fragment
+        }
+        
+        dictionary[key] = finalText
+    })
+}
+
 export async function getDictionary(languageCode = getDefaultLocale()) {
     let dictionary = {}
     try { dictionary = await getJsonData('./translations/' + languageCode + '.json')}
@@ -25,8 +76,14 @@ export async function getDictionary(languageCode = getDefaultLocale()) {
         try { dictionary = await getJsonData('./translations/' + FALLBACK_LANGUAGE_CODE + '.json')} catch (error) {}
     }
 
+    const isLTRTextDirection = !RTL_LANGUAGE_CODES.includes(languageCode)
+
+    if(!isLTRTextDirection) {
+        flipRTLPlaceholders(dictionary)
+    }
+
 	return {
         ...dictionary,
-        isLTRTextDirection: !RTL_LANGUAGE_CODES.includes(languageCode)
+        isLTRTextDirection
     }
 }

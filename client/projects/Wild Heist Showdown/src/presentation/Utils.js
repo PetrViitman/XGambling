@@ -2,7 +2,7 @@ import {
 	RANDOM_REELS_SYMBOLS_IDS,
 	REELS_COUNT,
 	REELS_LENGTHS,
-	REGULAR_SYMBOLS_IDS
+	REGULAR_SYMBOLS_IDS,
 } from "./Constants"
 
 export function getRandomSymbolId(reelIndex) {
@@ -18,13 +18,13 @@ export function generateMatrix(width = REELS_COUNT) {
 }
 
 export function formatMoney({value, currencyCode, isLTRTextDirection = true}) {
-	let formattedValue = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').split(",").join(" ")
+	let formattedValue = value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,').split(",").join(" ")
 
 	if(currencyCode) {
 		if (isLTRTextDirection) {
-			formattedValue = formattedValue + ' ' + currencyCode
+			formattedValue = formattedValue + ' ' + currencyCode
 		} else {
-			formattedValue = currencyCode + ' ' + formattedValue
+			formattedValue = currencyCode + ' ' + formattedValue
 		}
 	}
 

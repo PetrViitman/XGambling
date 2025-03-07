@@ -106,6 +106,7 @@ export class GUIView extends AdaptiveContainer {
         coefficients,
         isLTRTextDirection = true,
         isMobileApplicationClient = false,
+        isSpecialMobileApplicationClient = false,
         locale,
         audio
     }) {
@@ -115,6 +116,7 @@ export class GUIView extends AdaptiveContainer {
         }
 
         this.isMobileApplicationClient = isMobileApplicationClient
+        this.isSpecialMobileApplicationClient = isSpecialMobileApplicationClient
         this.isFullscreenModeAvailable = !isMobileApplicationClient && !navigator.userAgent.match(/iPhone/i)
 
         //extractHighResolutionSymbols(gameAssets)
@@ -123,7 +125,7 @@ export class GUIView extends AdaptiveContainer {
         this.initBonusPanel(assets, dictionary)
         this.initOverlay(assets)
         this.initGradient(assets)
-        this.initButtons(assets, isMobileApplicationClient)
+        this.initButtons(assets, isMobileApplicationClient, isSpecialMobileApplicationClient)
         this.initIndicators({assets, dictionary, isLTRTextDirection})
         this.initBetSelector({assets, dictionary, currencyCode, isLTRTextDirection})
         this.initBuyFeatureSelector({assets, dictionary, currencyCode, buyFeatureBetMultiplier, isLTRTextDirection})
@@ -349,7 +351,11 @@ export class GUIView extends AdaptiveContainer {
         this.bottomGradientView = this.addChild(new BottomGradientView(assets))
     }
 
-    initButtons(assets, isMobileApplicationClient) {
+    initButtons(
+        assets,
+        isMobileApplicationClient,
+        isSpecialMobileApplicationClient
+    ) {
         const {audio} = this
         const leftCornerGroupView = this.addChild(new AdaptiveContainer)
             .stickTop()
@@ -414,7 +420,7 @@ export class GUIView extends AdaptiveContainer {
         this.buttonInfoView.scale.set(0.5)
         this.buttonAudioView.scale.set(0.5)
 
-        if (isMobileApplicationClient) {
+        if (isMobileApplicationClient && !isSpecialMobileApplicationClient) {
             this.buttonHomeView = new ButtonHomeView(assets, audio)
             this.buttonHomeView.y = 50
             this.buttonHomeView.scale.set(0.5)
@@ -667,7 +673,8 @@ export class GUIView extends AdaptiveContainer {
                 buttonAutoplayView
             )
 
-            const offsetY = 1460
+            const isWidePortrait = sidesRatio > 0.6
+            const offsetY = isWidePortrait ? 1160 : 1460
 
             buttonFullScreenView?.position.set(55, 55)
             buttonBonusView.position.set(55, 220)
@@ -711,7 +718,7 @@ export class GUIView extends AdaptiveContainer {
 
             bottomGroupView.pivot.y = 0
             bottomGroupView
-                .setSourceArea({width: 1000, height: 1800})
+                .setSourceArea({width: 1000, height: isWidePortrait ? 1500 : 1800})
                 .setTargetArea({
                     x: 0,
                     y: offsetTop,
@@ -720,7 +727,8 @@ export class GUIView extends AdaptiveContainer {
                 })
                 .stickMiddle()
 
-            this.infoBarView.expand(Math.max(1, sidesRatio * 2))
+            const infoBarExpansionMultiplier = isWidePortrait ? 1.5 : 2
+            this.infoBarView.expand(Math.max(1, sidesRatio * infoBarExpansionMultiplier))
         }
     }
 
