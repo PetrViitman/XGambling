@@ -31,6 +31,11 @@ import { ButtonAudioView } from "./buttons/ButtonAudioView";
 import { NetworkStatusView } from "./NetworkStatusView";
 import { TextField } from "../text/TextField";
 
+function isAppleMobileDevice() {
+    return /iPhone|iPad|iPod/.test(navigator.userAgent) || 
+           (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
 export class GUIView extends AdaptiveContainer {
     bottomGradientView
     buttonSpinView
@@ -119,7 +124,7 @@ export class GUIView extends AdaptiveContainer {
 
         this.isMobileApplicationClient = isMobileApplicationClient
         this.isSpecialMobileApplicationClient = isSpecialMobileApplicationClient
-        this.isFullscreenModeAvailable = !isMobileApplicationClient && !navigator.userAgent.match(/iPhone/i)
+        this.isFullscreenModeAvailable = !isMobileApplicationClient && !isAppleMobileDevice()
 
         //extractHighResolutionSymbols(gameAssets)
 
