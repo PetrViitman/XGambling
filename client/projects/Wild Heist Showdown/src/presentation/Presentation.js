@@ -106,16 +106,8 @@ export class Presentation {
 				.appendChild(this.pixiApplication.view)
 		// ...CANVAS APPENDING
 
-		let elapsedFrames = 0
-		let timeStampFPS = 0
 		Ticker.shared.add(() => {
 			Timeline.update()
-			elapsedFrames++
-			const currentTime = Date.now()
-			if(currentTime - timeStampFPS < 1000) return
-			document.title = elapsedFrames
-			timeStampFPS = currentTime
-			elapsedFrames = 0
 		})
 
 		// GUI...
@@ -246,7 +238,6 @@ export class Presentation {
 			})
 
 			this.pixiApplication.renderer.resolution = lowestResolution + resolutionDelta * vfxLevel
-			this.pixiGUIApplication.renderer.resolution = lowestResolution + resolutionDelta * vfxLevel
 			this.vfxLevel = vfxLevel
 		}
 		// ...ADJUSTING RESOLUTION
