@@ -473,9 +473,6 @@ export class PaytableContentView extends Container {
         textField.position.set(500, offsetY)
         this.addChild(textField)
 
-        console.log('TF: ', textField)
-
-
         offsetY += textField.height * 1.5
         maximalWidth = 900
         textField = new TextField({maximalWidth})

@@ -25,4 +25,10 @@ export class ButtonFullScreenView extends ButtonView {
         iconView.alpha = 1
         this.iconView = iconView
     }
+
+    presentPress(progress) {
+        const subProgress = Math.sin(Math.PI * progress)
+
+        this.contentContainer.scale.set(1 - 0.35 * subProgress)
+    }
 }

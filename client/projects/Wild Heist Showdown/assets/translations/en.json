@@ -61,6 +61,7 @@
     "no_win": "NO WIN",
     "win_3600_ways_instructions_part_2": "• The total number of winning bet ways for each symbol is calculated by multiplying the count of adjacent winning symbols on each reel from the leftmost to the right.║║• The winning symbol payout is multiplied by the number of winning bet ways.",
     "win_3600_ways_example": "FROM ABOVE EXAMPLE:",
-    "win_3600_ways_instructions_part_3": "• After the payout of every round, all winning symbols explode, and the symbols above them cascade down to form a new round.║║• Additional winning combinations will be tallied in every round until no more winning combinations can be tallied.║║• All wins shown in cash."
+    "win_3600_ways_instructions_part_3": "• After the payout of every round, all winning symbols explode, and the symbols above them cascade down to form a new round.║║• Additional winning combinations will be tallied in every round until no more winning combinations can be tallied.║║• All wins shown in cash.",
+    "accessible_only_within_primary_account": "accessible only within primary account"
 }
   

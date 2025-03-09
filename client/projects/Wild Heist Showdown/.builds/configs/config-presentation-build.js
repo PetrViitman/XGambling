@@ -25,6 +25,12 @@ export default defineConfig({
           extensions: ['.js'],
           exclude: 'node_modules/**',
         }),
+        {
+          name: 'remove-all-comments',
+          renderChunk(code) {
+            return code.replace(/\/\*[\s\S]*?\*\//g, '')
+          },
+        },,
       ],
     },
   },

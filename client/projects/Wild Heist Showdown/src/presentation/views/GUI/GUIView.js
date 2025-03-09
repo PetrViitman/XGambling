@@ -29,6 +29,7 @@ import { ButtonBonusView } from "./buttons/ButtonBonusView";
 import { ButtonHomeView } from "./buttons/ButtonHomeView";
 import { ButtonAudioView } from "./buttons/ButtonAudioView";
 import { NetworkStatusView } from "./NetworkStatusView";
+import { TextField } from "../text/TextField";
 
 export class GUIView extends AdaptiveContainer {
     bottomGradientView
@@ -107,10 +108,11 @@ export class GUIView extends AdaptiveContainer {
         isLTRTextDirection = true,
         isMobileApplicationClient = false,
         isSpecialMobileApplicationClient = false,
+        characters,
         locale,
         audio
     }) {
-        const assets = await createAtlas(gameAssets, vfxLevel)
+        const assets = await createAtlas({assets: gameAssets, vfxLevel})
         for (const [key, value] of Object.entries(gameAssets)) {
             assets[key] = value
         }
@@ -570,7 +572,6 @@ export class GUIView extends AdaptiveContainer {
             buttonAutoplayView,
             buttonInfoView,
             buttonFullScreenView,
-            buttonHomeView,
             buttonBuyFeatureView,
             buttonBonusView,
             buttonAudioView,
@@ -586,12 +587,17 @@ export class GUIView extends AdaptiveContainer {
 
         if(!bottomGroupView) return
 
-        leftSideGroupView.setTargetArea({x: 0, y: offsetTop + 0.25 * 0.9, width: 1, height: 0.5 * 0.9 - offsetBottom})
         leftCornerGroupView.setTargetArea({x: 0, y: offsetTop, width: 1, height: 1  - offsetBottom})
         buttonFullScreenView?.setFullscreenMode(document.fullscreenElement)
 
 
         if (sidesRatio > 1) {
+            leftSideGroupView.setTargetArea({
+                x: 0.05,
+                y: offsetTop + 0.25 * 0.9,
+                width: 0.95,
+                height: 0.5 * 0.9 - offsetBottom
+            })
             rightSideGroupView.addChild(
                 buttonSpinView,
                 buttonSkipView,
@@ -604,13 +610,9 @@ export class GUIView extends AdaptiveContainer {
             buttonInfoView.position.set(105, 250 + 75)
             buttonBuyFeatureView.position.set(105, 365 + 75)
 
-
-
             audioGroupView
                 .setSourceArea({width: 850, height: 500})
                 .setTargetArea({x: 0, y: 0.1, width: 1, height: 0.8})
-            
-
 
             const x = 725
             buttonAudioView.position.set(x, 0)
@@ -661,6 +663,13 @@ export class GUIView extends AdaptiveContainer {
 
             buttonAudioView.position.set(950, 150)
             buttonAudioView.scale.set(0.5)
+
+            leftSideGroupView.setTargetArea({
+                x: 0,
+                y: offsetTop + 0.25 * 0.9,
+                width: 1,
+                height: 0.5 * 0.9 - offsetBottom
+            })
 
             audioGroupView
                 .setSourceArea({width: 1000, height: 500})
@@ -762,6 +771,7 @@ export class GUIView extends AdaptiveContainer {
         this.autoplaySelectorView.setSelectableOptions(this.autoplayOptions)
 
         this.betSelectorView.setSelectableOptions(this.betsOptions)
+        this.betSelectorView.currencyCode = this.currencyCode
         this.betSelectorView.forceSelect({optionIndex: this.betIndex})
         this.betSelectorView.setBetLimits(this.minimalBet, this.maximalBet)
 

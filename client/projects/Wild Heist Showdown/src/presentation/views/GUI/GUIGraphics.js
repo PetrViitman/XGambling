@@ -197,6 +197,29 @@ function createIconSpin(width = 175, height = 200) {
 }
 
 
+function createCharacter(character = 'M', fontSize = 75) {
+	const canvas = createCanvas(fontSize, fontSize)
+	const width = fontSize
+	const height = fontSize
+	const {context} = canvas
+	const finalFontSize = fontSize * 0.85
+    const text = character
+
+    context.font = "bold " + finalFontSize +"px Tahoma"
+    context.textBaseline = "middle";
+
+    context.fillStyle = "green";
+    context.fillRect(0, 0, width, height);
+    context.fillStyle = "white";
+
+
+    context.fillText(text, width * 0.5 - context.measureText(character).width * 0.5, height * 0.5)
+
+
+    return canvas
+}
+
+
 function createIconSkip(width = 150, height = 150) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
@@ -1062,7 +1085,7 @@ function createGradient(width = 248, height = 400) {
     return canvas
 }
 
-function createBigRoundedRectangle(width = 490, height = 590) {
+function createBigRoundedRectangle(width = 400, height = 590) {
 	const canvas = createCanvas(width, height)
 	const {context} = canvas
 
@@ -1156,7 +1179,7 @@ function createSafeIcon(safeView) {
 	return canvas
 }
 
-export async function createAtlas(assets, vfxLevel) {
+export async function createAtlas({assets, vfxLevel, characters = []}) {
     const canvasWidth = 2048
     const canvasHeight = 2048
     const canvas = createCanvas(canvasWidth, canvasHeight)
@@ -1199,6 +1222,26 @@ export async function createAtlas(assets, vfxLevel) {
         new Base2DSymbolView(9, assets),
         new Base2DSymbolView(10, assets),
 	]
+
+	const alphabetDescriptors = []
+	const fontSize = 75
+	let x = 0
+	let y = 1400
+	for (let i = 0; i < characters.length; i++) {
+		const character = characters[i]
+		alphabetDescriptors.push({
+			name: character,
+			image: createCharacter(character, fontSize),
+			x,
+			y
+		})
+
+		x += fontSize
+		if(x + fontSize >= 2048) {
+			x = 0
+			y+= fontSize
+		}
+	}
 
 
     const descriptors = [
@@ -1256,7 +1299,8 @@ export async function createAtlas(assets, vfxLevel) {
 		{name: 'UICorner', image: createUICorner(), x: 1005, y: 805}, 
 		{name: 'UIBorder', image: createUIBorder(), x: 1005, y: 905}, 
 		{name: 'iconHomeBackground', image: createIconHomeBackground(), x: 605, y: 805}, 
-		{name: 'iconTriangle', image: createIconTriangle(), x: 805, y: 805}
+		{name: 'iconTriangle', image: createIconTriangle(), x: 805, y: 805},
+		...alphabetDescriptors
     ].forEach(({
         name, x, y, image,
 		maximalWidth = image.width,
@@ -1292,10 +1336,10 @@ export async function createAtlas(assets, vfxLevel) {
 
 
 
-	// canvas.style.position = "absolute"
-	// canvas.style.zIndex = 500000
-	// var body = document.getElementsByTagName("body")[0]
-	// body.appendChild(canvas)
+	//canvas.style.position = "absolute"
+	//canvas.style.zIndex = 500000
+	//var body = document.getElementsByTagName("body")[0]
+	//body.appendChild(canvas)
 	
 
     return spriteSheet.parse()

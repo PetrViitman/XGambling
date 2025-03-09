@@ -32,20 +32,23 @@ export class WedgesRingView extends Container {
     }
 
     initCharacters({assets, vfxLevel, audio}) {
-        if(vfxLevel < 0.2) return
+        if(vfxLevel < 0.3) return
 
         this.timelines = []
-        
-        this.charactersViews = [
+        const positions = vfxLevel < 0.35
+        ? [
             [50, 175],
-
+            [-175, -50, 0.05]
+        ]
+        : [
+            [50, 175],
             [175, 50, 0.95],
-
             [-50, -175, 0.5],
+            [-175, -50, 0.1]
+        ]
 
-            [-175, -50, 0.1],
 
-        ].map(([
+        this.charactersViews = positions.map(([
             x,
             y,
             initialFlipProgress = 0
@@ -69,12 +72,12 @@ export class WedgesRingView extends Container {
             return this.addChild(view)
         })
 
-        this.charactersViews[0].setShirtColor(0xFFFFAA)
-        this.charactersViews[0].setLegsColor(0x888888)
-        this.charactersViews[1].setShirtColor(0xBBBBBB)
-        this.charactersViews[1].setLegsColor(0x666666)
-        this.charactersViews[2].setShirtColor(0xFFFFFF)
-        this.charactersViews[3].setShirtColor(0xFFEEAA)
+        this.charactersViews[0]?.setShirtColor(0xFFFFAA)
+        this.charactersViews[0]?.setLegsColor(0x888888)
+        this.charactersViews[1]?.setShirtColor(0xBBBBBB)
+        this.charactersViews[1]?.setLegsColor(0x666666)
+        this.charactersViews[2]?.setShirtColor(0xFFFFFF)
+        this.charactersViews[3]?.setShirtColor(0xFFEEAA)
 
         this.presentIdleIntro()
 

@@ -152,7 +152,7 @@ export class ForegroundView extends Container {
 
     initCharacters(assets, vfxLevel, audio) {
 
-        if(vfxLevel < 0.3) return
+        if(vfxLevel < 0.2) return
 
         this.charactersViews = [0.4, 0.6].map((offsetX, i) => {
             const view = i

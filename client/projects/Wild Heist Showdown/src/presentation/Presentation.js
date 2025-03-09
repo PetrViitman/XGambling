@@ -75,7 +75,7 @@ export class Presentation {
 
 		this.languageCode = languageCode
 		this.pixiApplication = new Application({
-			background: 0x000000,
+			background: 0x000000
 		})
 		this.vfxLevel = customVFXLevel
 		this.pixiApplication.view.setAttribute('touch-action', 'none')
@@ -106,15 +106,16 @@ export class Presentation {
 				.appendChild(this.pixiApplication.view)
 		// ...CANVAS APPENDING
 
-		
+		let elapsedFrames = 0
 		let timeStampFPS = 0
 		Ticker.shared.add(() => {
 			Timeline.update()
-
+			elapsedFrames++
 			const currentTime = Date.now()
 			if(currentTime - timeStampFPS < 1000) return
-
+			document.title = elapsedFrames
 			timeStampFPS = currentTime
+			elapsedFrames = 0
 		})
 
 		// GUI...
@@ -231,7 +232,7 @@ export class Presentation {
 
 		// ADJUSTING RESOLUTION...
 		const highestResolution = window.devicePixelRatio
-		const lowestResolution = Math.min(1.5, highestResolution)
+		const lowestResolution = Math.min(1, highestResolution)
 		const resolutionDelta = highestResolution - lowestResolution
 
 		if (this.vfxLevel) {
@@ -245,6 +246,7 @@ export class Presentation {
 			})
 
 			this.pixiApplication.renderer.resolution = lowestResolution + resolutionDelta * vfxLevel
+			this.pixiGUIApplication.renderer.resolution = lowestResolution + resolutionDelta * vfxLevel
 			this.vfxLevel = vfxLevel
 		}
 		// ...ADJUSTING RESOLUTION
@@ -496,16 +498,16 @@ export class Presentation {
 		TextField.fontStyles.default =  {
 			fontFamily: "Helvetica",
 			dropShadow: true,
-			dropShadowDistance: 7,
+			dropShadowDistance: 5,
 			dropShadowAngle: Math.PI / 2,
 			dropShadowColor: 0x190445,
 			fontWeight: 'bold',
-			fontSize: 256,
+			fontSize:  45,
 			fill: ['#FFFFFF', '#CCCCCC'],
 		}
 
 		if(this.isLTRTextDirection) {
-			BitmapFont.from(
+			const t = BitmapFont.from(
 				"default",
 				TextField.fontStyles.default,
 				{

@@ -27,14 +27,15 @@ export class TensionPoolView extends Container {
         })
     }
 
-	presentFreeSpinsAward() {
+	presentFreeSpinsAward(isFreeSpinsMode) {
+		const multiplier = isFreeSpinsMode ? 1 : 10
 		this.timeline
 			.deleteAllAnimations()
 			.addAnimation({
-				duration: 20000,
+				duration: 2000 * multiplier,
 				onProgress: progress => {
-					const subProgress = (progress * 10) % 1
-					const alpha = Math.min(1, Math.sin(Math.PI * progress) * 20)
+					const subProgress = (progress * multiplier) % 1
+					const alpha = Math.min(1, Math.sin(Math.PI * progress) * 2 * multiplier)
 
 					this.tensionsViews.forEach(view => {
 						view.setProgress(subProgress)

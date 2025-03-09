@@ -1,5 +1,5 @@
 import { COEFFICIENTS, SlotMachine } from "./slotMachine/SlotMachine"
-import PROBABILITY from "./slotMachine/RTP_96"
+import PROBABILITY from "./slotMachine/PROBABILITIES_DEMO"
 
 const CUSTOM_REELS_EXPECTED = true
 const ERROR_CODES = {
@@ -35,14 +35,14 @@ const ACCOUNTS = [
         "type": 13,
         "name": "1xGames bonus account",
         "id": 476415627,
-        "balance": 1015.5,
+        "balance": 10015.5,
         "currencyId": 1,
-        "codeCurrency": "RUB",
+        "codeCurrency": "EUR",
         "isPrimary": false,
         "isActive": false,
         "currency": {
             "id": 1,
-            "code": "RUB"
+            "code": "EUR"
         }
     },/*
     {

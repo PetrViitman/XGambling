@@ -9,6 +9,27 @@ function getDefaultLocale() {
 	return navigator.language;
 }
 
+function formatDuration(minutes) {
+    const units = [
+        { label: 'w', value: 7 * 24 * 60 },
+        { label: 'd', value: 24 * 60 },
+        { label: 'h', value: 60 },
+        { label: 'm', value: 1 }
+    ];
+    
+    let result = [];
+    
+    for (const unit of units) {
+        const amount = Math.floor(minutes / unit.value);
+        if (amount > 0) {
+            result.push(`${amount}${unit.label}`);
+            minutes %= unit.value;
+        }
+    }
+    
+    return result.join(' ');
+}
+
 
 export class SelectableBonusView extends Container {
     descriptor
@@ -169,14 +190,19 @@ export class SelectableBonusView extends Container {
 
         const finalHours = Math.trunc(hours - days * 24)
 
-        this.remainingTimeTextField.setText(
-            new Intl.DurationFormat(locale, { style: "narrow" }).format(
+        const formattedDuration = Intl?.DurationFormat
+            ? new Intl.DurationFormat(locale, { style: "narrow" }).format(
                 {
                     days,
                     hours: finalHours,
                     minutes: remainingMinutesCount - (days * 24 * 60 + finalHours * 60)
                 },
-            ) || '-'
+            )
+            : formatDuration(remainingMinutesCount)
+
+
+        this.remainingTimeTextField.setText(
+            formattedDuration || '-'
         )
 
         const alpha = remainingMinutesCount ? 1 : 0.25

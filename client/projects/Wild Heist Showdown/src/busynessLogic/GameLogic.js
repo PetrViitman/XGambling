@@ -114,6 +114,7 @@ export class GameLogic {
 		this.accounts.forEach(account => account.isActive = false)
 		this.presentation?.presentNetworkStatus?.(false)
 		this.activeBonusDescriptor = undefined
+		const accountId = account.id
 
 		const {
 			accounts,
@@ -127,11 +128,14 @@ export class GameLogic {
 
 		this.accounts = accounts
 		account.isActive = true
-		this.activeAccount = account
+		this.activeAccount = this.accounts.find(({id}) => id === accountId)
+
+		this.activeAccount.isActive = true
 
 		this.minimalBet = minimalBet
 		this.maximalBet = maximalBet
-		this.currencyCode = currencyCode
+		this.currencyCode = this.activeAccount.currency.code
+
 		this.balance = balance
 		this.updateBetsOptions()
 

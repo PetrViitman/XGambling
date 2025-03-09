@@ -405,14 +405,16 @@ export class SlotMachine {
 		let roundSteps = []
 		let isFreeSpinsMode
 		let freeSpinsCount = 0
+		let isSecondBonusAwarded = false
 
 		do {
 			freeSpinsCount = Math.max(0, freeSpinsCount - 1)
 			let reels = desiredReels ?? this.roll({
 				probabilities: isFreeSpinsMode ? bonusSpins : defaultSpins,
 				desiredReels,
-				isBonusPurchased: isBonusPurchased && !roundSteps.length
-			})
+				isBonusPurchased: isBonusPurchased && (!isSecondBonusAwarded || !roundSteps.length)
+			}) 
+			if(freeSpinsCount && !isSecondBonusAwarded) isSecondBonusAwarded = true
 			const subSteps = this.getCascadeSteps({
 				multiplier: isFreeSpinsMode ? 8 : 1,
 				reels,

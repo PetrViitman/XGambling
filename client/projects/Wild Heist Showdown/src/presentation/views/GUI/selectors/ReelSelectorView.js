@@ -70,7 +70,7 @@ export class ReelSelectorView extends Container {
     }
 
     initTextFields() {
-        const maximalWidth = 180
+        const maximalWidth = 150
         const maximalHeight = 50
 
         this.eventMode = 'static'
@@ -133,7 +133,7 @@ export class ReelSelectorView extends Container {
             sprite.anchor.set(0.5)
             sprite.tint = 0xf8ee89
             sprite.y = y
-            sprite.width = 192
+            sprite.width = 158
             sprite.height = 1.5
             container.addChild(sprite)
         })

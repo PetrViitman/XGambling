@@ -777,36 +777,38 @@ export class ReelsView extends BaseReelsView {
 	async presentFreeSpinsAward(freeSpinsCount) {
 		this.reset()
 	 	this.setMasked(false)
-		this.tensionPoolView?.presentFreeSpinsAward()
+		this.tensionPoolView?.presentFreeSpinsAward(this.isFreeSpinsMode)
 
-		return Promise.all([
-			this.presentFreeSpinsCount(freeSpinsCount),
-			this.cameraTimeline
-				.deleteAllAnimations()
-				.addAnimation({
-					duration: 1250,
-					onProgress: (progress) => {
-						this.camera
-							.focus({
-								view: this,
-								offsetX: 0,
-								offsetY: 0,
-							})
-							.setZoom(1 + 0.15 * Math.sin(Math.PI * 4 * progress) * (1 - progress))
+		return this
+			.cameraTimeline
+			.deleteAllAnimations()
+			.addAnimation({
+				delay: 500,
+				onFinish: () => this.presentFreeSpinsCount(freeSpinsCount)
+			})
+			.addAnimation({
+				duration: 1250,
+				onProgress: (progress) => {
+					this.camera
+						.focus({
+							view: this,
+							offsetX: 0,
+							offsetY: 0,
+						})
+						.setZoom(1 + 0.15 * Math.sin(Math.PI * 4 * progress) * (1 - progress))
 
 
-						const scatterProgress = (progress * 2) % 1
+					const scatterProgress = (progress * 2) % 1
 
-						this.cellsViews.forEach(reel => reel.forEach(view => {
-							if(view.currentSymbolId === SCATTER_SYMBOL_ID) {
-								view.getSymbolView().presentTeasing(scatterProgress)
-								view.presentWinBox(scatterProgress)
-							}
-						}))
-					}
-				})
-				.play()
-		])
+					this.cellsViews.forEach(reel => reel.forEach(view => {
+						if(view.currentSymbolId === SCATTER_SYMBOL_ID) {
+							view.getSymbolView().presentTeasing(scatterProgress)
+							view.presentWinBox(scatterProgress)
+						}
+					}))
+				}
+			})
+			.play()
 	}
 
 	async presentBonusGameFinish() {
