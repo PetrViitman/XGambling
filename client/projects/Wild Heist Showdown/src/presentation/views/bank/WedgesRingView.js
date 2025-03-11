@@ -35,12 +35,7 @@ export class WedgesRingView extends Container {
         if(vfxLevel < 0.3) return
 
         this.timelines = []
-        const positions = vfxLevel < 0.35
-        ? [
-            [50, 175],
-            [-175, -50, 0.05]
-        ]
-        : [
+        const positions = [
             [50, 175],
             [175, 50, 0.95],
             [-50, -175, 0.5],

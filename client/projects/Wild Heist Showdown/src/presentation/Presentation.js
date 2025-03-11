@@ -116,6 +116,7 @@ export class Presentation {
 			backgroundAlpha: 0,
 			resolution: window.devicePixelRatio
 		})
+		
 		this.pixiGUIApplication.view.setAttribute('touch-action', 'none')
 		this.pixiGUIApplication.renderer.plugins.accessibility.destroy();
 		delete this.pixiGUIApplication.renderer.plugins.accessibility;
@@ -224,7 +225,7 @@ export class Presentation {
 
 		// ADJUSTING RESOLUTION...
 		const highestResolution = window.devicePixelRatio
-		const lowestResolution = Math.min(1, highestResolution)
+		const lowestResolution = Math.min(1.5, highestResolution)
 		const resolutionDelta = highestResolution - lowestResolution
 
 		if (this.vfxLevel) {

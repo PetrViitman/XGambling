@@ -29,6 +29,10 @@ export class PopupSelectorView extends AdaptiveContainer {
         this.visible = false
     }
 
+    setLocked(isLocked = true) {
+        this.reelSelectorView.setLocked(isLocked)
+    }
+
     initReelSelector(assets) {
         const view = new ReelSelectorView(assets)
         view.position.set(500, 290)

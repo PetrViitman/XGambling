@@ -231,8 +231,12 @@ export class GUIView extends AdaptiveContainer {
             new AccountSelectorView({assets, dictionary, audio: this.audio})
         )
 
-        this.accountSelectorView.onAccountSwitchRequest = (account) => {
-            this.presentPopup()
+        this.accountSelectorView.onAccountSwitchRequest = async account => {
+            this.accountSelectorView.setLocked()
+            this.presentNetworkStatus(false)
+            await this.presentPopup()
+            this.presentNetworkStatus(true)
+            this.accountSelectorView.setLocked(false)
             this.resolve?.({
                 key: 'change_account',
                 value:  account
@@ -258,7 +262,14 @@ export class GUIView extends AdaptiveContainer {
     }
 
     initBonusSelector({assets, dictionary, isLTRTextDirection, locale}){
-        const view = new BonusSelectorView({assets, dictionary, isLTRTextDirection, locale, audio: this.audio})
+        const view = new BonusSelectorView({
+            assets,
+            dictionary,
+            isLTRTextDirection,
+            locale,
+            audio: this.audio,
+            isMobileApplicationClient: this.isMobileApplicationClient
+        })
         view.visible = false
         view.alpha = 0
         view.onButtonCloseClick = () => {
@@ -933,7 +944,6 @@ export class GUIView extends AdaptiveContainer {
             'buy': this.buyFeatureSelectorView,
             'autoplay': this.autoplaySelectorView,
             'account': this.accountSelectorView,
-            'rules': undefined,
         }
 
         const oldPopupView = popupsMap[this.activePopupName]
@@ -943,12 +953,13 @@ export class GUIView extends AdaptiveContainer {
 
         this.activePopupName = name
         this.activePopupView = newPopupView
-        this.refresh()
+        // this.refresh()
 
         this.infoBarView.setVisible(name !== 'account')
 
         popupsViews.forEach(view => { view.visible = false })
-        this.timeline
+        return this
+            .timeline
             .wind(1)
             .deleteAllAnimations()
             .addAnimation({

@@ -2,11 +2,16 @@ import { Sprite } from "pixi.js";
 import { ScrollableWindow } from "../ScrollableWindowView";
 import { BonusSelectorContentView } from "./BonusSelectorContentView";
 
+const GAME_ID = 578
+
 export class BonusSelectorView extends ScrollableWindow {
-    constructor({assets, dictionary, coefficients, isLTRTextDirection, locale, audio}) {
+    isMobileApplicationClient
+
+    constructor({assets, dictionary, coefficients, isLTRTextDirection, locale, audio, isMobileApplicationClient}) {
         super({assets, dictionary, coefficients, isLTRTextDirection, locale, audio})
 
         this.textField.setText(dictionary.bonuses)
+        this.isMobileApplicationClient = isMobileApplicationClient
     }
 
 
@@ -49,6 +54,18 @@ export class BonusSelectorView extends ScrollableWindow {
             }
             return 0
         })
+
+        if(this.isMobileApplicationClient) {
+            const finalBonuses = []
+            bonuses.forEach(bonus => {
+                if(bonus.GID === GAME_ID) {
+                    finalBonuses.push(bonus)
+                }
+            })
+
+            bonuses = finalBonuses
+        }
+
 
         this.contentView.refresh(bonuses)
 

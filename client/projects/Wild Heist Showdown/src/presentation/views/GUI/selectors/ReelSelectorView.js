@@ -56,7 +56,15 @@ export class ReelSelectorView extends Container {
         this.addChild(sprite)
     }
 
+    setLocked(isLocked = true) {
+        this.isLocked = isLocked
+    }
+
     setSelectableOptions(options = []) {
+        if (this.isLocked) {
+            return
+        }
+
         if(this.selectableOptions === options) {
             return
         }
@@ -174,6 +182,10 @@ export class ReelSelectorView extends Container {
     }
 
     adjust() {
+        if (this.isLocked) {
+            return
+        }
+
         const {
             textFields,
             progress,
@@ -300,6 +312,9 @@ export class ReelSelectorView extends Container {
     }
 
     forceSelect({optionIndex, dropUserInput, ignoreSameOptionIndex = false}) {
+        if (this.isLocked) {
+            return
+        }
         if(!ignoreSameOptionIndex && this.selectedOptionIndex === optionIndex) return
         this.timeline.wind(1)
         this.progressOffset = 0

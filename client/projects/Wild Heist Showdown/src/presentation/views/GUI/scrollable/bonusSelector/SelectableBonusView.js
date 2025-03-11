@@ -30,7 +30,6 @@ function formatDuration(minutes) {
     return result.join(' ');
 }
 
-
 export class SelectableBonusView extends Container {
     descriptor
     buttonView

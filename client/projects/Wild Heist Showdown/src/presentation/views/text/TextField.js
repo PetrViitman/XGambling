@@ -97,10 +97,10 @@ export class TextField extends Container {
 		if (charactersPerLineCount) {
 			this.text = ''
 
-			finalTexts.forEach(finalText => {
+			finalTexts.forEach((finalText, paragraphIndex) => {
 				let buffer = ''
 
-				if(finalText.length < charactersPerLineCount) {
+				if (finalText.length < charactersPerLineCount) {
 					buffer = finalText + (finalTexts.length > 1 ? '\n' : '')
 				} else {
 					let elapsedCharactersCount = 0
@@ -119,9 +119,12 @@ export class TextField extends Container {
 
 						buffer += textLine
 						characterIndex += textLine.length
-						elapsedCharactersCount += Math.max(0, textLine.length - 1) || charactersPerLineCount
+						elapsedCharactersCount += Math.max(0, textLine.length) || charactersPerLineCount
 
-						if(elapsedCharactersCount < finalText.length) {
+						if(
+							paragraphIndex < finalTexts.length - 1 
+							|| elapsedCharactersCount < finalText.length
+						) {
 							buffer += '\n'
 						}
 					}
@@ -139,6 +142,10 @@ export class TextField extends Container {
 
 				this.text += buffer
 			})
+
+			if(this.marker) {
+				console.log('|' + this.text + '|')
+			}
 		}
 
 		if (!this.textView)

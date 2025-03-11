@@ -6,6 +6,7 @@ export class AccountSelectorView extends PopupSelectorView {
         super({assets, dictionary})
 
         this.initButtonSwitch({assets, dictionary, audio})
+        
     }
 
     initTexts(dictionary) {
