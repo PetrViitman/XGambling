@@ -138,9 +138,9 @@ export class GUIView extends AdaptiveContainer {
         this.initBuyFeatureSelector({assets, dictionary, currencyCode, buyFeatureBetMultiplier, isLTRTextDirection})
         this.initAutoplaySelector({assets, dictionary})
         this.initAccountSelector({assets, dictionary})
+        this.initNetworkStatus(assets)
         this.initPaytable({assets, dictionary, coefficients, isLTRTextDirection})
         this.initBonusSelector({assets, dictionary, isLTRTextDirection, locale})
-        this.initNetworkStatus(assets)
 
         audio.onAudioReady = () => this.buttonAudioView.onAudioReady()
     }
@@ -485,7 +485,7 @@ export class GUIView extends AdaptiveContainer {
         this.buttonAudioView.onClick = () => {
             this.buttonAudioView.setMuted(!this.buttonAudioView.isMuted)
 
-            this.audio.setMuted(this.buttonAudioView.isMuted)
+            this.audio.setMuted({isMuted: this.buttonAudioView.isMuted})
             // this.onAutoplaySpinsCountChange?.(this.autoplayOptions[this.autoplaySelectorView.getSelectedOptionIndex()])
         }
 

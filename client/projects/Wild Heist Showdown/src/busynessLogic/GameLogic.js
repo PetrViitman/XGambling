@@ -186,7 +186,7 @@ export class GameLogic {
 		await presentation?.presentSpinStart?.({ // let it spin while fetching
 			balance: balanceBeforePayouts,
 			multiplier: this.multiplier,
-			currencyCode: this.currencyCode
+			currencyCode: this.currencyCode,
 		})
 
 		this.presentation?.presentNetworkStatus?.(false)

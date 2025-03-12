@@ -306,7 +306,7 @@ export class ReelsView extends BaseReelsView {
 				capturedSymbolView: cellView.getSymbolView(),
 				x: cellX,
 				y: cellY + offsetY - 1,
-				symbolId: cellView.currentSymbolId
+				symbolId: Math.abs(cellView.currentSymbolId)
 			})
 
 		})

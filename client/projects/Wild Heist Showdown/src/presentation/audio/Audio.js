@@ -43,6 +43,7 @@ export class Audio {
     tensionTimeline = new Timeline
     countingTimeline = new Timeline
     isMuted = true
+    isHidden = false
     volumeMultiplier = 0
     loadingVolumeMultiplier = 0
 
@@ -55,13 +56,14 @@ export class Audio {
     winIndex = 0
     isMusicRequested
 
+
     constructor() {
         document.addEventListener("visibilitychange", () => {
-            this.setPaused(document.hidden)
+            this.setMuted({saveToCookie: false})
         }, false);
 
 
-        this.setMuted(true, false)
+        this.setMuted({isMuted: true, saveToCookie: false})
 
         /*
         new Timeline()
@@ -171,9 +173,13 @@ export class Audio {
         return this
     }
 
-    setMuted(isMuted = true, saveToCookie = true) {
+    setMuted({
+        isMuted = this.isMuted,
+        saveToCookie = true,
+    }) {
+        const isHidden = document.hidden
         this.isMuted = isMuted
-        this.volumeMultiplier = isMuted ? 0 : 1
+        this.volumeMultiplier = (isMuted || isHidden) ? 0 : 1
 
         const audios = Object.values(this.audios)
 
@@ -190,7 +196,7 @@ export class Audio {
     }
 
     recoverCookieMuteState() {
-        this.setMuted(getCookie(COOKIE_NAME), false)
+        this.setMuted({isMuted: getCookie(COOKIE_NAME), saveToCookie: false})
         this.onCookieMuteStateRecovered?.(this.isMuted)
     }
 
@@ -225,7 +231,7 @@ export class Audio {
 
         this.loadingVolumeMultiplier = 1
         this.isMusicRequested && this.playMusic()
-        this.setMuted(this.isMuted, false)
+        this.setMuted({saveToCookie: false})
     }
 
     setPaused(isPaused = true) {
@@ -233,6 +239,8 @@ export class Audio {
 
         const audios = Object.values(this.audios)
         
+
+        console.log()
         if (isPaused) {
             audios.forEach(audio => audio.context?.audioContext?.suspend?.())
         } else {

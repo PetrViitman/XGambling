@@ -5,20 +5,19 @@ import { Timeline } from "../../timeline/Timeline"
 import { formatMoney } from "../../Utils"
 
 const PAYOUTS_IDS_COLOR_MAP = {
-	0: 0xFF55ff, // 10
-	1: 0xAAff00, // Q
-	2: 0x00AAff, // J
-	3: 0xFF8800, // A
-	4: 0xFF5500, // K
-	5: 0x55EEFF, // scarab
-	6: 0xffd300, // eye
-	7: 0x7766FF, // pharaoh
-	8: 0xFF5500, // ankh
-	9: 0xff6f00, // book
-	10: 0xff6f00, // book
-	11: 0xff6f00, // book
-	12: 0xff6f00, // book
+	1: 0xAAFF55,
+	2: 0xFF2200,
+	3: 0xFF22AA,
+	4: 0x55AAFF,
+	5: 0x22FFFF,
+	6: 0x2266FF,
+	7: 0xEEEEEE,
+	8: 0xFFAA22,
+	9: 0xAAFF00,
+	10: 0xFFFF00,	
 }
+
+
 
 const ZOOM_DELTA = 0.5
 
@@ -137,39 +136,43 @@ export class PayoutsInfoPanelView extends Container {
 			.play()
 	}
 
-	updatePayoutsTexts(color) {
-		const {coefficients } = this
-		const capturedSymbolId = Math.abs(this.capturedSymbolId)
+	updatePayoutsTexts() {
+		const {coefficients, payoutsViews } = this
+		const capturedSymbolId = this.capturedSymbolId
+		const color = PAYOUTS_IDS_COLOR_MAP[capturedSymbolId]
 
 		if(capturedSymbolId === undefined) return
 
 		if (coefficients[capturedSymbolId]) {
 
 			const coefficientsArray = Object.values(coefficients[capturedSymbolId])
-			const symbolsCountOffset = 5 - coefficientsArray.length
 			const textFieldHeight = 250 / coefficientsArray.length
 
-			this.payoutsViews.forEach((view, i) => {
-				const coefficient = coefficientsArray[i]
+			payoutsViews.forEach((view, i) => {
+				const coefficient = coefficientsArray[coefficientsArray.length - 1 - i]
 				const payout = formatMoney({value: coefficient * this.bet})
 
 				view.visible = !!coefficient
-				color && view.setFontColor(color)
-				view.setText((i + symbolsCountOffset + 2) + 'x: ' + payout)
+				view.setText((coefficientsArray.length - i + 2) + 'x: ' + payout)
 				view.y = textFieldHeight * i + 5
 				view.setMaximalHeight(textFieldHeight)
 			})
 		} else if (capturedSymbolId === WILD_SYMBOL_ID) {
-			this.payoutsViews.forEach(view => view.setText(''))
-			this.payoutsViews[0].y = 5
-			this.payoutsViews[0].setMaximalHeight(250)
-			this.payoutsViews[0].setText('WILD')
+			payoutsViews.forEach(view => view.setText(''))
+			payoutsViews[0].y = 5
+			payoutsViews[0].setMaximalHeight(250)
+			payoutsViews[0].setText('WILD')
 		} else if (capturedSymbolId === SCATTER_SYMBOL_ID) {
-			this.payoutsViews.forEach(view => view.setText(''))
-			this.payoutsViews[0].y = 5
-			this.payoutsViews[0].setMaximalHeight(250)
-			this.payoutsViews[0].setText('SCATTER')
+			payoutsViews.forEach(view => view.setText(''))
+			payoutsViews[0].y = 5
+			payoutsViews[0].setMaximalHeight(250)
+			payoutsViews[0].setText('SCATTER')
 		}
+
+
+		color && payoutsViews.forEach(view => {
+			view.setFontColor(color)
+		})
 	}
 
 	async presentPayouts({
@@ -182,11 +185,10 @@ export class PayoutsInfoPanelView extends Container {
 			camera,
 			timeline,
 			reelsView,
-			coefficients,
 			contentContainer,
 		} = this
 
-		// if(!coefficients[symbolId]) return
+
 		if(contentContainer.visible) return
 		
 		// KEEPING PANEL INSIDE REELS...
@@ -207,8 +209,7 @@ export class PayoutsInfoPanelView extends Container {
 			x * CELL_WIDTH,
 			y * CELL_HEIGHT)
 
-		// capturedSymbolView.presentAnimation({index: 0})
-		this.updatePayoutsTexts(PAYOUTS_IDS_COLOR_MAP[symbolId])
+		this.updatePayoutsTexts()
 		
 		await timeline
 			.deleteAllAnimations()
@@ -226,11 +227,7 @@ export class PayoutsInfoPanelView extends Container {
 					
 					capturedSymbolView.setBrightness(1)
 
-					//reelsView.cellsViews.forEach(
-					//	reel => reel.forEach(view => view.getSymbolView().presentWin(0)))
-
 					this.capturedSymbolView.presentCoefficients(progress)
-					// this.capturedSymbolView.idleFactor = 1 - Math.sin(Math.PI * progress)
 
 					camera
 						.focus({view: this.capturedSymbolView})
@@ -249,16 +246,10 @@ export class PayoutsInfoPanelView extends Container {
 						const symbolView = view.getSymbolView()
 						if(symbolView !== capturedSymbolView) {
 							symbolView.setBrightness(0)
-							//symbolView.presentWin(0)
-							//symbolView.idleFactor = 1
-							//symbolView.update(progress)
 						}
 					}))
-
-					//capturedSymbolView.idleFactor = 1
+	
 					capturedSymbolView.setBrightness(1)
-					//capturedSymbolView.update(progress)
-					//capturedSymbolView.presentCoefficients(1)
 				}
 			})
 			.setLoopMode()

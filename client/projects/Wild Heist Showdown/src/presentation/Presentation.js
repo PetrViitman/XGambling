@@ -644,6 +644,7 @@ export class Presentation {
 			balance,
 			payout: commonPayout,
 			currencyCode,
+			winCurrencyCode: currencyCode
 		})
 
 		this.setGamePlayTimeScale()

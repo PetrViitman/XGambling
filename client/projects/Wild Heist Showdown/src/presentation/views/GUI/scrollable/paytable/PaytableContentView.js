@@ -657,9 +657,9 @@ export class PaytableContentView extends Container {
                 })
 
                 if (isLTRTextDirection) {
-                    text += i + ': ' + payout
+                    text += i + 'x: ' + payout
                 } else {
-                    text += payout + ' :' + i
+                    text += payout + ' :x' + i
                 }
 
                 if(i > 3) {
