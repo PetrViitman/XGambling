@@ -19,7 +19,7 @@ import { AwardView } from "./views/splashScreens/award/AwardView"
 import { GUIView } from "./views/GUI/GUIView"
 import { TextField } from "./views/text/TextField"
 import { Audio } from "./audio/Audio"
-import { flipRTLPlaceholders, getDictionary } from "./Dictionary"
+import { flipRTLPlaceholders, getDictionary, isBadRasterLanguage } from "./Dictionary"
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
 
@@ -66,6 +66,7 @@ export class Presentation {
 		this.isMobileApplicationClient = isMobileApplicationClient
 		this.isSpecialMobileApplicationClient = isSpecialMobileApplicationClient
 		TextField.isLTRTextDirection = isLTRTextDirection
+		TextField.isDynamicCharacterSet = isLTRTextDirection || isBadRasterLanguage(languageCode)
 
 		dictionary && !isLTRTextDirection && flipRTLPlaceholders(dictionary)
 		this.dictionary = dictionary
@@ -158,8 +159,7 @@ export class Presentation {
 		// ...GUI
 		
 		this.guiView = new GUIView(wrapperHTMLElementId)
-		this.guiView.alpha = 0
-		this.guiView.visible = false
+		this.guiView.alpha = 0.0001
 		this.guiView.onWindowVisibleStateChanged = (isVisible) => {
 			this.pixiApplication.stage.visible = !isVisible
 
@@ -282,6 +282,7 @@ export class Presentation {
 		this.initInteractiveLayer()
 		AdaptiveContainer.onResize()
 		await this.reelsView.preRenderSymbols()
+		this.guiView.alpha = 0
 
 
 		this.guiView.refresh({
@@ -309,6 +310,8 @@ export class Presentation {
 		}
 
 		this.guiView.onSkipRequested = () => { this.skip() }
+		this.guiView.visible = true
+
 
 		await this.loadingScreen.presentInteractionRequest(this.assets)
 
@@ -316,7 +319,6 @@ export class Presentation {
 
 		isSignedIn && this.guiView.requestFullScreen()
 
-		this.guiView.visible = true
 		await Promise.all([
 			this.loadingScreen.hide((progress) => {
 				this.guiView.alpha = progress
@@ -498,19 +500,20 @@ export class Presentation {
 			fill: ['#FFFFFF', '#CCCCCC'],
 		}
 
-		if(this.isLTRTextDirection) {
-			const t = BitmapFont.from(
-				"default",
-				TextField.fontStyles.default,
-				{
-					chars: [new Set([
+		const defaultCharacterSet = ' 0123456789x:,./ABCDEFGHIJKLMNOPQRSTUVWXYZ∞-|½×='
+		BitmapFont.from(
+			"default",
+			TextField.fontStyles.default,
+			{
+				chars: this.isLTRTextDirection
+					? [new Set([
 						...(accounts.map(({name}) => name).join('').split('')),
 						...(bitmapPhrases.join('').split('')),
-						...'0123456789x:,./ABCDEFGHIJKLMNOPQRSTUVWXYZ∞-|½×='
+						...defaultCharacterSet
 					])]
-				}
-			)
-		}
+					: [...defaultCharacterSet]
+			}
+		)
 	}
 
 	// API...

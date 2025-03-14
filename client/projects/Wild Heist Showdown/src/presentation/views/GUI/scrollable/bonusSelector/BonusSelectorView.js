@@ -7,8 +7,8 @@ const GAME_ID = 578
 export class BonusSelectorView extends ScrollableWindow {
     isMobileApplicationClient
 
-    constructor({assets, dictionary, coefficients, isLTRTextDirection, locale, audio, isMobileApplicationClient}) {
-        super({assets, dictionary, coefficients, isLTRTextDirection, locale, audio})
+    async init({assets, dictionary, coefficients, isLTRTextDirection, locale, audio, isMobileApplicationClient}) {
+        await super.init({assets, dictionary, coefficients, isLTRTextDirection, locale, audio})
 
         this.textField.setText(dictionary.bonuses)
         this.isMobileApplicationClient = isMobileApplicationClient

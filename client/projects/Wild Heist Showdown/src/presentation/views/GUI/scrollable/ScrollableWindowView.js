@@ -19,10 +19,9 @@ export class ScrollableWindow extends AdaptiveContainer {
     audio
 
     releaseTimeline = new Timeline
-    
-    constructor({assets, dictionary, coefficients, isLTRTextDirection, locale, audio}) {
-        super()
 
+
+    async init({assets, dictionary, coefficients, isLTRTextDirection, locale, audio}) {
         this.audio = audio
 
         this.initOverlay(assets)
@@ -33,7 +32,7 @@ export class ScrollableWindow extends AdaptiveContainer {
         this.initButtons(assets, isLTRTextDirection, audio)
 
         this.initScrollableContainer()
-        this.initContent({assets, dictionary, coefficients, isLTRTextDirection, locale})
+        await this.initContent({assets, dictionary, coefficients, isLTRTextDirection, locale})
         
         this.initScrollBar(assets, isLTRTextDirection)
 

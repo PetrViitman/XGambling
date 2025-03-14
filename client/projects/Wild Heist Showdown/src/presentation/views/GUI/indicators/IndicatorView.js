@@ -61,7 +61,7 @@ export class IndicatorView extends Container {
     initTextField(assets) {
         const maximalWidth = 290
         const maximalHeight = 80
-        const textField = new TextField({maximalWidth, maximalHeight})
+        const textField = new TextField({maximalWidth, maximalHeight, isDynamicCharacterSet: false})
             .setFontName('default')
             .setText('')
             .setAlignMiddle()

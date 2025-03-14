@@ -37,10 +37,10 @@ export class ReelSelectorView extends Container {
     frameView
     trianglesIconsViews
 
-    constructor(assets) {
+    constructor(assets, isDynamicCharacterSet) {
         super()
         this.initPanel(assets)
-        this.initTextFields()
+        this.initTextFields(isDynamicCharacterSet)
         this.setSelectableOptions()
         this.initFrame(assets)
         this.initTriangles(assets)
@@ -77,7 +77,7 @@ export class ReelSelectorView extends Container {
         this.adjust()
     }
 
-    initTextFields() {
+    initTextFields(isDynamicCharacterSet) {
         const maximalWidth = 150
         const maximalHeight = 50
 
@@ -111,7 +111,7 @@ export class ReelSelectorView extends Container {
         this.textFields = this.selectableOptions
             .map(_ => {
                 const textField = this
-                    .addChild(new TextField({maximalWidth, maximalHeight}))
+                    .addChild(new TextField({maximalWidth, maximalHeight, isDynamicCharacterSet}))
                     .setFontName('default')
                     .setFontSize(maximalHeight * 0.85)
                     .setFontColor(0xFFFFFF)

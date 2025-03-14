@@ -30,7 +30,7 @@ export class BetSelectorView extends PopupSelectorView {
     }
 
     initReelSelector(assets) {
-        super.initReelSelector(assets)
+        super.initReelSelector(assets, false)
 
         this.reelSelectorView.formatOptions = (options) => {
             return options.map(value => formatMoney({value}) )

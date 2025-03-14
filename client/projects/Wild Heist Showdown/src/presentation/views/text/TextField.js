@@ -13,6 +13,7 @@ const ALIGN_IDS = {
 export class TextField extends Container {
 	static fontStyles = {}
 	static isLTRTextDirection = true
+	static isDynamicCharacterSet
 
 	text
 	maximalWidth
@@ -36,7 +37,7 @@ export class TextField extends Container {
 	constructor({
 		maximalWidth = undefined,
 		maximalHeight = undefined,
-		isDynamicCharacterSet = false
+		isDynamicCharacterSet = TextField.isDynamicCharacterSet
 	}) {
 		super()
 
@@ -366,7 +367,9 @@ export class TextField extends Container {
 		if (!this.textView) {
 			try {
 				this.atlasText = null
-				if (TextField.isLTRTextDirection && !this.isDynamicCharacterSet) {
+				if (
+					TextField.isLTRTextDirection || this.isDynamicCharacterSet === false
+				) {
 					this.bitmapText = new BitmapText('', {fontName})
 				} else {
 					this.bitmapText = new Text('')

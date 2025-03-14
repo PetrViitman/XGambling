@@ -31,11 +31,7 @@ export class IndicatorBetView extends IndicatorView {
 
     presentBonus(bonusDescriptor) {
         if(bonusDescriptor?.type === 3) {
-            if (bonusDescriptor.bet) {
-                this.textField.setText(this.dictionary.free_bet.replace('{BET}', bonusDescriptor.bet))
-            } else {
-                this.textField.setText(this.dictionary.bonus_free_bet_shorthand)
-            }
+            this.textField.setText('FREE')
             this.setInteractive(false)
         } else if (this.activeBonusDescriptor?.type === 3){
             const currentValue = this.currentValue

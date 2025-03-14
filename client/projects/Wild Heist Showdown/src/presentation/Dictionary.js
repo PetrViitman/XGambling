@@ -7,6 +7,7 @@ function getDefaultLocale() {
 }
 
 const RTL_LANGUAGE_CODES = ['ar', 'he', 'fa', 'ur', 'sd', 'ps', 'yi']
+const BAD_RASTER_LANGUAGE_CODES  = ['km', 'my']
 const FALLBACK_LANGUAGE_CODE = 'en'
 
 async function getJsonData(path) {
@@ -83,4 +84,8 @@ export async function getDictionary(languageCode = getDefaultLocale()) {
         ...dictionary,
         isLTRTextDirection
     }
+}
+
+export function isBadRasterLanguage(languageCode) {
+    return BAD_RASTER_LANGUAGE_CODES.includes(languageCode)
 }

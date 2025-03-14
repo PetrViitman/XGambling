@@ -139,7 +139,7 @@ export class GUIView extends AdaptiveContainer {
         this.initAutoplaySelector({assets, dictionary})
         this.initAccountSelector({assets, dictionary})
         this.initNetworkStatus(assets)
-        this.initPaytable({assets, dictionary, coefficients, isLTRTextDirection})
+        await this.initPaytable({assets, dictionary, coefficients, isLTRTextDirection})
         this.initBonusSelector({assets, dictionary, isLTRTextDirection, locale})
 
         audio.onAudioReady = () => this.buttonAudioView.onAudioReady()
@@ -246,8 +246,10 @@ export class GUIView extends AdaptiveContainer {
         this.popupsViews.push(this.accountSelectorView)
     }
 
-    initPaytable({assets, dictionary, coefficients, isLTRTextDirection}) {
-        const view = new PaytableView({assets, dictionary, coefficients, isLTRTextDirection, audio: this.audio})
+    async initPaytable({assets, dictionary, coefficients, isLTRTextDirection}) {
+        const view = new PaytableView()
+        this.paytableView = this.addChild(view)
+        await view.init({assets, dictionary, coefficients, isLTRTextDirection, audio: this.audio})
         view.visible = false
         view.alpha = 0
         view.onButtonCloseClick = () => {
@@ -256,13 +258,13 @@ export class GUIView extends AdaptiveContainer {
         view.onOverlayClick = () => {
             this.presentWindow()
         }
-        this.paytableView = this.addChild(view)
 
         this.windowsViews.push(view)
     }
 
-    initBonusSelector({assets, dictionary, isLTRTextDirection, locale}){
-        const view = new BonusSelectorView({
+    async initBonusSelector({assets, dictionary, isLTRTextDirection, locale}){
+        const view = new BonusSelectorView()
+        await view.init({
             assets,
             dictionary,
             isLTRTextDirection,

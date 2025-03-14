@@ -26,6 +26,12 @@ const SYMBOLS_NAMES = [
     'Scatter',
 ]
 
+const timeline = new Timeline().addAnimation({duration: 1})
+
+function awaitNextFrame() {
+    return timeline.wind(0).play()
+}
+
 export class PaytableContentView extends Container {
     coefficients
     scattersViews = []
@@ -36,21 +42,19 @@ export class PaytableContentView extends Container {
     multiplierHeaderView
     multiplierView
     isLTRTextDirection
-    
-    constructor({assets, dictionary, coefficients, isLTRTextDirection}) {
-        super()
 
+    async init({assets, dictionary, coefficients, isLTRTextDirection}) {
         this.coefficients = coefficients
         this.dictionary = dictionary
         this.isLTRTextDirection= isLTRTextDirection
+        
 
-
-        this.initSymbolsPayouts(assets, dictionary)
-        this.initGoldFramedFeature(assets, dictionary)
-        this.initMultiplier(assets, dictionary)
-        this.initFreeSpins(assets, dictionary)
-        this.initMaximalWin(dictionary)
-        this.init3600Ways(assets, dictionary)
+        await this.initSymbolsPayouts(assets, dictionary)
+        await this.initGoldFramedFeature(assets, dictionary)
+        await this.initMultiplier(assets, dictionary)
+        await this.initFreeSpins(assets, dictionary)
+        await this.initMaximalWin(dictionary)
+        await this.init3600Ways(assets, dictionary)
         
         this.timeline.addAnimation({
             duration: 1000,
@@ -101,15 +105,20 @@ export class PaytableContentView extends Container {
         .setLoopMode()
         .play()
 
+        await timeline.wind(0).play()
         const sprite = this.addChildAt(new Sprite(assets.rectangle), 0)
         sprite.width = 1000
         sprite.height = this.height + 50
         sprite.tint = 0x000000
+
+        timeline.destroy()
     }
 
-    initSymbolsPayouts(assets, dictionary) {
+    async initSymbolsPayouts(assets, dictionary) {
         const {isLTRTextDirection} = this
         let maximalWidth = 1000
+        
+
         let textField = new TextField({maximalWidth})
             .setFontName('default')
             .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
@@ -140,7 +149,11 @@ export class PaytableContentView extends Container {
             {x: 0, y: 1, color: 0xFFAA22},
             {x: 2, y: 0, color: 0xAAFF00, align: 'center'},
             {x: 0, y: 0, color: 0xFFFF00, scale: 1.25, align: 'center'},
-        ].forEach(({x, y, color = 0xf8ee89, scale = 1, align}, i) => {
+        ]
+
+        for(let i = 0; i < descriptors.length; i++) {
+            await awaitNextFrame()
+            const  {x, y, color = 0xf8ee89, scale = 1, align} = descriptors[i]
             const sprite = new Sprite(assets['symbol' + SYMBOLS_NAMES[i]])
             sprite.anchor.set(0.5)
             sprite.scale.set(0.8 * scale)
@@ -149,7 +162,9 @@ export class PaytableContentView extends Container {
 
             const maximalWidth = 240
             const maximalHeight = 180
-            const textField = new TextField({maximalWidth, maximalHeight})
+
+            await awaitNextFrame()
+            const textField = new TextField({maximalWidth, maximalHeight, isDynamicCharacterSet: false})
                 .setFontName('default')
                 .setAlignMiddle()
                 .setAlignLeft()
@@ -173,9 +188,10 @@ export class PaytableContentView extends Container {
             }
 
             this.addChild(textField)
-        })
 
+        }
 
+        await awaitNextFrame()
         offsetY = this.height + 175
         maximalWidth = 900
 
@@ -264,7 +280,7 @@ export class PaytableContentView extends Container {
         return container
     }
 
-    initGoldFramedFeature(assets, dictionary) {
+    async initGoldFramedFeature(assets, dictionary) {
         let offsetY = this.height + 150
         let maximalWidth = 1000
         let textField = new TextField({maximalWidth})
@@ -278,7 +294,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
-
+        await awaitNextFrame()
 
         offsetY += textField.height + 200
         const offsetX = 125
@@ -326,10 +342,10 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
-        
+        await awaitNextFrame()
     }
 
-    initMultiplier(assets, dictionary) {
+    async initMultiplier(assets, dictionary) {
         let offsetY = this.height + 125
         let maximalWidth = 1000
         let textField = new TextField({maximalWidth})
@@ -343,6 +359,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.multiplierHeaderView = this.addChild(textField)
+        await awaitNextFrame()
 
 
         offsetY += textField.height + 150
@@ -371,10 +388,11 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
         
     }
 
-    initFreeSpins(assets, dictionary) {
+    async initFreeSpins(assets, dictionary) {
         let offsetY = this.height + 150
         let maximalWidth = 1000
         let textField = new TextField({maximalWidth})
@@ -388,6 +406,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         offsetY += textField.height + 150
 
@@ -420,10 +439,11 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
     }
 
-    initMaximalWin(dictionary) {
+    async initMaximalWin(dictionary) {
         let offsetY = this.height + 150
         let maximalWidth = 1000
         let textField = new TextField({maximalWidth})
@@ -437,6 +457,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         offsetY += textField.height * 1.5
         maximalWidth = 900
@@ -456,9 +477,10 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.maximalWinTextField = this.addChild(textField)
+        await awaitNextFrame()
     }
 
-    init3600Ways(assets, dictionary) {
+    async init3600Ways(assets, dictionary) {
         let offsetY = this.height + 200
         let maximalWidth = 1000
         let textField = new TextField({maximalWidth})
@@ -472,6 +494,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         offsetY += textField.height * 1.5
         maximalWidth = 900
@@ -491,6 +514,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         offsetY = this.height + 150
         let symbolsGroupView = this
@@ -556,6 +580,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(275, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         textField = new TextField({maximalWidth})
             .setFontName('default')
@@ -567,6 +592,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(750, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
 
         offsetY += 150
@@ -587,6 +613,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         offsetY = this.height + 150
         maximalWidth = 900
@@ -601,6 +628,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
 
         offsetY += 150
 
@@ -630,6 +658,7 @@ export class PaytableContentView extends Container {
         textField.pivot.set(maximalWidth / 2, 0)
         textField.position.set(500, offsetY)
         this.addChild(textField)
+        await awaitNextFrame()
     }
 
     refresh({bet, currencyCode = ''}) {
@@ -651,19 +680,37 @@ export class PaytableContentView extends Container {
         payoutsTextFields.forEach((textField, id) => {
             let text = ''
             
-            for(let i = 6; i >= 3; i--) {
-                const payout = formatMoney({
-                    value: finalBet * (coefficients[id + 1]?.[i] ?? 0),
-                })
+            if (isLTRTextDirection) {
+                for(let i = 6; i >= 3; i--) {
+                    const payout = formatMoney({
+                        value: finalBet * (coefficients[id + 1]?.[i] ?? 0),
+                    })
 
-                if (isLTRTextDirection) {
-                    text += i + 'x: ' + payout
-                } else {
-                    text += payout + ' :x' + i
+                    if (isLTRTextDirection) {
+                        text += i + 'x: ' + payout
+                    } else {
+                        text += payout + ' :x' + i
+                    }
+
+                    if(i > 3) {
+                        text += '\n'
+                    }
                 }
+            } else {
+                for(let i = 3; i <= 6; i++) {
+                    const payout = formatMoney({
+                        value: finalBet * (coefficients[id + 1]?.[i] ?? 0),
+                    })
 
-                if(i > 3) {
-                    text += '\n'
+                    if (isLTRTextDirection) {
+                        text += i + 'x: ' + payout
+                    } else {
+                        text += payout + ' :x' + i
+                    }
+
+                    if(i < 6) {
+                        text += '\n'
+                    }
                 }
             }
 

@@ -13,7 +13,7 @@ export class PopupSelectorView extends AdaptiveContainer {
     offsetTop = 0
     offsetBottom = 0
 
-    constructor({assets, dictionary, isLTRTextDirection}) {
+    constructor({assets, dictionary, isLTRTextDirection, isDynamicCharacterSet}) {
         super()
 
         this.isLTRTextDirection = isLTRTextDirection
@@ -22,7 +22,7 @@ export class PopupSelectorView extends AdaptiveContainer {
         this.setTargetArea({x: 0, y: 0.20 * 0.9, width: 1, height: 0.6 * 0.9})
             .setSourceArea({width: 1000, height: 1000})
 
-        this.initReelSelector(assets)
+        this.initReelSelector(assets, isDynamicCharacterSet)
         this.initTexts(dictionary)
 
         this.alpha = 0
@@ -33,8 +33,8 @@ export class PopupSelectorView extends AdaptiveContainer {
         this.reelSelectorView.setLocked(isLocked)
     }
 
-    initReelSelector(assets) {
-        const view = new ReelSelectorView(assets)
+    initReelSelector(assets, isDynamicCharacterSet) {
+        const view = new ReelSelectorView(assets, isDynamicCharacterSet)
         view.position.set(500, 290)
         view.scale.set(2.5)
         view.onOptionSelected = (option, index) => {
