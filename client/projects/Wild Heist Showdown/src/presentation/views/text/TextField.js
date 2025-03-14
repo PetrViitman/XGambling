@@ -363,21 +363,19 @@ export class TextField extends Container {
 			this.textView = this.addChild(this.atlasText)
 		}
 
-		// bitmap font as second highest priority
 		if (!this.textView) {
 			try {
 				this.atlasText = null
-				if (
-					TextField.isLTRTextDirection || this.isDynamicCharacterSet === false
-				) {
-					this.bitmapText = new BitmapText('', {fontName})
-				} else {
+
+				if (this.isDynamicCharacterSet) {
 					this.bitmapText = new Text('')
 
 					const fontStyle = TextField.fontStyles[fontName]
 					if(fontStyle) {
 						this.bitmapText.style =  fontStyle
 					}
+				} else {
+					this.bitmapText = new BitmapText('', {fontName})
 				}
 
 				this.textView = this.addChild(this.bitmapText)
