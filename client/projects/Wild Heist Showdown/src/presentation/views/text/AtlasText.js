@@ -125,7 +125,7 @@ export class AtlasText extends Container {
 			const angle = Math.PI * 2 * progress
 			const sin = Math.sin(angle)
 			bitmapCharacter.skew.x = sin * this.distortionFactor
-			bitmapCharacter.y = Math.sin(Math.PI * symbolsProgress) * this.distortionHeight
+			bitmapCharacter.y = bitmapCharacter.height / 2 + Math.sin(Math.PI * symbolsProgress) * this.distortionHeight
 		}
 	}
 

@@ -138,7 +138,7 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 
 	initPayout(assets) {
 		this.payoutView = this.bodyView.addChild(new AwardPayoutView(assets))
-		this.payoutView.position.set(500, 1450)
+		this.payoutView.position.set(500, 1350)
 	}
 
 	async presentPayout(payout) {
@@ -148,6 +148,8 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 			payoutView,
 			bonusGameIsOverTextField
 		} = this
+
+		const countingDuration = 2500
 
 		this.bodyView.addChildAt(awardView, 0)
 		awardView.position.set(500, 800)
@@ -159,7 +161,7 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 		
 		this.idleTimeline.play()
 
-		this.audio.presentCounting({duration: 2500})
+		this.audio.presentCounting({duration: countingDuration})
 
 		presentationTimeline
 			.deleteAllAnimations()
@@ -218,6 +220,11 @@ export class BonusPayoutSplashScreen extends BaseSplashScreen {
 			this.eventMode = 'static'
 			this.cursor = 'pointer'
 			this.addEventListener('pointerdown', () => {
+				if (presentationTimeline.totalElapsedMilliseconds < countingDuration) {
+					presentationTimeline.windToTime(countingDuration)
+					return
+				}
+
 				this.removeAllListeners()
 				this.eventMode = 'none'
 				this.cursor = 'default'

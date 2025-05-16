@@ -37,6 +37,8 @@ const STICK_MODE = {
  * Both vertical and horizontal settings can be applied simultaneously
  */
 export class AdaptiveContainer extends Container {
+	static isFullScreenMode
+
 	/**
 	 * Width of canvas in pixels (at the moment of last resize)
 	 */
@@ -84,21 +86,28 @@ export class AdaptiveContainer extends Container {
 	 * flag was not cancelled on installation
 	 */
 	static onResize() {
-
+		const {isFullScreenMode} = AdaptiveContainer
 		const application = AdaptiveContainer.pixiApplications[0]
-		const {clientHeight, clientWidth} = application.view
+		const clientWidth = isFullScreenMode ? window.screen.width : application.view.clientWidth
+		const clientHeight = isFullScreenMode ? window.screen.height : application.view.clientHeight
 
 		AdaptiveContainer.width = Math.max(MINIMAL_SCREEN_SIDE_SIZE, clientWidth)
 		AdaptiveContainer.height = Math.max(MINIMAL_SCREEN_SIDE_SIZE, clientHeight)
 
 		AdaptiveContainer.pixiApplications.forEach(({
+			view: {style},
 			renderer,
 			stage: {children}
 		}) => {
-			renderer.resize(clientWidth, clientHeight)
 			children.forEach(child => {
 				child.onResize?.()
 			})
+
+			if(isFullScreenMode) {
+				style.width = clientWidth + 'px'
+				style.height = clientHeight + 'px'
+			}
+
 			renderer.resize(clientWidth, clientHeight)
 		})
 	}

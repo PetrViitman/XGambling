@@ -8,6 +8,7 @@ export class BetSelectorView extends PopupSelectorView {
     minimalBet
     maximalBet
     currencyCode
+    selectedBet
 
     constructor({assets, dictionary, currencyCode, isLTRTextDirection, audio}) {
         super({assets, dictionary, isLTRTextDirection})
@@ -17,8 +18,10 @@ export class BetSelectorView extends PopupSelectorView {
 
         this.reelSelectorView.onUserInputTooSmall = () => this.onUserInputTooSmall()
         this.reelSelectorView.onUserInputTooBig = () => this.onUserInputTooBig()
-        this.reelSelectorView.onUserInputIsValid = () => this.onUserInputIsValid()
+        this.reelSelectorView.onUserInputIsValid = (value) => this.onUserInputIsValid(value)
         this.reelSelectorView.onEditableStateChange = (isEditable) => this.onEditableStateChange(isEditable)
+        this.reelSelectorView.onSelectableOptionsUpdated = () => {this.selectedBet = undefined}
+        this.reelSelectorView.getEditablePreset = () => {return this.selectedBet}
     }
     
     initTexts(dictionary) {
@@ -92,6 +95,8 @@ export class BetSelectorView extends PopupSelectorView {
             )
         this.hintView.setFontColor(0xFF0000)
         this.hintView.setText(text)
+        this.onUserInputIsInvalid?.()
+        this.onSelectedBetIsTooSmall?.()
     }
 
     onUserInputTooBig() {   
@@ -109,11 +114,14 @@ export class BetSelectorView extends PopupSelectorView {
             )
         this.hintView.setFontColor(0xFF0000)
         this.hintView.setText(text)
+        this.onUserInputIsInvalid?.()
+        this.onSelectedBetIsTooBig?.()
     }
 
-    onUserInputIsValid() {
+    onUserInputIsValid(value) {
         this.hintView.setFontColor(0xf8ee89)
         this.hintView.setText(this.dictionary.slide_or_tap)
+        this.selectedBet = value
     }
 
     onEditableStateChange(isEditable) {

@@ -54,7 +54,7 @@ export class BonusPanelView extends AdaptiveContainer {
                     this.iconView.tint = color
 
                     this.iconView.rotation = -0.2 + 0.1 * distortionProgress
-                    this.iconView.scale.y = 0.35 + 0.05 * distortionProgress
+                    this.iconView.scale.y = 0.6 + 0.05 * distortionProgress
 
                     this.buttonCloseView.iconView.rotation = 0.25 * distortionProgress
 
@@ -125,7 +125,7 @@ export class BonusPanelView extends AdaptiveContainer {
 
     initIcon(assets) {
         const view = new Sprite(assets.iconBonus)
-        view.scale.set(0.35)
+        view.scale.set(0.6)
         view.anchor.set(0.5)
         view.position.set(65, 50)
         this.iconView = this

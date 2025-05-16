@@ -242,8 +242,11 @@ const startRouterPublicDevServer = (ipAddress) => {
 		res.setHeader('Access-Control-Allow-Credentials', 'true')
 
 		const requestIp = req.socket.remoteAddress
+
+		console.log('-> ', 'http://' + BACKEND_HOSTNAME + ':' + BACKEND_PORT + req.url)
+
 		const proxy = request(
-			'https://' + BACKEND_HOSTNAME + ':' + BACKEND_PORT + req.url,
+			'http://' + BACKEND_HOSTNAME + ':' + BACKEND_PORT + req.url,
 			{
 				port: BACKEND_PORT,
 				host: BACKEND_HOSTNAME,
@@ -303,4 +306,4 @@ process.emit = function (name, ...args) {
 }
 
 
-start()
+// start()

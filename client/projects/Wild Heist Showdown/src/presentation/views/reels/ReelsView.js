@@ -542,11 +542,11 @@ export class ReelsView extends BaseReelsView {
 		payout,
 		currencyCode = 'FUN',
 		corruptionMap = [
-			[0, 1, 0],
-			[1, 0, 0, 0],
-			[1, 1, 0, 0, 0],
+			[0, 0, 0],
+			[0, 0, 0, 0],
 			[0, 0, 0, 0, 0],
-			[0, 0, 1, 0],
+			[0, 0, 0, 0, 0],
+			[0, 0, 0, 0],
 			[0, 0, 0],
 		],
 		patchMap,
@@ -898,6 +898,27 @@ export class ReelsView extends BaseReelsView {
 		])
 	}
 
+	presentImmediateSpinStop(targetSymbolsIds) {
+		if(!this.isSpinning()) return
+		if(!targetSymbolsIds) return
+
+		this.reelsViews.forEach((view, i) => {
+			view.presentImmediateSpinStop(targetSymbolsIds[i])
+		})
+
+		this.cameraTimeline.wind(1)
+
+		/*
+		this.reelsViews.map((reelView, i) => {
+			reelView.presentSpinStop({
+				cellsViews: this.cellsViews,
+				symbolsIds: targetSymbolsIds[i]
+			})
+		})
+
+		this.setTimeScale(1000)
+		*/
+	}
 
 	async presentSpinStop({
 		targetSymbols,
@@ -942,7 +963,7 @@ export class ReelsView extends BaseReelsView {
 				delay,
 				tensionDuration: isTensionReel ? 1500 : 0,
 				isBonusPurchased
-			}) 
+			})
 		})
 
 		totalStopDuration *= 0.5
@@ -964,7 +985,7 @@ export class ReelsView extends BaseReelsView {
 							offsetY: 0,
 						})
 						.setZoom(initialZoom - zoomDelta * progress)
-						.setAngle(0.025 * (1 - progress) * Math.sin(Math.PI * (totalStopDuration / 200) * progress))	
+						// .setAngle(0.025 * (1 - progress) * Math.sin(Math.PI * (totalStopDuration / 200) * progress))	
 				}
 			})
 			.play()

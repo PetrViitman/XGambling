@@ -65,7 +65,23 @@ export class ReelSelectorView extends Container {
             return
         }
 
-        if(this.selectableOptions === options) {
+        if (this.isEditable) {
+            return
+        }
+
+        let isSameSetOfOptions = true
+        for(let i = 0; i < options.length; i++) {
+            if(options[i] !== this.selectableOptions[i]) {
+                isSameSetOfOptions = false
+                break
+            } 
+        }
+
+        if (this.selectableOptions.length !== options.length) {
+            isSameSetOfOptions = false
+        }
+
+        if(isSameSetOfOptions) {
             return
         }
 
@@ -75,6 +91,8 @@ export class ReelSelectorView extends Container {
         this.progress = 0
         this.progressOffset = 0
         this.adjust()
+
+        this.onSelectableOptionsUpdated?.()
     }
 
     initTextFields(isDynamicCharacterSet) {
@@ -299,8 +317,17 @@ export class ReelSelectorView extends Container {
     }
 
     onSlide(e) {
-        this.setEditable(false)
         const { x, y } = this.toLocal(e.global)
+        const distanceToFrame = this.clickY - this.frameView.y
+        if (
+            Math.abs(distanceToFrame) <= this.frameView.height / 2
+            && Math.abs(y - this.clickY) < 10
+        ) {
+            return
+        }
+
+        this.setEditable(false)
+
         const { selectableOptions, textFields } = this
         const length = selectableOptions.length
 
@@ -315,6 +342,7 @@ export class ReelSelectorView extends Container {
         if (this.isLocked) {
             return
         }
+
         if(!ignoreSameOptionIndex && this.selectedOptionIndex === optionIndex) return
         this.timeline.wind(1)
         this.progressOffset = 0
@@ -378,6 +406,10 @@ export class ReelSelectorView extends Container {
         }
     }
 
+    getEditablePreset() {
+
+    }
+
     setEditable(isEditable = true) {
         this.timeline.wind(1)
 
@@ -404,7 +436,7 @@ export class ReelSelectorView extends Container {
         this.onEditableStateChange?.(isEditable)
 
         if(isEditable) {
-            this.setUserInput(this.selectedTextField.text) 
+            this.setUserInput(this.getEditablePreset() ?? this.selectedTextField.text) 
         } else {
             this.timeline
                 .setLoopMode(false)
@@ -454,7 +486,7 @@ export class ReelSelectorView extends Container {
         }
         
 
-        this.onUserInputIsValid?.()
+        this.onUserInputIsValid?.(value)
         this.isUserInputValid = true
     }
 

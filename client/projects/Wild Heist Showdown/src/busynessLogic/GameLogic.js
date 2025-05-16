@@ -68,6 +68,16 @@ export class GameLogic {
 		} = await this.webAPI.gameDescription()
 
 		// DEBUG...
+		console.log({
+			coefficients,
+			accounts,
+			buyFeatureBetMultiplier,
+			minimalBet,
+			maximalBet,
+			balance,
+			currencyCode
+		})
+
 		accounts.forEach((account, i) => account.id = i)
 		accounts[0].isActive = true
 		this.activeAccount = accounts[0]
@@ -250,11 +260,14 @@ export class GameLogic {
 			}
 
 			commonPayout += stepPayout
+
 			if (stepPayout) {
 				await presentation?.presentWin?.({
 					coefficient: stepCoefficient,
 					payout: stepPayout,
-					commonPayout,
+					commonPayout: (i < steps.length - 1)
+						? commonPayout
+						: totalPayout,
 					currencyCode,
 				})
 			} else if (

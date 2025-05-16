@@ -100,7 +100,7 @@ export class BigWinPayoutSplashScreen extends BaseSplashScreen {
 
 	initPayout(assets) {
 		this.payoutView = this.bodyView.addChild(new AwardPayoutView(assets))
-		this.payoutView.position.set(500, 1450)
+		this.payoutView.position.set(500, 1350)
 	}
 
 	/*
@@ -341,6 +341,11 @@ export class BigWinPayoutSplashScreen extends BaseSplashScreen {
 			this.eventMode = 'static'
 			this.cursor = 'pointer'
 			this.addEventListener('pointerdown', () => {
+				if (presentationTimeline.totalElapsedMilliseconds < countingDuration) {
+					presentationTimeline.windToTime(countingDuration)
+					return
+				}
+
 				this.removeAllListeners()
 				this.eventMode = 'none'
 				this.cursor = 'default'

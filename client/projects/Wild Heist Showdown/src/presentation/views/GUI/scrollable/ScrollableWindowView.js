@@ -250,12 +250,12 @@ export class ScrollableWindow extends AdaptiveContainer {
 
         let delta = Math.max(0, contentView.height - scrollableContainer.mask.height)
         contentView.y = -delta * finalProgress
+        
+        if(!scrollBarView) return
 
-        delta = Math.max(0, scrollableContainer.mask.height - scrollBarView.height)
+        delta = Math.max(0, scrollableContainer.mask.height - scrollBarView?.height)
         scrollBarView.y = delta * finalProgress
-
         scrollBarView.height = Math.max(0, Math.min(1, scrollableContainer.mask.height / contentView.height)) * scrollableContainer.mask.height
-
         scrollBarView.visible = contentView.height > scrollableContainer.mask.height
     }
 

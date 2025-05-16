@@ -1,0 +1,808 @@
+wild_heist_showdown.png
+	size: 4081, 3841
+	filter: Linear, Linear
+0_big_win
+	bounds: 330, 1270, 838, 230
+	offsets: 3, 2, 843, 235
+1_golden_ingot
+	bounds: 393, 5, 78, 108
+	offsets: 2, 1, 81, 112
+	rotate: 90
+1_golden_ingot_0
+	bounds: 3056, 728, 76, 108
+	offsets: 2, 0, 78, 108
+	rotate: 90
+2_golden_ingot
+	bounds: 1057, 230, 153, 45
+	offsets: 0, 1, 155, 50
+3_golden_ingot
+	bounds: 2166, 573, 128, 88
+	offsets: 0, 1, 129, 89
+	rotate: 90
+3_golden_ingot_sh
+	bounds: 452, 85, 104, 31
+	offsets: 1, 1, 106, 32
+	rotate: 90
+4.png
+	bounds: 3268, 541, 66, 61
+	offsets: 6, 9, 80, 80
+	rotate: 90
+4_golden_ingot
+	bounds: 2528, 597, 111, 76
+	offsets: 1, 1, 113, 77
+	rotate: 90
+5_golden_ingot
+	bounds: 1693, 852, 168, 92
+	offsets: 2, 3, 174, 96
+6_golden_ingot
+	bounds: 1272, 2980, 85, 57
+	offsets: 2, 38, 87, 95
+	rotate: 90
+Layer 136
+	bounds: 2741, 3019, 31, 56
+	offsets: 1, 1, 33, 58
+a_smbl
+	bounds: 3887, 2812, 188, 171
+	offsets: 8, 3, 207, 190
+ammunitionbelt
+	bounds: 2420, 587, 121, 107
+	offsets: 1, 3, 125, 119
+	rotate: 90
+big_win_light
+	bounds: 970, 276, 993, 649
+	offsets: 14, 23, 1022, 695
+	rotate: 90
+blur/a_blur
+	bounds: 1859, 560, 181, 264
+blur/bottle_blur
+	bounds: 3861, 1067, 217, 290
+	offsets: 0, 2, 217, 292
+blur/boy_blur
+	bounds: 3861, 1358, 217, 343
+	offsets: 10, 1, 247, 345
+blur/gun_blur
+	bounds: 2254, 5, 211, 288
+	offsets: 0, 5, 211, 293
+blur/hat_blur
+	bounds: 3884, 2548, 195, 263
+	offsets: 0, 0, 195, 264
+blur/j_blur
+	bounds: 2676, 3338, 151, 266
+	rotate: 90
+blur/k_blur
+	bounds: 1693, 945, 168, 271
+blur/q_blur
+	bounds: 3901, 3062, 179, 275
+blur/scatter_blur
+	bounds: 1623, 2163, 305, 400
+	offsets: 23, 0, 342, 400
+body
+	bounds: 3637, 2437, 244, 160
+	offsets: 10, 4, 254, 178
+boom_0
+	bounds: 932, 2880, 245, 99
+boom_p1/boom_p1_00
+	bounds: 1960, 3070, 127, 132
+	offsets: 98, 86, 350, 350
+boom_p1/boom_p1_01
+	bounds: 3043, 20, 176, 179
+	offsets: 86, 76, 350, 350
+boom_p1/boom_p1_02
+	bounds: 1418, 1, 274, 274
+	offsets: 37, 30, 350, 350
+boom_p1/boom_p1_03
+	bounds: 3287, 2796, 350, 342
+	offsets: 0, 0, 350, 350
+boom_p1/boom_p1_04
+	bounds: 2277, 2217, 350, 350
+boom_p1/boom_p1_05
+	bounds: 2390, 2721, 350, 350
+boom_p1/boom_p1_06
+	bounds: 2503, 3490, 350, 350
+boom_p1/boom_p1_07
+	bounds: 2854, 3490, 350, 350
+boom_p1/boom_p1_08
+	bounds: 3205, 3490, 350, 350
+boom_p1/boom_p1_09
+	bounds: 3556, 3490, 350, 350
+boom_p1/boom_p1_10
+	bounds: 2943, 3139, 350, 350
+boom_p1/boom_p1_11
+	bounds: 3294, 3139, 350, 350
+boom_p1/boom_p1_12
+	bounds: 2936, 2788, 350, 350
+boom_p1/boom_p1_13
+	bounds: 1951, 1861, 336, 350
+	offsets: 8, 0, 350, 350
+	rotate: 90
+boom_p1/boom_p1_14
+	bounds: 2628, 1910, 303, 347
+	offsets: 38, 3, 350, 350
+boom_p1/boom_p1_15
+	bounds: 3242, 821, 291, 330
+	offsets: 51, 20, 350, 350
+	rotate: 90
+boom_p1/boom_p1_16
+	bounds: 335, 2553, 286, 322
+	offsets: 56, 28, 350, 350
+boom_p1/boom_p1_17
+	bounds: 1693, 1, 276, 289
+	offsets: 65, 61, 350, 350
+boom_p1/boom_p1_18
+	bounds: 2286, 3072, 260, 243
+	offsets: 78, 107, 350, 350
+	rotate: 90
+boom_p1/boom_p1_19
+	bounds: 2071, 1424, 221, 215
+	offsets: 98, 119, 350, 350
+boom_p2/boom_p2_00
+	bounds: 1822, 3069, 137, 133
+	offsets: 104, 95, 350, 350
+boom_p2/boom_p2_01
+	bounds: 2741, 2625, 197, 191
+	offsets: 77, 79, 350, 350
+	rotate: 90
+boom_p2/boom_p2_02
+	bounds: 2071, 917, 216, 210
+	offsets: 67, 69, 350, 350
+boom_p2/boom_p2_03
+	bounds: 2151, 294, 286, 276
+	offsets: 21, 36, 350, 350
+boom_p2/boom_p2_04
+	bounds: 956, 2562, 311, 317
+	offsets: 13, 20, 350, 350
+boom_p2/boom_p2_05
+	bounds: 3278, 1445, 331, 343
+	offsets: 6, 7, 350, 350
+	rotate: 90
+boom_p2/boom_p2_06
+	bounds: 3282, 1777, 335, 345
+	offsets: 4, 5, 350, 350
+	rotate: 90
+boom_p2/boom_p2_07
+	bounds: 3283, 2113, 341, 348
+	offsets: 1, 2, 350, 350
+	rotate: 90
+boom_p2/boom_p2_08
+	bounds: 3287, 2455, 340, 349
+	offsets: 1, 1, 350, 350
+	rotate: 90
+boom_p2/boom_p2_09
+	bounds: 1169, 1270, 337, 348
+	offsets: 2, 2, 350, 350
+	rotate: 90
+boom_p2/boom_p2_10
+	bounds: 3261, 1113, 331, 341
+	offsets: 6, 7, 350, 350
+	rotate: 90
+boom_p2/boom_p2_11
+	bounds: 2589, 713, 300, 297
+	offsets: 17, 11, 350, 350
+boom_p2/boom_p2_12
+	bounds: 2288, 1005, 300, 299
+	offsets: 17, 10, 350, 350
+boom_p2/boom_p2_13
+	bounds: 2597, 1306, 302, 299
+	offsets: 16, 11, 350, 350
+boom_p2/boom_p2_14
+	bounds: 2288, 709, 300, 295
+	offsets: 18, 15, 350, 350
+boom_p2/boom_p2_15
+	bounds: 3573, 769, 294, 267
+	offsets: 22, 41, 350, 350
+	rotate: 90
+boy_body
+	bounds: 1862, 989, 207, 107
+	offsets: 1, 1, 209, 112
+boy_cowboy_glow
+	bounds: 3876, 2106, 229, 204
+	offsets: 6, 8, 253, 221
+	rotate: 90
+boy_hand
+	bounds: 1204, 2980, 67, 85
+boy_hat
+	bounds: 2741, 2823, 192, 111
+boy_head
+	bounds: 2041, 571, 124, 130
+	offsets: 1, 0, 125, 130
+boy_mask
+	bounds: 2255, 575, 88, 126
+	offsets: 0, 3, 88, 129
+boy_revolver
+	bounds: 3887, 2984, 77, 191
+	rotate: 90
+bullet_hole
+	bounds: 2234, 3089, 47, 47
+butt/arrows
+	bounds: 3907, 3505, 166, 173
+	rotate: 90
+butt/aura2
+	bounds: 2157, 3204, 128, 128
+butt/state_white
+	bounds: 2762, 40, 280, 280
+butt/statedef
+	bounds: 3808, 395, 236, 236
+butt/variant3
+	bounds: 3622, 1477, 238, 238
+butt/variant8
+	bounds: 3622, 1238, 238, 238
+button_vfx/button_vfx_01
+	bounds: 2088, 3071, 131, 145
+	offsets: 85, 92, 300, 300
+	rotate: 90
+button_vfx/button_vfx_02
+	bounds: 2071, 1640, 220, 230
+	offsets: 49, 33, 300, 300
+	rotate: 90
+button_vfx/button_vfx_03
+	bounds: 3638, 2842, 239, 248
+	offsets: 39, 29, 300, 300
+	rotate: 90
+button_vfx/button_vfx_04
+	bounds: 1575, 1610, 250, 253
+	offsets: 34, 26, 300, 300
+	rotate: 90
+button_vfx/button_vfx_05
+	bounds: 1058, 1608, 252, 260
+	offsets: 31, 22, 300, 300
+	rotate: 90
+button_vfx/button_vfx_06
+	bounds: 1319, 1610, 250, 255
+	offsets: 31, 27, 300, 300
+	rotate: 90
+button_vfx/button_vfx_07
+	bounds: 1829, 1610, 241, 250
+	offsets: 29, 33, 300, 300
+button_vfx/button_vfx_08
+	bounds: 3632, 1952, 242, 241
+	offsets: 29, 43, 300, 300
+button_vfx/button_vfx_09
+	bounds: 3632, 2194, 243, 242
+	offsets: 28, 43, 300, 300
+button_vfx/button_vfx_10
+	bounds: 3638, 2598, 245, 243
+	offsets: 27, 43, 300, 300
+button_vfx/button_vfx_11
+	bounds: 1865, 1097, 205, 160
+	offsets: 69, 94, 300, 300
+centr_glow_win
+	bounds: 1929, 2198, 347, 365
+	offsets: 20, 2, 383, 369
+cloth
+	bounds: 1, 1, 125, 82
+	offsets: 1, 1, 127, 84
+coinss1
+	bounds: 1620, 973, 176, 68
+	rotate: 90
+explosion/explosion_00
+	bounds: 1178, 2881, 98, 98
+	offsets: 110, 125, 350, 350
+explosion/explosion_01
+	bounds: 1277, 2881, 98, 98
+	offsets: 110, 125, 350, 350
+explosion/explosion_02
+	bounds: 2890, 604, 165, 164
+	offsets: 84, 98, 350, 350
+explosion/explosion_03
+	bounds: 2438, 300, 286, 276
+	offsets: 21, 36, 350, 350
+	rotate: 90
+explosion/explosion_04
+	bounds: 1268, 2563, 311, 317
+	offsets: 13, 20, 350, 350
+explosion/explosion_05
+	bounds: 2917, 1437, 331, 343
+	offsets: 6, 7, 350, 350
+	rotate: 90
+explosion/explosion_06
+	bounds: 2932, 1769, 335, 345
+	offsets: 4, 5, 350, 350
+	rotate: 90
+explosion/explosion_07
+	bounds: 2933, 2105, 341, 348
+	offsets: 1, 2, 350, 350
+	rotate: 90
+explosion/explosion_08
+	bounds: 2933, 2447, 340, 349
+	offsets: 1, 1, 350, 350
+	rotate: 90
+explosion/explosion_09
+	bounds: 1518, 1272, 337, 348
+	offsets: 2, 2, 350, 350
+	rotate: 90
+explosion/explosion_10
+	bounds: 2900, 1105, 331, 341
+	offsets: 6, 7, 350, 350
+	rotate: 90
+eyeballs
+	bounds: 484, 126, 63, 17
+	offsets: 1, 1, 65, 19
+	rotate: 90
+finger1
+	bounds: 2741, 2996, 30, 22
+	offsets: 1, 1, 32, 24
+finger2
+	bounds: 1267, 236, 39, 20
+	offsets: 1, 1, 41, 22
+	rotate: 90
+finger3
+	bounds: 452, 190, 48, 30
+	offsets: 1, 1, 51, 32
+finger4
+	bounds: 1029, 229, 46, 27
+	offsets: 1, 1, 48, 29
+	rotate: 90
+finger5
+	bounds: 1330, 3029, 34, 20
+	offsets: 1, 1, 36, 22
+fire
+	bounds: 1620, 1150, 72, 121
+	offsets: 28, 5, 128, 128
+flare_00
+	bounds: 3645, 3082, 255, 121
+	offsets: 1, 5, 256, 126
+free_spins_text_new
+	bounds: 1, 1266, 1284, 328
+	offsets: 0, 6, 1290, 340
+	rotate: 90
+freespeen_light
+	bounds: 1580, 2564, 504, 521
+	offsets: 62, 58, 627, 634
+	rotate: 90
+girl_cowgirl_rays
+	bounds: 2597, 1011, 294, 301
+	offsets: 7, 7, 307, 316
+	rotate: 90
+girl_eyelidl
+	bounds: 1559, 3015, 28, 16
+	offsets: 1, 1, 30, 18
+	rotate: 90
+girl_eyelidr
+	bounds: 484, 91, 34, 17
+	offsets: 1, 1, 37, 19
+	rotate: 90
+glass
+	bounds: 845, 1502, 103, 105
+glass2
+	bounds: 949, 1502, 103, 105
+glass_0
+	bounds: 1053, 1502, 101, 105
+	offsets: 0, 8, 113, 123
+glow0
+	bounds: 1521, 3203, 635, 637
+	offsets: 0, 3, 640, 640
+glow_1
+	bounds: 953, 1, 227, 464
+	offsets: 3, 1, 233, 615
+	rotate: 90
+gun1
+	bounds: 1867, 1258, 61, 203
+	offsets: 4, 8, 75, 213
+	rotate: 90
+gun2
+	bounds: 1330, 3050, 15, 36
+	offsets: 1, 1, 17, 38
+	rotate: 90
+hair1
+	bounds: 1211, 234, 55, 41
+	offsets: 1, 1, 57, 43
+hair2
+	bounds: 2344, 584, 75, 124
+	offsets: 1, 1, 77, 126
+hair3
+	bounds: 2688, 2568, 56, 69
+	offsets: 1, 1, 58, 71
+	rotate: 90
+hair5
+	bounds: 127, 2, 81, 116
+	offsets: 1, 1, 83, 118
+	rotate: 90
+hair7
+	bounds: 3056, 638, 86, 89
+	offsets: 1, 21, 88, 111
+hand1
+	bounds: 970, 229, 46, 58
+	offsets: 0, 12, 62, 84
+	rotate: 90
+hand2
+	bounds: 2234, 3137, 47, 66
+	offsets: 1, 1, 49, 68
+hat
+	bounds: 2490, 2568, 197, 152
+hat1
+	bounds: 2605, 604, 235, 108
+hat2
+	bounds: 325, 2, 81, 67
+	offsets: 3, 1, 85, 69
+	rotate: 90
+head
+	bounds: 2366, 2574, 123, 131
+ice_1
+	bounds: 2741, 2967, 29, 28
+	offsets: 1, 1, 31, 30
+ice_2
+	bounds: 1330, 2995, 33, 33
+	offsets: 1, 1, 35, 35
+info/info_00
+	bounds: 3220, 111, 88, 88
+info/info_01
+	bounds: 3220, 111, 88, 88
+info/info_02
+	bounds: 3220, 22, 88, 88
+info/info_03
+	bounds: 3309, 146, 88, 88
+info/info_04
+	bounds: 3309, 57, 88, 88
+info/info_05
+	bounds: 3681, 165, 88, 88
+info/info_06
+	bounds: 3681, 76, 88, 88
+info/info_07
+	bounds: 3770, 165, 88, 88
+info/info_08
+	bounds: 3792, 306, 88, 88
+info/info_09
+	bounds: 3770, 76, 88, 88
+info/info_10
+	bounds: 3881, 306, 88, 88
+info/info_11
+	bounds: 3970, 306, 88, 88
+info/info_12
+	bounds: 3859, 217, 88, 88
+info/info_13
+	bounds: 3948, 217, 88, 88
+info/info_14
+	bounds: 3859, 128, 88, 88
+info/info_15
+	bounds: 3859, 39, 88, 88
+info/info_16
+	bounds: 3948, 128, 88, 88
+info/info_17
+	bounds: 3948, 39, 88, 88
+info_glow
+	bounds: 653, 229, 1040, 316
+	offsets: 81, 47, 1198, 532
+	rotate: 90
+info_glow1
+	bounds: 584, 1608, 944, 473
+	offsets: 59, 37, 1025, 535
+	rotate: 90
+info_glow_1
+	bounds: 1, 84, 1181, 450
+	rotate: 90
+info_glow_2
+	bounds: 1521, 3069, 300, 133
+j_smbl
+	bounds: 2503, 3333, 156, 172
+	offsets: 10, 5, 173, 188
+	rotate: 90
+k_smbl
+	bounds: 3907, 3338, 166, 172
+	offsets: 13, 7, 194, 197
+	rotate: 90
+light
+	bounds: 622, 2555, 320, 333
+	offsets: 13, 0, 346, 333
+	rotate: 90
+light_4_0018
+	bounds: 3200, 834, 270, 37
+	rotate: 90
+light_screen_1_0135
+	bounds: 1204, 3066, 774, 316
+	offsets: 18, 6, 808, 323
+	rotate: 90
+mega_win_light_0
+	bounds: 1058, 1861, 700, 564
+	offsets: 85, 60, 876, 691
+	rotate: 90
+mega_win_text
+	bounds: 330, 1501, 1049, 253
+	offsets: 3, 3, 1055, 258
+	rotate: 90
+money01
+	bounds: 3268, 476, 64, 57
+	offsets: 0, 4, 65, 65
+	rotate: 90
+motion_01
+	bounds: 502, 2, 450, 218
+	offsets: 0, 12, 461, 230
+multiplier_light
+	bounds: 2786, 2935, 192, 148
+	rotate: 90
+part019
+	bounds: 1867, 1320, 289, 203
+	offsets: 26, 58, 352, 283
+	rotate: 90
+part027
+	bounds: 721, 2878, 101, 210
+	offsets: 143, 26, 352, 283
+	rotate: 90
+part033
+	bounds: 2071, 1128, 295, 216
+	offsets: 22, 47, 352, 283
+	rotate: 90
+part047
+	bounds: 3875, 1897, 208, 205
+	offsets: 88, 33, 352, 283
+	rotate: 90
+pupils1
+	bounds: 1288, 231, 12, 10
+	offsets: 1, 1, 14, 12
+	rotate: 90
+pupils2
+	bounds: 1299, 232, 11, 11
+	offsets: 1, 1, 13, 13
+q_smbl
+	bounds: 1376, 2883, 182, 182
+	offsets: 12, 7, 205, 201
+ray_0
+	bounds: 452, 221, 200, 1048
+	offsets: 20, 210, 243, 1258
+rays
+	bounds: 3645, 3204, 255, 285
+	offsets: 66, 37, 416, 384
+revolver
+	bounds: 3882, 2336, 198, 211
+	offsets: 0, 1, 201, 220
+revolver_reel
+	bounds: 2758, 2568, 54, 56
+	offsets: 1, 0, 55, 56
+revolver_trigger
+	bounds: 1559, 3044, 19, 24
+	offsets: 1, 3, 21, 28
+revolverglow
+	bounds: 3469, 58, 211, 211
+	offsets: 1, 1, 213, 213
+sc_smoke/smoke_00
+	bounds: 2102, 2568, 137, 131
+	offsets: 104, 95, 350, 350
+	rotate: 90
+sc_smoke/smoke_01
+	bounds: 2234, 2568, 137, 131
+	offsets: 104, 95, 350, 350
+	rotate: 90
+sc_smoke/smoke_02
+	bounds: 3907, 3672, 168, 173
+	offsets: 83, 79, 350, 350
+	rotate: 90
+sc_smoke/smoke_03
+	bounds: 2061, 702, 214, 215
+	offsets: 51, 59, 350, 350
+	rotate: 90
+sc_smoke/smoke_04
+	bounds: 3628, 1716, 239, 235
+	offsets: 41, 47, 350, 350
+sc_smoke/smoke_05
+	bounds: 1881, 293, 266, 269
+	offsets: 30, 30, 350, 350
+	rotate: 90
+sc_smoke/smoke_06
+	bounds: 2994, 330, 273, 273
+	offsets: 27, 27, 350, 350
+sc_smoke/smoke_07
+	bounds: 2715, 321, 282, 278
+	offsets: 24, 23, 350, 350
+	rotate: 90
+sc_smoke/smoke_08
+	bounds: 1970, 2, 290, 283
+	offsets: 21, 20, 350, 350
+	rotate: 90
+sc_smoke/smoke_09
+	bounds: 2466, 1, 298, 295
+	offsets: 18, 13, 350, 350
+	rotate: 90
+sc_smoke/smoke_10
+	bounds: 2899, 805, 300, 299
+	offsets: 17, 10, 350, 350
+sc_smoke/smoke_11
+	bounds: 2293, 1305, 303, 301
+	offsets: 16, 9, 350, 350
+sc_smoke/smoke_12
+	bounds: 2611, 1606, 305, 303
+	offsets: 15, 8, 350, 350
+sc_smoke/smoke_13
+	bounds: 2302, 1911, 308, 305
+	offsets: 13, 8, 350, 350
+sc_smoke/smoke_14
+	bounds: 2628, 2258, 309, 304
+	offsets: 13, 9, 350, 350
+	rotate: 90
+sc_smoke/smoke_15
+	bounds: 2302, 1607, 308, 303
+	offsets: 14, 11, 350, 350
+scatter
+	bounds: 1620, 288, 215, 65
+	offsets: 0, 1, 216, 73
+	rotate: 90
+scatter_glow_1
+	bounds: 2157, 3333, 345, 507
+	offsets: 17, 29, 362, 595
+scatter_vfx/scatter_glow_00
+	bounds: 3868, 1832, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_01
+	bounds: 3868, 1832, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_02
+	bounds: 3868, 1832, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_03
+	bounds: 3868, 1832, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_23
+	bounds: 3868, 1832, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_24
+	bounds: 3868, 1832, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_04
+	bounds: 3868, 1767, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_05
+	bounds: 3868, 1702, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_06
+	bounds: 1686, 291, 212, 64
+	offsets: 2, 5, 216, 73
+	rotate: 90
+scatter_vfx/scatter_glow_07
+	bounds: 1751, 291, 212, 64
+	offsets: 2, 5, 216, 73
+	rotate: 90
+scatter_vfx/scatter_glow_08
+	bounds: 1816, 291, 212, 64
+	offsets: 2, 5, 216, 73
+	rotate: 90
+scatter_vfx/scatter_glow_09
+	bounds: 3200, 608, 212, 64
+	offsets: 2, 5, 216, 73
+	rotate: 90
+scatter_vfx/scatter_glow_10
+	bounds: 3265, 608, 212, 64
+	offsets: 2, 5, 216, 73
+	rotate: 90
+scatter_vfx/scatter_glow_11
+	bounds: 3569, 530, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_12
+	bounds: 3330, 495, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_13
+	bounds: 3543, 465, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_14
+	bounds: 3326, 430, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_15
+	bounds: 3539, 400, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_16
+	bounds: 3268, 365, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_17
+	bounds: 3481, 335, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_18
+	bounds: 3268, 300, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_19
+	bounds: 3043, 265, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_20
+	bounds: 3481, 270, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_21
+	bounds: 3256, 235, 212, 64
+	offsets: 2, 5, 216, 73
+scatter_vfx/scatter_glow_22
+	bounds: 3043, 200, 212, 64
+	offsets: 2, 5, 216, 73
+sh2
+	bounds: 244, 2, 81, 80
+	rotate: 90
+shadow_whiskey
+	bounds: 1693, 1217, 171, 54
+	offsets: 3, 3, 175, 59
+shell
+	bounds: 2786, 3128, 149, 115
+	offsets: 3, 3, 159, 118
+shine_fr
+	bounds: 721, 2980, 860, 482
+	offsets: 1, 0, 862, 485
+	rotate: 90
+smoke
+	bounds: 1288, 244, 128, 31
+	offsets: 0, 52, 128, 128
+spark22.png
+	bounds: 1620, 905, 67, 67
+	offsets: 1, 1, 69, 69
+sparkles
+	bounds: 2530, 3076, 256, 255
+	offsets: 9, 6, 272, 268
+	rotate: 90
+sparks_09
+	bounds: 1623, 1861, 301, 327
+	offsets: 0, 24, 318, 372
+	rotate: 90
+star
+	bounds: 2813, 2569, 55, 65
+	offsets: 3, 3, 59, 73
+	rotate: 90
+super_mega_win_text_new
+	bounds: 335, 2876, 964, 385
+	offsets: 3, 3, 970, 390
+	rotate: 90
+text
+	bounds: 393, 3, 1, 1
+boom_p2/boom_p2_16
+	bounds: 393, 3, 1, 1
+boom_p2/boom_p2_17
+	bounds: 393, 3, 1, 1
+text0
+	bounds: 393, 3, 1, 1
+top_light0
+	bounds: 1862, 825, 163, 198
+	rotate: 90
+total_win_text_new
+	bounds: 1, 2551, 1289, 333
+	offsets: 0, 6, 1290, 344
+	rotate: 90
+whiskey_back
+	bounds: 3694, 254, 145, 97
+	rotate: 90
+whiskey_front
+	bounds: 2786, 3244, 151, 93
+wild_blur
+	bounds: 2102, 2706, 287, 364
+	offsets: 16, 21, 317, 400
+wild_text
+	bounds: 584, 1501, 260, 106
+	offsets: 1, 2, 263, 110
+wild_vfx/wild_vfx_09
+	bounds: 1620, 765, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_10
+	bounds: 3603, 1151, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_11
+	bounds: 3603, 1064, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_12
+	bounds: 3842, 980, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_13
+	bounds: 3841, 893, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_14
+	bounds: 3841, 806, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_15
+	bounds: 3841, 719, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_16
+	bounds: 1620, 678, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_17
+	bounds: 1620, 591, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_18
+	bounds: 1620, 504, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_19
+	bounds: 3330, 734, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_20
+	bounds: 3569, 682, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_21
+	bounds: 3330, 647, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_22
+	bounds: 3808, 632, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_23
+	bounds: 3569, 595, 238, 86
+	offsets: 12, 7, 262, 100
+wild_vfx/wild_vfx_24
+	bounds: 3330, 560, 238, 86
+	offsets: 12, 7, 262, 100

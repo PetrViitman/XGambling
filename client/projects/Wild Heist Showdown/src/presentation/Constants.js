@@ -1,3 +1,5 @@
+import { isIos } from "./Utils"
+
 export const CELL_WIDTH = 250
 export const CELL_HEIGHT = 240
 export const REELS_COUNT = 6
@@ -45,3 +47,4 @@ export const WIN_COEFFICIENTS = {
 	HUGE: 35,
 	MEGA: 50,
 }
+export const isIOS = isIos()

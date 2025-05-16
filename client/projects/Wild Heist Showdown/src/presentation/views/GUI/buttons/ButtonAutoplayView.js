@@ -40,6 +40,7 @@ export class ButtonAutoplayView extends ButtonView {
             .setAlignMiddle()
 
         textField.pivot.set(maximalWidth / 2, maximalHeight / 2)
+        textField.x = 5
         this.textField = this.iconContainer.addChild(textField)
     }
 

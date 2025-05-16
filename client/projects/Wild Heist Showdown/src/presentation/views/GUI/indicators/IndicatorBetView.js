@@ -1,6 +1,7 @@
 import { Sprite } from "pixi.js"
 import { IndicatorView } from "./IndicatorView"
 import { Timeline } from "../../../timeline/Timeline"
+import { colorToColor } from "../../GraphicalPrimitives"
 
 export class IndicatorBetView extends IndicatorView {
     interactionTimeline = new Timeline
@@ -40,5 +41,20 @@ export class IndicatorBetView extends IndicatorView {
         }
 
         this.activeBonusDescriptor = bonusDescriptor
+    }
+
+    presentInvalidBetSettings(progress) {
+        const subProgress = Math.sin(Math.PI * 4 * progress)
+        this.textField.setFontColor(
+            colorToColor(
+                248,
+                238,
+                137,
+                255,
+                0,
+                0,
+                subProgress
+            )
+        )
     }
 }

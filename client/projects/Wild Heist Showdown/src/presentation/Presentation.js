@@ -4,8 +4,8 @@ import { Timeline } from "./timeline/Timeline"
 import { BackgroundView } from "./views/BackgroundView"
 import { getPreloadingAssets, getAssets } from "./Assets"
 import { ReelsView } from "./views/reels/ReelsView"
-import { formatMoney, getRandomLoseReels } from "./Utils"
-import { TURBO_MODE_TIME_SCALE, WIN_COEFFICIENTS } from "./Constants"
+import { formatMoney, getRandomLoseReels, setViewport } from "./Utils"
+import { isIOS, TURBO_MODE_TIME_SCALE, WIN_COEFFICIENTS } from "./Constants"
 import { BonusAwardSplashScreen } from "./views/splashScreens/BonusAwardSplashScreen"
 import { BonusPayoutSplashScreen } from "./views/splashScreens/BonusPayoutSplashScreen"
 import { LoadingScreen } from "./views/loadingScreen/LoadingScreen"
@@ -19,10 +19,9 @@ import { AwardView } from "./views/splashScreens/award/AwardView"
 import { GUIView } from "./views/GUI/GUIView"
 import { TextField } from "./views/text/TextField"
 import { Audio } from "./audio/Audio"
-import { flipRTLPlaceholders, getDictionary, isBadRasterLanguage } from "./Dictionary"
+import { flipRTLPlaceholders, isRTLTextDirection, getDictionary, isBadRasterLanguage } from "./Dictionary"
 
 settings.MIPMAP_MODES = MIPMAP_MODES.ON
-
 
 export class Presentation {
 	preloadingAssetsMap
@@ -57,16 +56,16 @@ export class Presentation {
 		preloadingAssetsMap,
 		assetsMap,
 		audioMap,
-		isLTRTextDirection = true,
 		isMobileApplicationClient = false,
 		isSpecialMobileApplicationClient = false,
-		dictionary
+		dictionary,
+		isLTRTextDirection = !isRTLTextDirection(languageCode)
 	}) {
 		this.isLTRTextDirection = isLTRTextDirection
 		this.isMobileApplicationClient = isMobileApplicationClient
 		this.isSpecialMobileApplicationClient = isSpecialMobileApplicationClient
 		TextField.isLTRTextDirection = isLTRTextDirection
-		TextField.isDynamicCharacterSet = isLTRTextDirection || isBadRasterLanguage(languageCode)
+		TextField.isDynamicCharacterSet = !isLTRTextDirection || isBadRasterLanguage(languageCode)
 
 		dictionary && !isLTRTextDirection && flipRTLPlaceholders(dictionary)
 		this.dictionary = dictionary
@@ -128,6 +127,7 @@ export class Presentation {
 			height: '100%',
 			position: 'absolute',
 			'z-index': 1,
+			'pointer-events': 'none'
 		})
 		document.getElementById(wrapperHTMLElementId)
 				.appendChild(this.pixiGUIApplication.view)
@@ -167,44 +167,29 @@ export class Presentation {
 		}
 
 		this.pixiGUIApplication.stage.addChild(this.guiView)
+		
+		if (
+			isMobileApplicationClient
+			&& !isSpecialMobileApplicationClient
+		) {
+			setViewport("width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover")
+			let { style } = document.body
+
+			const width = screen.width + 'px'
+			const height = screen.height + 'px'
+
+			style.margin = '0px'
+			style.width = width
+			style.height = height
+
+			AdaptiveContainer.isFullScreenMode = true
+
+			style = document.getElementById(wrapperHTMLElementId).style
+			style.width = width
+			style.height = height
+		}
 
 		AdaptiveContainer.install([this.pixiApplication, this.pixiGUIApplication], true)
-		
-		/*
-		const renderer = this.pixiApplication.renderer;
-		const drawElements = renderer.gl.drawElements;
-		let drawCount = 0
-		const oldDrawElementsFunction = renderer.gl.drawElements.bind(renderer.gl)
-
-		renderer.gl.drawElements = (arg1, arg2, arg3, arg4) => {
-
-			oldDrawElementsFunction(arg1, arg2, arg3, arg4);
-			drawCount++;
-		}
-
-		this.pixiApplication.ticker.add(() => {
-			document.title = `RC: ${drawCount}`
-			drawCount = 0;
-		});
-		*/
-
-
-		/*
-		const {renderer} = this.pixiGUIApplication
-		let drawCount = 0
-		const oldDrawElementsFunction = renderer.gl.drawElements.bind(renderer.gl)
-
-		renderer.gl.drawElements = (arg1, arg2, arg3, arg4) => {
-
-			oldDrawElementsFunction(arg1, arg2, arg3, arg4);
-			drawCount++;
-		}
-
-		this.pixiGUIApplication.ticker.add(() => {
-			document.title = `RC: ${drawCount}`
-			drawCount = 0;
-		});
-		*/
 
 		return this
 	}
@@ -222,7 +207,6 @@ export class Presentation {
 		buyFeatureBetMultiplier,
 		locale
 	}) {
-
 		// ADJUSTING RESOLUTION...
 		const highestResolution = window.devicePixelRatio
 		const lowestResolution = Math.min(1.5, highestResolution)
@@ -234,7 +218,9 @@ export class Presentation {
 
 			const vfxLevel = await getVFXLevel({
 				pixiApplication: this.pixiApplication,
-				testVFXMultiplier: document.testVFXMultiplier,
+				// DEBUG...
+				testVFXMultiplier: 1.87571366,//document.testVFXMultiplier,
+				// ...DEBUG
 				testDelayMultiplier: document.testDelayMultiplier
 			})
 
@@ -245,9 +231,7 @@ export class Presentation {
 
 		// FETCHING DICTIONARY...
 		if (!this.dictionary) {
-			this.dictionary =  await getDictionary(this.languageCode)
-			this.isLTRTextDirection = this.dictionary.isLTRTextDirection
-			TextField.isLTRTextDirection = this.isLTRTextDirection
+			this.dictionary = await getDictionary(this.languageCode)
 		}
 		// ...FETCHING DICTIONARY
 
@@ -322,13 +306,13 @@ export class Presentation {
 		await Promise.all([
 			this.loadingScreen.hide((progress) => {
 				this.guiView.alpha = progress
-			}).then(() => isSignedIn && this.guiView.requestFullScreen()),
+			}).then(() => {
+				this.pixiGUIApplication.view.style['pointer-events'] = 'auto'
+				isSignedIn && this.guiView.requestFullScreen()
+				this.loadingScreen.destroy()
+			}),
 			this.presentIntro()
 		])
-
-
-		this.loadingScreen.destroy()
-
 	}
 
 	initLoadingScreen() {
@@ -402,7 +386,7 @@ export class Presentation {
 
 		window.flipFactor = 0.25 * 0.65
 		this.reelsView.alpha = 1
-		this.bankView.setFlip(0)
+		this.bankView.setFlip(0.001)
 	}
 
 	initBank() {
@@ -528,16 +512,18 @@ export class Presentation {
 		this.guiView.refresh({isSkipExpected: false})
 		this.interactiveLayerView.setInteractive(false)
 		this.reelsView.setInteractive(false)
-		this.setGamePlayTimeScale(5)
+		this.setGamePlayTimeScale(4)
+
+		this.reelsView.presentImmediateSpinStop(this.targetSymbolsIds)
 	}
 
 	setGamePlayTimeScale(scale = 1) {
 		const turboMultiplier = this.isTurboMode ? TURBO_MODE_TIME_SCALE : 1
 		const finalTimeSale = scale * turboMultiplier
-		this.reelsView.setTimeScale(finalTimeSale)
-		this.bankView.setTimeScale(finalTimeSale)
+		this.reelsView?.setTimeScale(finalTimeSale)
+		this.bankView?.setTimeScale(finalTimeSale)
 
-		this.audio.setTimeScale(scale)
+		this.audio?.setTimeScale(scale)
 	}
 
 	async getUserInput({
@@ -624,6 +610,7 @@ export class Presentation {
 		commonPayout = 0,
 		freeSpinsCount,
 		currencyCode,
+		winCurrencyCode = currencyCode,
 		multiplier = 1,
 	}) {
 		const { reelsView, dictionary, isLTRTextDirection } = this
@@ -647,7 +634,7 @@ export class Presentation {
 			balance,
 			payout: commonPayout,
 			currencyCode,
-			winCurrencyCode: currencyCode
+			winCurrencyCode
 		})
 
 		this.setGamePlayTimeScale()
@@ -676,6 +663,7 @@ export class Presentation {
 		payout,
 		isBonusPurchased
 	}) {
+		this.targetSymbolsIds = targetSymbols.map(reel => reel.map(symbolId => symbolId))
 		this.setGamePlayTimeScale()
 		this.guiView.refresh({ isSkipExpected: true })
 		this.interactiveLayerView.setInteractive()
@@ -752,6 +740,7 @@ export class Presentation {
 		})
 
 		this.audio.presentBigWin()
+		this.camera.setAngle(0)
 		await this.bankView.presentFreeSpinsAward(freeSpinsCount)
 
 		this.guiView.refresh({ isSkipExpected: false })
@@ -914,10 +903,10 @@ export class Presentation {
 		offsetTop = 0,
 		offsetBottom = 0,
 	}) {
-		this.bankView.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
-		this.skyView.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
-		this.splashScreens.forEach(view => view.setAdaptiveDesignOffsets({offsetTop, offsetBottom}))
-		this.guiView.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
+		this.bankView?.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
+		this.skyView?.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
+		this.splashScreens?.forEach(view => view.setAdaptiveDesignOffsets({offsetTop, offsetBottom}))
+		this.guiView?.setAdaptiveDesignOffsets({offsetTop, offsetBottom})
 	}
 
 	resolve() {

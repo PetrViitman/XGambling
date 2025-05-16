@@ -184,7 +184,7 @@ export class SingleReelView extends Container {
 				onProgress: (progress) => {
 					this.spinTimeline.setTimeScaleFactor({
 						name: 'acceleration',
-						value: 1 + progress * 8,
+						value: 1 + progress * 7,
 					})
 					this.cellsViews.forEach((view) => {
 						const regress = 1 - progress
@@ -272,6 +272,27 @@ export class SingleReelView extends Container {
 			.setLoopMode()
 			.play()
 		// ...INFINITE SPIN
+	}
+
+	presentImmediateSpinStop(targetSymbolsIds) {
+		this.spinTimeline.setLoopMode(false).wind(1).deleteAllAnimations()
+		this.spinAccelerationTimeline.wind(1).deleteAllAnimations()
+		this.spinFinishTimeline.wind(1).deleteAllAnimations()
+		this.featureTimeline.wind(1).deleteAllAnimations()
+
+		this.cellsContainer.pivot.y = 0
+		this.cellsContainer.y = 0
+
+
+		for (let i = 0; i < this.cellsViews.length - 1; i++) {
+			this.cellsViews[i].y = i * CELL_HEIGHT - CELL_HEIGHT / 2
+		}
+
+		targetSymbolsIds.forEach((symbolId, i) => {
+			this.cellsViews[i].setBlur(0)
+			this.cellsViews[i + 1].presentSymbol(symbolId)
+		})
+		this.adjustDistortion()
 	}
 
 	async presentSpinStop({

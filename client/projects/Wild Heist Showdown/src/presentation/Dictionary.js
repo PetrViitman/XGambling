@@ -10,6 +10,8 @@ const RTL_LANGUAGE_CODES = ['ar', 'he', 'fa', 'ur', 'sd', 'ps', 'yi']
 const BAD_RASTER_LANGUAGE_CODES  = ['km', 'my']
 const FALLBACK_LANGUAGE_CODE = 'en'
 
+export const RTL_EXCEPTIONS = []
+
 async function getJsonData(path) {
     const text = await Assets.load({
 		src: path,
@@ -20,9 +22,28 @@ async function getJsonData(path) {
 }
 
 export function flipRTLPlaceholders(dictionary) {
+    const specialSymbols = ` ║'½/()`
     const endPointSymbols = '!?.,•-'
     const breakPointSymbols = '×1234567890{}ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?:_!@#$%^&*-,.•'
     Object.entries(dictionary).forEach(([key, text]) => {
+        let shouldBeSkipped = true
+
+        for(let i = 0; i < text.length; i++) {
+            if(
+                !breakPointSymbols.includes(text[i])
+                && !endPointSymbols.includes(text[i])
+                && !specialSymbols.includes(text[i])
+            ) {
+                shouldBeSkipped = false
+                break
+            }
+        }
+
+        if (shouldBeSkipped) {
+            dictionary[key] += '®'
+
+            return
+        }
         const fragments = []
         let fragment = ''
         let isBreakpointSymbol = false
@@ -74,18 +95,17 @@ export async function getDictionary(languageCode = getDefaultLocale()) {
         try { dictionary = await getJsonData('./translations/' + FALLBACK_LANGUAGE_CODE + '.json')} catch (error) {}
     }
 
-    const isLTRTextDirection = !RTL_LANGUAGE_CODES.includes(languageCode)
-
-    if(!isLTRTextDirection) {
+    if(isRTLTextDirection(languageCode)) {
         flipRTLPlaceholders(dictionary)
     }
 
-	return {
-        ...dictionary,
-        isLTRTextDirection
-    }
+	return dictionary
 }
 
 export function isBadRasterLanguage(languageCode) {
     return BAD_RASTER_LANGUAGE_CODES.includes(languageCode)
+}
+
+export function isRTLTextDirection(languageCode) {
+    return RTL_LANGUAGE_CODES.includes(languageCode)
 }

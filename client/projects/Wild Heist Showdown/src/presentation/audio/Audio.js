@@ -3,6 +3,7 @@ import { Timeline } from '../timeline/Timeline';
 import { getCookie, setCookie } from '../Utils';
 import { Assets } from "pixi.js"
 import { extensions, ExtensionType } from 'pixi.js';
+import { isIOS } from '../Constants';
 
 const customAssetLoader = {
     extension: {
@@ -49,39 +50,55 @@ export class Audio {
 
     shootingVolumeMultiplier = 1
 
+    lastReelHitCallTimestamp = Date.now()
     lastBackgroundShotCallTimestamp = Date.now()
     lastForegroundShotCallTimestamp = Date.now()
     lastScatterCallTimestamp = Date.now()
 
     winIndex = 0
     isMusicRequested
+    isReadyToPlay = false
+    isUserInteractionExpected = false
+    audioContextRecoveryTimeline = new Timeline
 
 
     constructor() {
         document.addEventListener("visibilitychange", () => {
             this.setMuted({saveToCookie: false})
-        }, false);
+        })
+
+        window.addEventListener("focus", () => {
+            if(this.isUserInteractionExpected) {
+                this.isUserInteractionExpected = false
+                this.audioContextRecoveryTimeline
+                    .deleteAllAnimations()
+                    .addAnimation({
+                        duration: 5,
+                        onFinish: () => {
+                            this.setPaused(false)
+                        }
+                    })
+                    .play()
+            }
+        })
+
+        document.addEventListener('touchstart', () => {
+            if(this.isUserInteractionExpected) {
+                this.isUserInteractionExpected = false
+                this.audioContextRecoveryTimeline
+                    .deleteAllAnimations()
+                    .addAnimation({
+                        duration: 5,
+                        onFinish: () => {
+                            this.setPaused(false)
+                        }
+                    })
+                    .play()
+            }
+        })
 
 
         this.setMuted({isMuted: true, saveToCookie: false})
-
-        /*
-        new Timeline()
-          .addAnimation({
-            duration: 250,
-            onProgress: progress => {
-                const currentTime = Date.now()
-                const activityTimeDelta = this.activityTimeStamp - currentTime
-                
-
-                for(let i =0 ; i < 3; i ++) {
-                   //  this.audios['background_shot_' + i].volume = volume
-                }
-            }
-        })
-        .setLoopMode()
-        .play()
-        */
     }
 
     refreshActivityTimeStamp() {
@@ -174,25 +191,27 @@ export class Audio {
     }
 
     setMuted({
+        isHidden = document.hidden,
         isMuted = this.isMuted,
         saveToCookie = true,
     }) {
-        const isHidden = document.hidden
-        this.isMuted = isMuted
-        this.volumeMultiplier = (isMuted || isHidden) ? 0 : 1
-
-        const audios = Object.values(this.audios)
-
-        if (isMuted) {
-            audios.forEach(audio => {
-                audio.volume = 0
-            })
-        } else {
-            audios.forEach(audio => {
-                this.setVolume(audio.name)
-            })
+        if (isHidden && isIOS) {
+            this.isUserInteractionExpected = true
         }
+
+        this.isMuted = isMuted
+        const isToBeSilenced = isMuted || isHidden
+
+        if(isToBeSilenced || saveToCookie || !isIOS) {
+            this.setPaused(isToBeSilenced)
+        }
+
         saveToCookie && setCookie(COOKIE_NAME, isMuted, 365)
+
+        this.volumeMultiplier = isMuted ? 0 : 1
+        if(!isMuted) {
+            this.setVolume('music', 1)
+        }
     }
 
     recoverCookieMuteState() {
@@ -218,7 +237,6 @@ export class Audio {
             return
         }
 
-
         audio.mainVolume = params.volume ?? 1
 
         this.setVolume(params.name)
@@ -227,6 +245,7 @@ export class Audio {
     }
 
     onLoadingFinished() {
+        this.isReadyToPlay = true
         this.onAudioReady?.()
 
         this.loadingVolumeMultiplier = 1
@@ -235,16 +254,15 @@ export class Audio {
     }
 
     setPaused(isPaused = true) {
-        if(isPaused === this.isPaused) return
-
         const audios = Object.values(this.audios)
-        
-
-        console.log()
         if (isPaused) {
-            audios.forEach(audio => audio.context?.audioContext?.suspend?.())
+            audios.forEach(audio => {
+                audio.context?._ctx?.suspend?.()
+            })
         } else {
-            audios.forEach(audio => audio.context?.audioContext?.resume?.())
+            audios.forEach(audio => {
+                audio.context?._ctx?.resume?.()
+            })
         }
 
         this.isPaused = isPaused
@@ -323,7 +341,13 @@ export class Audio {
     }
 
     presentReelHit() {
-        this.play({name: 'reel_hit_' + Math.trunc(Math.random() * 2), volume: 0.55})
+        if (this.isPaused) return
+        const currentTime = Date.now()
+        const timeDelta = currentTime - this.lastReelHitCallTimestamp
+        if(timeDelta > 100) {
+            this.lastReelHitCallTimestamp = currentTime
+            this.play({name: 'reel_hit_' + Math.trunc(Math.random() * 2), volume: 0.55})   
+        }
     }
 
 

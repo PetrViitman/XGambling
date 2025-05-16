@@ -1,7 +1,5 @@
-import { Sprite } from "pixi.js";
-import { ButtonView } from "./ButtonView";
-import { TextField } from "../../text/TextField";
-import { Timeline } from "../../../timeline/Timeline";
+import { Sprite } from "pixi.js"
+import { ButtonView } from "./ButtonView"
 
 
 export class ButtonAudioView extends ButtonView {
@@ -15,7 +13,10 @@ export class ButtonAudioView extends ButtonView {
         audio.onCookieMuteStateRecovered = (isMuted) => {
             this.setMuted(isMuted)
         }
-     //   this.presentSpinsCount(0)
+
+        if (audio.isReadyToPlay) {
+            this.onAudioReady()
+        }
     }
 
     initIcon(assets) {
@@ -38,9 +39,14 @@ export class ButtonAudioView extends ButtonView {
     }
 
     setMuted(isMuted = true) {
+        this.isMuted = isMuted
+        this.updateIcon()
+    }
+
+    updateIcon() {
         this.iconView.visible = false
 
-        if (isMuted) {
+        if (this.isMuted) {
             this.iconView = this.iconMutedView
         } else {
             this.iconView = this.isAudioReadyToPlay
@@ -49,12 +55,10 @@ export class ButtonAudioView extends ButtonView {
         }
 
         this.iconView.visible = true
-        this.isMuted = isMuted
     }
 
     onAudioReady() {
         this.isAudioReadyToPlay = true
         this.setMuted(this.isMuted) 
-    }
-    
+    }   
 }

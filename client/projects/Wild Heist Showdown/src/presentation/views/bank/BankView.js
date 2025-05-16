@@ -81,16 +81,18 @@ export class BankView extends AdaptiveContainer {
         })
         
 
+        /*
         new Timeline()
             .addAnimation({
                 duration: 20000,
                 onProgress: progress => {
-                    this.idleFlipProgress = 0.00203125 * Math.sin(Math.PI * 2 * progress)
+                    //this.idleFlipProgress = 0.00203125 * Math.sin(Math.PI * 2 * progress)
                     this.setFlip()
                 }
             })
             .setLoopMode()
             .play()
+            */
 
         this.setHiddenElementsVisible(false)
     }
@@ -253,6 +255,7 @@ export class BankView extends AdaptiveContainer {
                 },
                 onProgress: progress => {
                     this.flipProgress = initialFlipProgress + flipProgressDelta * progress
+                    this.setFlip()
                 }
             })
             .play()
@@ -309,6 +312,8 @@ export class BankView extends AdaptiveContainer {
                         multiplier: 8,
                         progress
                     })
+
+                    this.setFlip()
                     
                     /*
                     this.reelsView.multiplierView.presentShift({
@@ -387,6 +392,8 @@ export class BankView extends AdaptiveContainer {
                         multiplier: 1,
                         progress
                     })
+
+                    this.setFlip()
                 }
             })
             .addAnimation({duration: 3250})

@@ -5,6 +5,7 @@ const { makeBet, gameDescription } = require('./WildHeistShowdownController')
 const router = express.Router()
 
 router.post('/gameDescription', sessionValidation, async (request, response) => {
+    console.log('GAME DESCRIPTION REQUEST')
     const sessionId = request.headers['sessionid']
     const { accountId } = request.body
 

@@ -89,6 +89,7 @@ export class BaseChestView extends Container {
         joints[1].x = sin * -this.shoulderDistance
 
         const rootContainer = this.parent.parent.parent.parent
+
         let jointPosition = joints[0].getGlobalPosition()
         let localPosition = rootContainer.toLocal(jointPosition)
         armLeftView.zIndex = cos * -300

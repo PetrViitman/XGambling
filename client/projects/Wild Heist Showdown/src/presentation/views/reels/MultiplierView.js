@@ -233,32 +233,6 @@ export class MultiplierView extends Container {
         })
     }
 
-    presentMultiplier({
-        multiplier = 2,
-        progress = 1
-    }) {
-        this.presentShift({
-            multiplier,
-            progress: 1,
-        })
-
-        this.textFields[3].y = 390 * Math.min(1, progress * 3) ** 2
-        this.textFields[3].scale.set(1 + 1.5 * Math.abs(Math.sin(Math.PI * 3 * progress)) * (1 -progress ))
-        this.textFields[3].alpha = Math.min(1, (1 - progress) * 2)
-
-        this.textFields[3].setFontColor(
-            colorToColor(
-                241,
-                125,
-                255,
-                255,
-                255,
-                255,
-                Math.min(1, progress * 3)
-            )
-        )
-    }
-
     presentOutro({
         minimalMultiplier = 1,
         multiplier = 4,
@@ -299,7 +273,7 @@ export class MultiplierView extends Container {
             progress: 1,
         })
 
-        this.textFields[3].y = 390 * Math.min(1, progress * 3) ** 2
+        this.textFields[3].y = 350 * Math.min(1, progress * 3) ** 2
         this.textFields[3].scale.set(1 + 1.5 * Math.abs(Math.sin(Math.PI * 3 * progress)) * (1 -progress ))
         this.textFields[3].alpha = Math.min(1, (1 - progress) * 2)
 

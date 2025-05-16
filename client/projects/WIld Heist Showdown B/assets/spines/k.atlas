@@ -1,0 +1,10 @@
+k.png
+size:446,170
+filter:Linear,Linear
+blur/k_blur
+bounds:1,1,168,271
+rotate:90
+k_smbl
+bounds:273,3,166,172
+offsets:13,7,194,197
+rotate:90

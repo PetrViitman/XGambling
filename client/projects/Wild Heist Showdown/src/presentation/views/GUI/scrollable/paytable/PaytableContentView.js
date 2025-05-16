@@ -147,13 +147,13 @@ export class PaytableContentView extends Container {
             {x: 0, y: 2, color: 0x2266FF},
             {x: 2, y: 1, color: 0xEEEEEE},
             {x: 0, y: 1, color: 0xFFAA22},
-            {x: 2, y: 0, color: 0xAAFF00, align: 'center'},
-            {x: 0, y: 0, color: 0xFFFF00, scale: 1.25, align: 'center'},
+            {x: 2, y: 0, color: 0xAAFF00, align: 'center', isSpecialSymbol: true},
+            {x: 0, y: 0, color: 0xFFFF00, scale: 1.25, align: 'center', isSpecialSymbol: true},
         ]
 
         for(let i = 0; i < descriptors.length; i++) {
             await awaitNextFrame()
-            const  {x, y, color = 0xf8ee89, scale = 1, align} = descriptors[i]
+            const  {x, y, color = 0xf8ee89, scale = 1, align, isSpecialSymbol} = descriptors[i]
             const sprite = new Sprite(assets['symbol' + SYMBOLS_NAMES[i]])
             sprite.anchor.set(0.5)
             sprite.scale.set(0.8 * scale)
@@ -164,7 +164,11 @@ export class PaytableContentView extends Container {
             const maximalHeight = 180
 
             await awaitNextFrame()
-            const textField = new TextField({maximalWidth, maximalHeight, isDynamicCharacterSet: false})
+            const textField = new TextField({
+                maximalWidth,
+                maximalHeight,
+                isDynamicCharacterSet: isSpecialSymbol ? undefined : false
+            })
                 .setFontName('default')
                 .setAlignMiddle()
                 .setAlignLeft()

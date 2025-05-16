@@ -210,7 +210,6 @@ export class BaseReelsView extends Container {
 		return Promise.all(
 			this.reelsViews.map((view, i) =>
 				view.presentSpinStart(i * 200)))        
-   
 	}
 
 	async presentSpinStop({

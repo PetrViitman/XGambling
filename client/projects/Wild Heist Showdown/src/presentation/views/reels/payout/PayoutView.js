@@ -4,7 +4,7 @@ import { formatMoney } from "../../../Utils";
 import { Timeline } from "../../../timeline/Timeline";
 import { colorToColor } from "../../GraphicalPrimitives";
 
-const FLIGHT_DISTANCE = 1500
+const FLIGHT_DISTANCE = 1700
 
 export class PayoutView extends Container {
     backgroundView
@@ -86,7 +86,6 @@ export class PayoutView extends Container {
                 .setFontColor(color)
                 .setText('20354')
 
-
             textField.pivot.set(
                 maximalWidth / 2,
                 maximalHeight / 2)
@@ -153,7 +152,8 @@ export class PayoutView extends Container {
         this.backgroundView.alpha = Math.min(1, progress * 2)
         this.backgroundView.width = this.textFields[1].width * 2
         this.backgroundView.height = this.textFields[1].height * 2
-        this.backgroundView.position.set(this.textFields[0].x, this.textFields[0].y - 200)
+        this.backgroundView.position.set(this.textFields[0].x, this.textFields[0].y)
+    
     }
 
     presentOutro({

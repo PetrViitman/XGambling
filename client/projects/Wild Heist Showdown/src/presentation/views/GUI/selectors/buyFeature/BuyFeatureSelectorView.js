@@ -12,8 +12,11 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
     scattersViews
     idleTimeline = new Timeline
     bet = 0
+    maximalBet = 0
     currencyCode = 'FUN'
     buyFeatureBetMultiplier = 1
+
+    isTooBigBet = false
     
     constructor({assets, dictionary, currencyCode, isLTRTextDirection, buyFeatureBetMultiplier, audio}) {
         super({assets, dictionary, currencyCode, isLTRTextDirection})
@@ -108,7 +111,7 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
 
 
         maximalHeight = 100
-        textField = new TextField({maximalWidth, maximalHeight})
+        textField = new TextField({maximalWidth, maximalHeight, isDynamicCharacterSet: false})
             .setCharactersPerLineCount(SYMBOLS_PER_LINE_COUNT)
             .setFontName('default')
             .setAlignMiddle()
@@ -166,7 +169,14 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
             .play()
     }
 
-    refresh({bet = this.bet, currencyCode = this.currencyCode}) {
+    refresh({
+        bet = this.bet,
+        currencyCode = this.currencyCode,
+        maximalBet = this.maximalBet
+    }) {
+        this.maximalBet = maximalBet
+
+
         const {dictionary, isLTRTextDirection} = this
 
         this.instructionTextField.setText(
@@ -189,5 +199,30 @@ export class BuyFeatureSelectorView extends PopupSelectorView {
                 currencyCode
             })
         )
+
+        const buyFeaturePrice = bet * this.buyFeatureBetMultiplier
+        this.buttonView.setInteractive(buyFeaturePrice <= maximalBet)
+        this.isTooBigBet = buyFeaturePrice > maximalBet
+
+        if (this.isTooBigBet) {
+            this.hintView
+                .setText(
+                    dictionary
+                    .maximal_bet_is
+                    .replace(
+                        '{BET}',
+                        formatMoney({
+                            value: maximalBet,
+                            currencyCode,
+                            isLTRTextDirection
+                        })
+                    )
+                )
+                .setFontColor(0xFF0000)
+        } else {
+            this.hintView
+                .setText(dictionary.get_3_guaranteed_scatters)
+                .setFontColor(0xf8ee89)
+        }
     }
 }

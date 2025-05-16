@@ -1,0 +1,9 @@
+q.png
+size:460,184
+filter:Linear,Linear
+blur/q_blur
+bounds:1,4,179,275
+rotate:90
+q_smbl
+bounds:277,1,182,182
+offsets:12,7,205,201

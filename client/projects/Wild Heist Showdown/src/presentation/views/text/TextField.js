@@ -132,13 +132,18 @@ export class TextField extends Container {
 				}
 
 				if (!TextField.isLTRTextDirection) {
-					const lines = buffer.split('\n')
-					buffer = ''
+					if (text[text.length - 1] === '®') {
+						buffer = buffer.substring(0, buffer.length - 1)
+					} else {
+						const lines = buffer.split('\n')
+						buffer = ''
 
-					for(let i = lines.length - 1; i >= 0; i--) {
-						buffer += lines[i]
-						if (i) buffer += '\n'
+						for(let i = lines.length - 1; i >= 0; i--) {
+							buffer += lines[i]
+							if (i) buffer += '\n'
+						}
 					}
+
 				}
 
 				this.text += buffer

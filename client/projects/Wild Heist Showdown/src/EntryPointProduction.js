@@ -8,6 +8,10 @@ import './polyfills'
 import { GameLogic } from './busynessLogic/GameLogic'
 import { Presentation } from './presentation/Presentation'
 
+const protocol = window.location.protocol
+const hostname = window.location.hostname
+const port = 5004
+
 const presentation = new Presentation()
     .setup({
         customVFXLevel,
@@ -17,7 +21,7 @@ const presentation = new Presentation()
     })
 
 const webAPI = {
-    url: document.serviceURL ?? window.location.href,
+    url: document.serviceURL ?? protocol + '//' + hostname + ':' + port + '/',
     get: (route) => fetch(webAPI.url + route, {
         method: "GET",
         credentials: 'include',
@@ -41,7 +45,7 @@ const webAPI = {
             })
         .then(response => response.json())
         .then(data => {
-            console.log('RESPONSE: ', { data} ) 
+            console.log('RESPONSE: ', data ) 
             return data
         })
         .catch(_ => {return {errorCode: -1}})

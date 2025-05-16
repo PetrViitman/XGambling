@@ -1,0 +1,111 @@
+{
+  "frames": {
+    "background_fs": {
+      "frame": {
+        "x": 2.5,
+        "y": 2.5,
+        "w": 1398,
+        "h": 1398
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1398,
+        "h": 1398
+      },
+      "sourceSize": {
+        "w": 1398,
+        "h": 1398
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "background_mg0": {
+      "frame": {
+        "x": 2.5,
+        "y": 1405.5,
+        "w": 1398,
+        "h": 1398
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1398,
+        "h": 1398
+      },
+      "sourceSize": {
+        "w": 1398,
+        "h": 1398
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "popupbonus": {
+      "frame": {
+        "x": 1405.5,
+        "y": 2.5,
+        "w": 645,
+        "h": 1398
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 645,
+        "h": 1398
+      },
+      "sourceSize": {
+        "w": 645,
+        "h": 1398
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "popuptotal": {
+      "frame": {
+        "x": 1405.5,
+        "y": 1405.5,
+        "w": 645,
+        "h": 1398
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 645,
+        "h": 1398
+      },
+      "sourceSize": {
+        "w": 645,
+        "h": 1398
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "jpgs@0.5x.jpg",
+    "format": "RGB888",
+    "size": {
+      "w": 2053,
+      "h": 2806
+    },
+    "scale": 0.5
+  }
+}

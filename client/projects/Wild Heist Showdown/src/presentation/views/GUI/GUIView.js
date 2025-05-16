@@ -3,7 +3,6 @@ import { AdaptiveContainer } from "../adaptiveDesign/AdaptiveContainer";
 import { createAtlas,extractHighResolutionSymbols } from "./GUIGraphics";
 import { ButtonSpinView } from "./buttons/ButtonSpinView";
 import { ButtonSkipView } from "./buttons/ButtonSkipView";
-import { ButtonBetView } from "./buttons/ButtonBetView";
 import { ButtonBetMoreView } from "./buttons/ButtonBetMoreView";
 import { ButtonBetLessView } from "./buttons/ButtonBetLessView";
 import { ButtonInfoView } from "./buttons/ButtonInfoView";
@@ -29,12 +28,8 @@ import { ButtonBonusView } from "./buttons/ButtonBonusView";
 import { ButtonHomeView } from "./buttons/ButtonHomeView";
 import { ButtonAudioView } from "./buttons/ButtonAudioView";
 import { NetworkStatusView } from "./NetworkStatusView";
-import { TextField } from "../text/TextField";
+import { isIOS } from "../../Constants";
 
-function isAppleMobileDevice() {
-    return /iPhone|iPad|iPod/.test(navigator.userAgent) || 
-           (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-}
 
 export class GUIView extends AdaptiveContainer {
     bottomGradientView
@@ -99,6 +94,7 @@ export class GUIView extends AdaptiveContainer {
     accounts = []
     fullScreeRequestTimeline = new Timeline
     timeline = new Timeline
+    invalidSettingsResponseTimeline = new Timeline
     audio
 
     isFullscreenModeAvailable
@@ -113,10 +109,10 @@ export class GUIView extends AdaptiveContainer {
         isLTRTextDirection = true,
         isMobileApplicationClient = false,
         isSpecialMobileApplicationClient = false,
-        characters,
         locale,
         audio
     }) {
+
         const assets = await createAtlas({assets: gameAssets, vfxLevel})
         for (const [key, value] of Object.entries(gameAssets)) {
             assets[key] = value
@@ -124,7 +120,7 @@ export class GUIView extends AdaptiveContainer {
 
         this.isMobileApplicationClient = isMobileApplicationClient
         this.isSpecialMobileApplicationClient = isSpecialMobileApplicationClient
-        this.isFullscreenModeAvailable = !isMobileApplicationClient && !isAppleMobileDevice()
+        this.isFullscreenModeAvailable = !isMobileApplicationClient && !isIOS
 
         //extractHighResolutionSymbols(gameAssets)
 
@@ -141,8 +137,6 @@ export class GUIView extends AdaptiveContainer {
         this.initNetworkStatus(assets)
         await this.initPaytable({assets, dictionary, coefficients, isLTRTextDirection})
         this.initBonusSelector({assets, dictionary, isLTRTextDirection, locale})
-
-        audio.onAudioReady = () => this.buttonAudioView.onAudioReady()
     }
 
     initBonusPanel(assets, dictionary) {
@@ -178,6 +172,16 @@ export class GUIView extends AdaptiveContainer {
                 value: bet
             })
         }
+
+        this.betSelectorView.onSelectedBetIsTooSmall = () => {
+            this.buttonSpinView.setInteractive(false)
+            this.buttonBetLessView.setInteractive(false)
+        }
+
+        this.betSelectorView.onSelectedBetIsTooBig = () => {
+            this.buttonSpinView.setInteractive(false)
+            this.buttonBetMoreView.setInteractive(false)
+        }
         this.popupsViews.push(this.betSelectorView)
     }
 
@@ -205,9 +209,7 @@ export class GUIView extends AdaptiveContainer {
                 key: 'buy_feature',
                 value: this.bet
             })
-        }
-
-        
+        }  
         this.popupsViews.push(this.buyFeatureSelectorView)
     }
 
@@ -496,7 +498,7 @@ export class GUIView extends AdaptiveContainer {
                 this.onAutoplaySpinsCountChange?.(this.autoplayOptions[this.autoplaySelectorView.getSelectedOptionIndex()])
             }
 
-            this.resolve?.({ key: 'make_bet' })
+            this.resolve?.({ key: 'make_bet', value:  this.betsOptions[this.betIndex] })
             this.buttonSkipView.presentClick()
             this.requestFullScreen()
         }
@@ -546,7 +548,8 @@ export class GUIView extends AdaptiveContainer {
             this.resolve?.({ key: 'request_bonuses' })
             this.presentPopup()
         }
-
+        
+        audio.onAudioReady = () => this.buttonAudioView.onAudioReady()
     }
 
     
@@ -561,7 +564,7 @@ export class GUIView extends AdaptiveContainer {
 
         this.indicatorBetView.onClick = () => {
             if(!this.maximalBet) {
-                this.resolve?.({ key: 'make_bet' })
+                this.resolve?.({ key: 'make_bet', value:  this.betsOptions[this.betIndex] })
                 return
             }
             this.presentPopup('bet')
@@ -569,7 +572,7 @@ export class GUIView extends AdaptiveContainer {
 
         this.indicatorBalanceView.onClick = () => {
             if(!this.maximalBet) {
-                this.resolve?.({ key: 'make_bet' })
+                this.resolve?.({ key: 'make_bet', value:  this.betsOptions[this.betIndex] })
                 return
             }
             this.presentPopup('account')
@@ -796,12 +799,15 @@ export class GUIView extends AdaptiveContainer {
         this.bonusPanelView.presentBonus(this.activeBonusDescriptor)
         this.bonusPanelView.setInteractive(this.activeBonusDescriptor && this.isSpinExpected)
 
-        this.buyFeatureSelectorView.refresh({bet: this.bet, currencyCode: this.currencyCode})
+        this.buyFeatureSelectorView.refresh({bet: this.bet, currencyCode: this.currencyCode, maximalBet: this.maximalBet})
         this.paytableView.refresh({bet: this.bet, currencyCode: this.currencyCode})
 
         const isFreeBet = this.activeBonusDescriptor?.type === 3
 
-        this.buttonBetMoreView.setInteractive(isBetExpected && !isFreeBet && this.isSpinExpected && this.betIndex < this.betsOptions.length - 1)
+        this.buttonBetMoreView.setInteractive(
+            !(this.activePopupName === 'buy' && this.buyFeatureSelectorView.isTooBigBet)
+            
+            &&  isBetExpected && !isFreeBet && this.isSpinExpected && this.betIndex < this.betsOptions.length - 1)
         this.buttonBetLessView.setInteractive(isBetExpected && !isFreeBet && this.isSpinExpected && this.betIndex > 0)
 
         this.buttonSpinView.setInteractive(this.isSpinExpected)
@@ -955,7 +961,7 @@ export class GUIView extends AdaptiveContainer {
 
         this.activePopupName = name
         this.activePopupView = newPopupView
-        // this.refresh()
+        this.refresh()
 
         this.infoBarView.setVisible(name !== 'account')
 

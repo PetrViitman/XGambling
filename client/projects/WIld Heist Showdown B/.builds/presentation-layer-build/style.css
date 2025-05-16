@@ -1,0 +1,1306 @@
+
+.body[data-v-f3e97ea0]{
+	width: var(--cb28daf2)  + 'px';
+	height: var(--cd9076f4) + 'px';
+
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	transform-origin: center middle;
+	transform: scaleX(1) scaleY(1);
+}
+.content-container[data-v-f3e97ea0]{
+	position: absolute;
+	transform-origin: left top;
+	white-space: nowrap;
+}
+
+
+.background[data-v-8ea45787]{
+		position: absolute;
+		width: var(--46e3847e);
+		height: 50px;
+}
+.text-field[data-v-8ea45787] {
+		left: var(--bbb4d2e2);
+}
+.text-field.value[data-v-8ea45787] {
+		font-size: var(--2726674a);
+		top: var(--02efd936);
+}
+.caption[data-v-8ea45787] {
+		top: 20px;
+		color: #00B1A9;
+}
+.background.decorated[data-v-8ea45787]{
+		background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .5)), to(rgba(42, 42, 42, .5)));
+		background: linear-gradient(180deg, rgba(0, 0, 0, .5), rgba(42, 42, 42, .5));
+		border-radius: 28px;
+		-webkit-box-shadow: 0px 2px rgba(255, 255, 255, 0.08627);
+		box-shadow: 0px 2px rgba(255, 255, 255, 0.08627);
+}
+
+.button[data-v-fcf8ca37]{
+		text-align: center;
+		width: 30px;
+		height: 30px;
+		font-size: 25px;
+		background-color: rgba(255, 255, 255, 0.1);
+		border-radius: 15px;
+		position: absolute;
+}
+.button.disabled[data-v-fcf8ca37] {
+	  pointer-events: none;
+	  opacity: 0.25;
+	  color: #444444;
+}
+.button[data-v-fcf8ca37]:hover {
+	  color: white;
+	  cursor: pointer;
+	  background-color: rgba(255, 255, 255, 0.25);
+}
+.button.left[data-v-fcf8ca37] {
+		top: 10px;
+		left: 5px;
+}
+.button.right[data-v-fcf8ca37] {
+		top: 10px;
+		right: 5px;
+}
+
+.text-field[data-v-9d60a925]{
+		opacity: 0.5;
+        color: white;
+        position: absolute;
+        left: 5px;
+}
+
+.blurred-background[data-v-a4d15ed8]{
+	width: 600px;
+	height: 70px;
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, .8)), to(rgba(41, 41, 41, .8)));
+	background: linear-gradient(to top, rgba(0, 0, 0, .8) 0%, rgba(41, 41, 41, .8) 100%);
+	border-top: 1px solid #515253;
+}
+
+.body[data-v-724f9979]{
+		width: 70px;
+		height: 70px;
+}
+.body[data-v-724f9979]:hover {
+		color: #00B1A9;
+		cursor: pointer;
+}
+.body[data-v-724f9979]:active {
+		color: rgb(255, 255, 255);
+}
+
+.body[data-v-c1b45442]{
+	width: 70px;
+	height: 70px;
+}
+.body[data-v-c1b45442]:hover {
+	color: #00B1A9;
+	cursor: pointer;
+}
+.body[data-v-c1b45442]:active {
+	color: rgb(255, 255, 255);
+}
+
+.body[data-v-5c99ac2f]{
+		width: 50px;
+		height: 50px;
+}
+.body[data-v-5c99ac2f]:hover {
+		color: white;
+		cursor: pointer;
+}
+
+.body[data-v-d0f78039]{
+		width: 50px;
+		height: 50px;
+}
+.body[data-v-d0f78039]:hover {
+		color: white;
+		cursor: pointer;
+}
+.body.active[data-v-d0f78039] {
+		color: #00B1A9;
+}
+.body.active[data-v-d0f78039]:hover {
+		color: #00dacf;
+}
+
+.body[data-v-3ea9ccec]{
+		width: 50px;
+		height: 50px;
+}
+.body[data-v-3ea9ccec]:hover {
+		color: white;
+		cursor: pointer;
+}
+
+.body[data-v-83f2e8d2]{
+		width: 50px;
+		height: 50px;
+}
+.body[data-v-83f2e8d2]:hover {
+		color: white;
+		cursor: pointer;
+}
+
+.body[data-v-3eabd837]{
+	color: #00B1A9;
+	width: 50px;
+	height: 50px;
+}
+.body[data-v-3eabd837]:hover {
+	color: #00dacf;
+	cursor: pointer;
+}
+
+.body[data-v-22a9db91]{
+		width: 100px;
+		height: 50px;
+		overflow: hidden;
+}
+.svg-icon[data-v-22a9db91] {
+		position: absolute;
+		top: -25px;
+}
+.body[data-v-22a9db91]:hover {
+		color: white;
+		cursor: pointer;
+}
+.text-field[data-v-22a9db91] {
+		position: absolute;
+		left: 40px;
+}
+
+.body-background[data-v-a80f2985]{
+	width: 300px;
+	height: 200px;
+	border-radius: 15px;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, .8)), to(rgba(41, 41, 41, .8)));
+	background: linear-gradient(to top, rgba(0, 0, 0, .8) 0%, rgba(41, 41, 41, .8) 100%);
+	border-top: 1px solid #515253;
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+}
+.message-text[data-v-a80f2985] {
+	width: 250px;
+	height: 40px;
+	left: 25px;
+	top: 66px;
+	text-align: center;
+}
+.button[data-v-a80f2985] {
+	position: absolute;
+	left: 105px;
+	top: 125px;
+	width: 80px;
+	height: 40px;
+	background:#b3b3b3;
+	border-radius: 10px;
+	color: black;
+}
+.button[data-v-a80f2985]:hover {
+	background:#00B1A9;
+	cursor: pointer;
+}
+
+.body-background[data-v-a6497647]{
+		width: 300px;
+		height: 200px;
+		border-radius: 15px;
+		background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, .8)), to(rgba(41, 41, 41, .8)));
+		background: linear-gradient(to top, rgba(0, 0, 0, .8) 0%, rgba(41, 41, 41, .8) 100%);
+		border-top: 1px solid #515253;
+		-webkit-backdrop-filter: blur(3px);
+		backdrop-filter: blur(3px);
+}
+.message-text[data-v-a6497647] {
+		width: 250px;
+		height: 20px;
+		left: 25px;
+		top: 40px;
+		text-align: center;
+}
+.selector[data-v-a6497647]{
+		top: 65px;
+		left: 50px;
+}
+.button[data-v-a6497647] {
+		position: absolute;
+		left: 112px;
+		top: 125px;
+		width: 80px;
+		height: 40px;
+		background:#b3b3b3;
+		border-radius: 10px;
+		color: black;
+}
+.button[data-v-a6497647]:hover {
+		background:#00B1A9;
+		cursor: pointer;
+}
+.button-close[data-v-a6497647]{
+		border-top: 1px solid #515253;
+		top: 5px;
+		right: 5px;
+		text-align: center;
+		width: 25px;
+		height: 25px;
+		font-size: 17px;
+		background-color: rgba(255, 255, 255, 0.1);
+		border-radius: 15px;
+		position: absolute;
+}
+.button-close.disabled[data-v-a6497647]{
+		pointer-events: none;
+		opacity: 0.5;
+}
+.button-close[data-v-a6497647]:hover {
+		border-top: 1px solid white;
+		color: white;
+		cursor: pointer;
+		background-color: rgba(255, 255, 255, 0.25);
+}
+
+
+.body-background[data-v-38499636]{
+	width: 300px;
+	height: 200px;
+	border-radius: 15px;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, .8)), to(rgba(41, 41, 41, .8)));
+	background: linear-gradient(to top, rgba(0, 0, 0, .8) 0%, rgba(41, 41, 41, .8) 100%);
+	border-top: 1px solid #515253;
+	-webkit-backdrop-filter: blur(3px);
+	backdrop-filter: blur(3px);
+}
+.message-text[data-v-38499636] {
+	width: 220px;
+	height: 20px;
+	left: 40px;
+	top: 15px;
+	text-align: center;
+}
+.button[data-v-38499636] {
+	position: absolute;
+	left: 95px;
+	top: 165px;
+	width: 120px;
+	height: 20px;
+	background:#b3b3b3;
+	border-radius: 5px;
+	color: black;
+	font-size: 10px;
+}
+.button[data-v-38499636]:hover {
+	background:#00B1A9;
+	cursor: pointer;
+}
+select[data-v-38499636] {
+	width: 35px;
+	height: 25px;
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	border-width: 0px;
+	font-size: 15px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 1px;
+	text-overflow: '';
+	outline: none;
+	text-align: center;
+}
+option[data-v-38499636] {
+	background-color: black;
+}
+select[data-v-38499636]:hover {
+	cursor: pointer;
+	background-color: #515253;
+}
+.reels[data-v-38499636] {
+	position: absolute;
+	top: 45px;
+	left: 65px;
+}
+.button-close[data-v-38499636]{
+	border-top: 1px solid #515253;
+	top: 5px;
+	right: 5px;
+	text-align: center;
+	width: 25px;
+	height: 25px;
+	font-size: 17px;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 15px;
+	position: absolute;
+}
+.button-close.disabled[data-v-38499636]{
+	pointer-events: none;
+	opacity: 0.5;
+}
+.button-close[data-v-38499636]:hover {
+	border-top: 1px solid white;
+	color: white;
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.25);
+}
+
+
+.test {
+    color: aqua;
+}
+
+.body[data-v-c5b6e5fc]{
+		width: var(--48ae7f88)  + 'px';
+		height: var(--7fa04d71) + 'px';
+
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		transform-origin: center middle;
+		transform: scaleX(1) scaleY(1);
+}
+.content-container[data-v-c5b6e5fc]{
+		position: absolute;
+		transform-origin: left top;
+		white-space: nowrap;
+}
+
+.balance[data-v-d483ec8b] {
+    left: var(--25b76abd);
+    top: var(--557ec4c8);
+}
+.bet[data-v-d483ec8b] {
+    left: var(--934bad1c);
+    top: var(--557ec4c8);
+}
+.win[data-v-d483ec8b] {
+    left: var(--44a7fdbd);
+    top: var(--557ec4c8);
+}
+
+.wild-heist-popup--bet[data-v-9199518b] {
+    width: 2000px;
+}
+
+.test[data-v-cdb808b7] {
+    width: 1250px;
+    height: 0;
+}
+.wild-heist-controls[data-v-cdb808b7] {
+    pointer-events: none;
+    background: none;
+}
+.wild-heist-controls[data-v-cdb808b7] * {
+    pointer-events: auto;
+}
+.disabled[data-v-cdb808b7] {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.wild-heist-popup--paytable[data-v-078eb6a8] {
+    width: 1200px;
+		height: 2000px;
+    background-color: #30303b;
+}
+
+.wild-heist-popup--autogame[data-v-3c4d37c1] {
+    width: 1300px;
+}
+
+.test[data-v-50d501a4] {
+    width: 1300px;
+}
+
+.body[data-v-2fd64e48]{
+	width: 100px;
+	height: 100px;
+	background-color: var(--3124e167);
+	opacity: var(--bbb6bc02);
+}
+
+[data-v-fddedf2e] {
+		pointer-events: auto;
+		text-transform: uppercase;
+		font-family: roboto;
+		font-weight: bold;
+		color: #b3b3b3;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+}
+.disabled[data-v-fddedf2e] {
+		color: #333333;
+		pointer-events: none;
+}
+.ui-container[data-v-fddedf2e] {
+		opacity: var(--498b2140);
+		width: var(--406c0137);
+		height: 100%;
+		position: absolute;
+		pointer-events: none;
+		-webkit-tap-highlight-color: transparent;
+		z-index: 2;
+}
+.hidden[data-v-fddedf2e] {
+		opacity: 0;
+		pointer-events: none;
+}
+.paytable-sample-wrapper[data-v-fddedf2e] {
+		left: 0px;
+		top: 0px;
+		width: 2500px;
+		height: 1000px;
+		position: absolute;
+		transform: scale(0.5);
+		transform-origin: left top
+}
+.bets-sample-wrapper[data-v-fddedf2e] {
+		left: 0px;
+		top: 0px;
+		width: 2500px;
+		height: 1000px;
+		position: absolute;
+		transform: scale(0.5);
+		transform-origin: left top;
+}
+* {
+  box-sizing: border-box;
+}
+.wild-heist {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+.wild-heist__bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.wild-heist__btns {
+  margin-bottom: 8px;
+}
+.wild-heist-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.wild-heist-controls {
+  display: grid;
+  grid-template-columns: 156px 156px 1fr 156px 156px;
+  grid-column-gap: 52px;
+  align-items: center;
+  padding: 58px 84px;
+  background: hsla(154, 8%, 16%, 0.7);
+}
+.wild-heist-btns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 8px;
+  padding-left: 19px;
+  padding-right: 19px;
+}
+.wild-heist-btn {
+  outline: none;
+  border: none;
+  width: 156px;
+  height: 156px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  color: #FCD200;
+}
+.wild-heist-btn:hover {
+  color: #FFDD34;
+}
+.wild-heist-btn:active {
+  color: #FFBF34;
+}
+.wild-heist-btn--has-border {
+  background: url("/VUI/circle.png") top/100% no-repeat;
+  padding-top: 40px;
+}
+.wild-heist-btn--has-border:hover {
+  background-position-y: 33.3%;
+}
+.wild-heist-btn--has-border:active {
+  color: #FFBF34;
+  background-position-y: 66.5%;
+}
+.wild-heist-btn--has-border:disabled {
+  opacity: 0.6;
+}
+.wild-heist-btn--minus, .wild-heist-btn--plus {
+  background: url("/VUI/bet-control-btn.png") 5.4% 15%/590% no-repeat;
+}
+.wild-heist-btn--minus:hover, .wild-heist-btn--plus:hover {
+  background-position-x: 35.2%;
+}
+.wild-heist-btn--minus:active, .wild-heist-btn--plus:active {
+  background-position-x: 65%;
+}
+.wild-heist-btn--minus:disabled, .wild-heist-btn--plus:disabled {
+  background-position-x: 95%;
+}
+.wild-heist-btn--minus {
+  background-position-y: 86%;
+}
+.wild-heist-btn--plus {
+  grid-column: 4/5;
+}
+.wild-heist-btn--autoplay {
+  background: url("/VUI/autoplay-btn-circle.png") top/100% no-repeat;
+}
+.wild-heist-btn--has-bg {
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  background: rgba(30, 16, 12, 0.7);
+  width: 100%;
+  height: 100px;
+  flex-direction: initial;
+  padding: 24px;
+  justify-content: space-between;
+}
+.wild-heist-btn--has-bg:hover .wild-heist-btn__text {
+  text-shadow: 0px 0px 7px rgba(255, 255, 255, 0.46);
+}
+.wild-heist-btn--has-bg:active .wild-heist-btn__text {
+  opacity: 0.8;
+}
+.wild-heist-btn--has-bg:disabled {
+  color: #A58309;
+}
+.wild-heist-btn--has-bg:disabled .wild-heist-btn__text {
+  opacity: 0.4;
+}
+.wild-heist-btn__label {
+  color: inherit;
+  text-transform: uppercase;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: -1.28px;
+  font-weight: 800;
+  margin-top: 20px;
+}
+.wild-heist-btn__text {
+  color: #fff;
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 700;
+}
+.wild-heist-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.wild-heist-popup::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 264px;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, #272731 12.62%, rgba(39, 39, 49, 0) 100%);
+  transform: rotate(180deg);
+}
+.wild-heist-popup__header {
+  background-color: #30303C;
+  padding: 62px 61px;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-template-columns: 1fr 142px;
+  position: relative;
+}
+.wild-heist-popup__title {
+  font-size: 62px;
+  line-height: 74px;
+  color: #EAD02E;
+  margin: 0;
+  text-align: center;
+  font-weight: 400;
+  grid-column: 1/3;
+}
+.wild-heist-popup__subhead, .wild-heist-popup__subtitle, .wild-heist-popup__text {
+  color: #fff;
+  text-align: center;
+  margin-right: -31px;
+}
+.wild-heist-popup__subhead {
+  font-size: 56px;
+  line-height: 67px;
+  margin-bottom: 80px;
+}
+.wild-heist-popup__subtitle {
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-top: 42px;
+  margin-bottom: 40px;
+}
+.wild-heist-popup__close {
+  width: 142px;
+  height: 142px;
+  background: url("VUI/btn-close.png") 0 -1%/100% no-repeat;
+  justify-self: end;
+  outline: none;
+  border: none;
+  padding: 0;
+  position: absolute;
+  grid-column: 2/3;
+}
+.wild-heist-popup__close:hover {
+  background-position-y: 48%;
+}
+.wild-heist-popup__close:active {
+  background-position-y: 99%;
+}
+.wild-heist-popup__content {
+  padding-left: 56px;
+  padding-right: 56px;
+  padding-bottom: 160px;
+}
+.wild-heist-popup__text {
+  font-size: 44px;
+  line-height: 1.3;
+  color: #fff;
+}
+.wild-heist-popup__pic {
+  background: url("../../../VUI/paytable-icons-sprite.png") 38% 100%/138% no-repeat;
+  margin-left: auto;
+  margin-right: auto;
+  width: 268px;
+  height: 267px;
+}
+.wild-heist-popup .scrollbar {
+  overflow-y: scroll;
+  max-height: 1715px;
+  margin-right: 12px;
+}
+.wild-heist-popup .scrollbar::-webkit-scrollbar {
+  width: 17px;
+}
+.wild-heist-popup .scrollbar::-webkit-scrollbar-thumb {
+  background-color: #D9D9D9;
+  border-radius: 20px;
+}
+.wild-heist-popup__coeff {
+  width: 100%;
+  margin-bottom: 40px;
+}
+.wild-heist-popup__scatter {
+  height: 212px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 63px;
+}
+.wild-heist-popup__scatter::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 160%;
+  position: absolute;
+  top: -100px;
+  left: -13px;
+  background: url("../../../VUI/scatter.png") 0 0/105% no-repeat;
+}
+.wild-heist-popup__bonus {
+  max-width: 318px;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wild-heist-popup__winlines {
+  margin-left: -109px;
+  width: auto;
+  margin-right: -51px;
+  margin-top: -6px;
+}
+.wild-heist-popup--paytable .wild-heist-popup__subhead {
+  margin-bottom: 0;
+}
+.wild-heist-popup--paytable .wild-heist-popup__subtitle {
+  margin-top: 78px;
+  margin-bottom: 20px;
+}
+.wild-heist-popup--paytable .wild-heist-popup__text {
+  text-align: center;
+  font-weight: 700;
+}
+.wild-heist-popup--paytable .wild-heist-popup__text span {
+  display: block;
+}
+.wild-heist-popup--paytable .wild-heist-popup__text--gold {
+  color: #EAD02E;
+  margin-top: -48px;
+}
+.wild-heist-popup--paytable .wild-heist-popup__text--gray {
+  color: #D6D6D6;
+}
+.wild-heist-popup--autogame, .wild-heist-popup--bet, .wild-heist-popup--balance {
+  top: unset;
+  bottom: 0;
+  height: auto;
+  background-color: #282833;
+}
+.wild-heist-popup--autogame::after, .wild-heist-popup--bet::after, .wild-heist-popup--balance::after {
+  display: none;
+}
+.wild-heist-popup--autogame .wild-heist-popup__content {
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-bottom: 0;
+}
+.wild-heist-popup--bet .wild-heist-popup-bottom {
+  margin-top: 37px;
+}
+.wild-heist-popup--balance .wild-heist-popup-bottom {
+  margin-top: 172px;
+}
+.wild-heist-popup__settings {
+  margin-top: 92px;
+}
+.wild-heist-autogame {
+  margin-top: 138px;
+  display: flex;
+  justify-content: space-between;
+}
+.wild-heist-autogame__info {
+  max-width: 1018px;
+  width: 100%;
+}
+.wild-heist-autogame__title {
+  font-size: 44px;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 16px;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+.wild-heist-autogame__text {
+  color: #C6C6C6;
+  font-size: 36px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.wild-heist-turbospin {
+  width: 200px;
+  height: 100px;
+  background: #0F0F0F;
+  border-radius: 16px;
+  outline: none;
+  border: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 25px 0 15px;
+}
+.wild-heist-turbospin--is-active .wild-heist-turbospin__thumb {
+  left: unset;
+  transform: translateX(100px);
+}
+.wild-heist-turbospin__thumb {
+  border-radius: 12px;
+  background: #E9E9E9;
+  width: 100px;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+.wild-heist-turbospin__text {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 36px;
+}
+.wild-heist-turbospin__text--off {
+  color: #24242D;
+}
+.wild-heist-turbospin__text--on {
+  color: #fff;
+}
+.wild-heist-popup-bottom {
+  background: #30303C;
+  margin-top: 116px;
+  padding: 24px;
+}
+.wild-heist-popup-bottom__btns {
+  display: grid;
+  grid-column-gap: 8px;
+  grid-auto-flow: column;
+}
+.wild-heist-popup-bottom__controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+.wild-heist-popup-btn {
+  border-radius: 20px;
+  border: 4px solid #FCD200;
+  background-color: transparent;
+  height: 142px;
+}
+.wild-heist-popup-btn:hover {
+  border: 4px solid #FFDD34;
+  cursor: pointer;
+}
+.wild-heist-popup-btn:active {
+  border: 4px solid #FFBF34;
+}
+.wild-heist-popup-btn--gold {
+  border: 4px solid transparent;
+  background-color: #FCD200;
+}
+.wild-heist-popup-btn--gold:hover {
+  background-color: #FFDD34;
+}
+.wild-heist-popup-btn--gold:active {
+  background-color: #FFBF34;
+}
+.wild-heist-popup-btn:disabled {
+  opacity: 0.6;
+}
+.wild-heist-popup-btn__text {
+  text-align: center;
+  font-size: 56px;
+  color: #fff;
+}
+.wild-heist-popup-btn__text--gold {
+  color: #FCD200;
+}
+.wild-heist-popup-dop {
+  display: grid;
+  align-items: center;
+  margin-left: -81px;
+  grid-auto-flow: column;
+}
+.wild-heist-popup-dop-left {
+  display: flex;
+  align-items: center;
+}
+.wild-heist-popup-dop-ico {
+  width: 213px;
+  height: 213px;
+  margin-right: 56px;
+  position: relative;
+}
+.wild-heist-popup-dop-ico::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 316px;
+  height: 316px;
+  background: url("../../../images/question.png") 0 0/100% no-repeat;
+  top: -46px;
+  left: -49px;
+}
+.wild-heist-popup-dop-list {
+  counter-reset: list-item 2;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.wild-heist-popup-dop-list__item {
+  font-size: 62px;
+  line-height: 75px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  counter-increment: list-item;
+}
+.wild-heist-popup-dop-list__item::before {
+  content: counter(list-item, decimal);
+  color: #fff;
+  margin-right: 24px;
+}
+.wild-heist-popup-dop-list__item::marker {
+  color: #fff;
+}
+.wild-heist-popup-dop-list__item--gold {
+  color: #FCD200;
+}
+.wild-heist-popup-list {
+  padding-left: 81px;
+}
+.wild-heist-popup-list__item {
+  color: #fff;
+  font-size: 44px;
+  line-height: 1.2;
+}
+.wild-heist-popup-list__item:not(:last-child) {
+  margin-bottom: 40px;
+}
+.wild-heist-info-item {
+  display: flex;
+  justify-content: space-between;
+}
+.wild-heist-info-item:not(:last-child) {
+  margin-bottom: 34px;
+}
+.wild-heist-info-item__title {
+  font-size: 44px;
+  line-height: 52px;
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 24px;
+  margin-left: 80px;
+  font-weight: 700;
+}
+.wild-heist-info-item__icon {
+  width: 212px;
+  height: 212px;
+  flex-shrink: 0;
+  background: url("../../../images/rules-icons-sprite.png") 0 0/100% no-repeat;
+}
+.wild-heist-info-item__icon--play {
+  background-position-y: 0;
+}
+.wild-heist-info-item__icon--autoplay {
+  background-position-y: 10%;
+}
+.wild-heist-info-item__icon--wallet {
+  background-position-y: 20%;
+}
+.wild-heist-info-item__icon--autogame {
+  background-position-y: 30%;
+}
+.wild-heist-info-item__icon--turbospin {
+  background-position-y: 40%;
+}
+.wild-heist-info-item__icon--menu {
+  background-position-y: 50%;
+}
+.wild-heist-info-item__icon--sound {
+  background-position-y: 60%;
+}
+.wild-heist-info-item__icon--paytable {
+  background-position-y: 70%;
+}
+.wild-heist-info-item__icon--rules {
+  background-position-y: 80%;
+}
+.wild-heist-info-item__icon--history {
+  background-position-y: 90%;
+}
+.wild-heist-info-item__icon--quit {
+  background-position-y: 100%;
+}
+.wild-heist-ico {
+  display: block;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.wild-heist-ico--has-stroke {
+  fill: none;
+  stroke: currentColor;
+}
+.wild-heist-symbols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 64px 28px;
+  padding-left: 113px;
+  margin-top: 74px;
+  margin-bottom: 65px;
+}
+.wild-heist-symbol {
+  display: flex;
+  align-items: center;
+  height: 212px;
+}
+.wild-heist-symbol__name {
+  font-size: 48px;
+  color: #FCD200;
+  max-width: 192px;
+  width: 100%;
+  margin-top: 57px;
+  margin-bottom: 0;
+}
+.wild-heist-symbol-ico {
+  width: 208px;
+  height: 212px;
+  margin-right: 45px;
+  flex-shrink: 0;
+  position: relative;
+}
+.wild-heist-symbol-ico::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("../../../VUI/paytable-icons-sprite.png") 50% 0/173% no-repeat;
+}
+.wild-heist-symbol-ico--wild::before {
+  background-position-y: 0;
+  height: 135%;
+}
+.wild-heist-symbol-ico--scatter::before {
+  background-position-y: 8.8%;
+  height: 201%;
+  top: -65px;
+  width: 116%;
+  left: -15px;
+  background-size: 149%;
+}
+.wild-heist-symbol-ico--cowboy::before {
+  background-position-y: 20.4%;
+}
+.wild-heist-symbol-ico--gun::before {
+  background-position-y: 30.3%;
+}
+.wild-heist-symbol-ico--hat::before {
+  background-position-y: 40%;
+}
+.wild-heist-symbol-ico--whiskey::before {
+  background-position-y: 50%;
+}
+.wild-heist-symbol-ico--letter-a::before {
+  background-position-y: 59.8%;
+}
+.wild-heist-symbol-ico--letter-k::before {
+  background-position-y: 69.7%;
+}
+.wild-heist-symbol-ico--letter-q::before {
+  background-position-y: 79.8%;
+}
+.wild-heist-symbol-ico--letter-j::before {
+  background-position-y: 89.6%;
+}
+.wild-heist-symbol-list {
+  display: flex;
+  flex-direction: column-reverse;
+  list-style: none;
+  counter-reset: item 2;
+  padding: 0;
+  margin: 0;
+}
+.wild-heist-symbol-list__item {
+  font-size: 48px;
+  color: #FCD200;
+  counter-increment: item;
+}
+.wild-heist-symbol-list__item::before {
+  content: counter(item, decimal);
+  color: #fff;
+  margin-right: 24px;
+}
+.wild-heist-bets {
+  display: grid;
+  grid-column-gap: 12px;
+  grid-auto-flow: column;
+}
+.wild-heist-bets-btn,
+.wild-heist-bets-input {
+  height: 162px;
+  font-size: 56px;
+  font-weight: 700;
+  border-radius: 10px;
+  width: 234px;
+  outline: none;
+  border: none;
+  text-align: center;
+}
+.wild-heist-bets-btn {
+  background-color: #464652;
+  opacity: 0.8;
+}
+.wild-heist-bets-btn:hover {
+  background-color: #585867;
+}
+.wild-heist-bets-btn:active {
+  background-color: #303041;
+  opacity: 0.4;
+}
+.wild-heist-bets-btn:disabled {
+  background-color: rgba(88, 88, 103, 0.2);
+}
+.wild-heist-bets-btn:disabled .wild-heist-bets-btn__text {
+  opacity: 0.3;
+}
+.wild-heist-bets-btn__text {
+  opacity: 1;
+  color: #fff;
+}
+.wild-heist-bets-input {
+  background-color: #2E2E33;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #fff;
+}
+.wild-heist-bets-input::placeholder {
+  color: #fff;
+}
+.wild-heist-popup-setting__head {
+  display: flex;
+  justify-content: space-between;
+}
+.wild-heist-popup-setting__name {
+  font-size: 44px;
+  max-width: 1017px;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.wild-heist-popup-setting__required {
+  color: #ACACAC;
+}
+.wild-heist-popup-setting__value {
+  font-size: 44px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #fff;
+  align-self: flex-end;
+}
+.wild-heist-popup-setting__slider {
+  margin-top: 86px;
+}
+.wild-heist-popup-slider__input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #7A7A7A;
+  outline: none;
+  accent-color: #fff;
+}
+.wild-heist-popup-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 92px;
+  background: #D6D6D6;
+  cursor: pointer;
+  border-radius: 16px;
+}
+.wild-heist-popup-options__heading {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #fff;
+  font-size: 44px;
+  text-align: center;
+}
+.wild-heist-popup-options__heading--gold {
+  color: #FCD200;
+}
+.wild-heist-popup-options__symbol {
+  font-size: 44px;
+  color: #fff;
+  opacity: 0.5;
+  align-self: center;
+  margin: 0;
+  width: 30px;
+  height: 52px;
+  position: relative;
+  left: 3px;
+  top: -2px;
+}
+.wild-heist-popup-options-headings {
+  display: grid;
+  padding-top: 50px;
+  padding-bottom: 102px;
+  align-items: center;
+  grid-auto-flow: column;
+}
+.wild-heist-popup-options-columns {
+  display: inline-grid;
+  grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1fr;
+  position: relative;
+  font-feature-settings: "tnum";
+  width: 100%;
+}
+.wild-heist-popup-options-columns::before, .wild-heist-popup-options-columns::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 259px;
+  pointer-events: none;
+  background: linear-gradient(180deg, #282833 7.11%, rgba(40, 40, 51, 0) 100%);
+  z-index: 2;
+}
+.wild-heist-popup-options-columns::before {
+  top: 0;
+}
+.wild-heist-popup-options-columns::after {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+.wild-heist-popup-options-column {
+  max-height: 570px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  padding-top: 280px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-bottom: 212px;
+  list-style: none;
+  padding-left: 0;
+}
+.wild-heist-popup-options-column::-webkit-scrollbar {
+  display: none;
+}
+.wild-heist-popup-options-column__num {
+  scroll-snap-align: center;
+  height: 132px;
+  color: #fff;
+  font-size: 44px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wild-heist-popup-options-column__num--gold {
+  color: #FCD200;
+}
+.wild-heist-balance {
+  margin-top: 40px;
+  padding-left: 24px;
+  padding-right: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wild-heist-balance__sum {
+  color: #fff;
+  font-size: 44px;
+}
+.wild-heist-balance-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wild-heist-balance-name__ico {
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
+  color: #FCD200;
+}
+.wild-heist-balance-name__text {
+  color: #fff;
+  font-size: 44px;
+}

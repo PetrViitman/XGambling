@@ -72,3 +72,21 @@ export function getCookie(name) {
     }
     return null;
 }
+
+export function isIos() {
+    return /iPhone|iPad|iPod/.test(navigator.userAgent) || 
+           (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+export function setViewport(metaContent) {
+    let meta = document.querySelector('meta[name="viewport"]');
+    
+    if (meta) {
+        meta.setAttribute("content", metaContent);
+    } else {
+        meta = document.createElement("meta");
+        meta.name = "viewport";
+        meta.content = metaContent;
+        document.head.appendChild(meta);
+    }
+}
